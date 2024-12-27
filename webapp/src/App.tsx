@@ -1,8 +1,8 @@
 export const App = () => {
   const tasks = [
-    { id: 1, name: "Be cool" },
-    { id: 2, name: "Write an app" },
-    { id: 3, name: "Profit" },
+    { id: 1, name: 'Be cool' },
+    { id: 2, name: 'Write an app' },
+    { id: 3, name: 'Profit' },
   ];
   return (
     <div>
