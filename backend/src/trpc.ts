@@ -8,10 +8,6 @@ const tasks = [
 
 const trpc = initTRPC.create();
 
-const x: number = 'x';
-
-if (x) console.log('x');
-
 export const trpcRouter = trpc.router({
   getTasks: trpc.procedure.query(() => {
     return { tasks };
