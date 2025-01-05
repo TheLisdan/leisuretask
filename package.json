@@ -10,7 +10,7 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache",
     "typecheck": "concurrently -n backend,webapp -c red,blue \"pnpm -r --filter @leisuretask/backend typecheck\" \"pnpm -r --filter @leisuretask/webapp typecheck\"",
     "prettify": "pnpm -r --parallel prettify",
-    "prepare": "husky init"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
@@ -20,6 +20,7 @@
     "eslint": "^9.17.0",
     "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
