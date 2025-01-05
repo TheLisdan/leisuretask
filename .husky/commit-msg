@@ -1,0 +1,12 @@
+relevant_line=$(awk '/^# ------------------------ >8 ------------------------/{exit} !/^#/ && NF {print; exit}' "$1")
+
+[ -z "$relevant_line" ] && exit 0
+
+all_other_lines=$(awk 'BEGIN{flag=0} /^# ------------------------ >8 ------------------------/{flag=1} !/^#/ && NF && flag {print}' "$1")
+
+formatted_relevant_line=$(echo "$relevant_line" | sed -e $'s/^[ \t]*//' -e $'s/[ \t]*\.*[ \t]*$//' -E -e $'s/[ \t]+/ /g' | awk '{ $0=toupper(substr($0,1,1)) substr($0,2); } 1')
+
+{
+  echo "$formatted_relevant_line"
+  echo "$all_other_lines"
+} > "$1"
