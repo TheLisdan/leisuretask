@@ -1,10 +1,10 @@
 import { initTRPC } from '@trpc/server';
+import _ from 'lodash';
 
-const tasks = [
-  { id: 1, name: 'Be cool' },
-  { id: 2, name: 'Write an app' },
-  { id: 3, name: 'Profit' },
-];
+const tasks = _.times(5, (i) => ({
+  id: i + 1,
+  name: `Task ${i + 1}`,
+}));
 
 const trpc = initTRPC.create();
 

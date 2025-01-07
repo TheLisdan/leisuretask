@@ -12,8 +12,6 @@ export const TodoListPage = () => {
 
   return (
     <div>
-      <h1>LeisureTask</h1>
-
       <h2>ToDo list:</h2>
       <ul>
         {data?.tasks.map((task) => {
