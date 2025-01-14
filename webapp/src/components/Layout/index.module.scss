@@ -1,0 +1,31 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/_include-media.scss';
+
+.layout {
+  @include mixins.flex(row, normal, normal);
+  height: 100%;
+  background: url(./app-background-image.png) repeat;
+
+  .navigation {
+    @include mixins.flex(column);
+    align-items: center;
+    padding: 12px;
+    background-color: vars.$uiBackground;
+    border-right: 1px solid vars.$mainGrayLight;
+
+    .link {
+      color: vars.$mainGray;
+      height: 30px;
+
+      &:hover {
+        color: vars.$mainGreenLight;
+        transition: none;
+      }
+
+      .logo {
+        height: 30px;
+      }
+    }
+  }
+}

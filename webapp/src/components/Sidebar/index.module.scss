@@ -1,0 +1,15 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/_include-media.scss';
+
+.sidebar {
+  @include mixins.flex(column);
+  height: 100%;
+  padding: 18px 36px;
+  background-color: vars.$mainWhite;
+  border-right: 1px solid vars.$mainGrayLight;
+
+  h2 {
+    @include mixins.h2;
+  }
+}

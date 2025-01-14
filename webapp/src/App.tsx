@@ -1,18 +1,19 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { getLandingRoute, getHomeRoute } from './lib/routes';
 import { TrpcProvider } from './lib/trpc';
 import { LandingPage } from './pages/LandingPage';
 import { TodoListPage } from './pages/TodoListPage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { getLandingRoute, getTodoListRoute } from './lib/routes';
-import { Layout } from './components/Layout';
+import './styles/global.scss';
 
 export const App = () => {
   return (
     <TrpcProvider>
       <BrowserRouter>
         <Routes>
+          <Route path={getLandingRoute()} element={<LandingPage />} />
           <Route element={Layout()}>
-            <Route path={getLandingRoute()} element={<LandingPage />} />
-            <Route path={getTodoListRoute()} element={<TodoListPage />} />
+            <Route path={getHomeRoute()} element={<TodoListPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

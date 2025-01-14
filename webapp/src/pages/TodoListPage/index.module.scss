@@ -1,0 +1,13 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/_include-media.scss';
+
+.content {
+  @include mixins.flex(column, normal);
+  padding: 28px;
+
+  .bigText {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+}

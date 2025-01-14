@@ -1,21 +1,16 @@
 import { Link, Outlet } from 'react-router-dom';
-import { getLandingRoute, getTodoListRoute } from '../../lib/routes';
+import { getHomeRoute } from '../../lib/routes';
+import css from './index.module.scss';
+import { TodoLogo } from './todo-logo';
 
 export const Layout = () => {
   return (
-    <div>
-      <h1>LeisureTask</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to={getLandingRoute()}>Home</Link>
-          </li>
-          <li>
-            <Link to={getTodoListRoute()}>Todo</Link>
-          </li>
-        </ul>
+    <div className={css.layout}>
+      <nav className={css.navigation}>
+        <Link to={getHomeRoute()} className={css.link}>
+          <TodoLogo className={css.logo} />
+        </Link>
       </nav>
-      <hr />
       <Outlet />
     </div>
   );

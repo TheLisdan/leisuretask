@@ -1,2 +1,4 @@
+const appRoute = '/app';
+
 export const getLandingRoute = () => '/';
-export const getTodoListRoute = () => '/app';
+export const getHomeRoute = () => `${appRoute}/home`;

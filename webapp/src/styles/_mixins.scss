@@ -1,0 +1,14 @@
+@use './vars.scss';
+@use '../../node_modules/include-media/dist/_include-media.scss';
+
+@mixin h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@mixin flex($direction: row, $align: center, $justify: flex-start) {
+  display: flex;
+  flex-flow: $direction nowrap;
+  align-items: $align;
+  justify-content: $justify;
+}
