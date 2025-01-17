@@ -1,5 +1,5 @@
-@use './vars.scss';
-@use '../../node_modules/include-media/dist/_include-media.scss';
+@use './vars';
+@use '../../node_modules/include-media/dist/include-media';
 
 @mixin h2 {
   font-size: 16px;

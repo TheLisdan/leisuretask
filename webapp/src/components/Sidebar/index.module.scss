@@ -1,6 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
-@use '../../../node_modules/include-media/dist/_include-media.scss';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .sidebar {
   @include mixins.flex(column);
