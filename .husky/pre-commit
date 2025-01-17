@@ -1,3 +1,4 @@
 pnpm typecheck
+pnpm w stylecheck
 pnpm lint-staged
 pnpm w stylelint
