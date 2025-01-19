@@ -4,10 +4,10 @@
 
 .sidebar {
   @include mixins.flex(column);
+  @include mixins.border;
   height: 100%;
-  padding: 18px 36px;
+  padding: vars.$mediumPadding 36px;
   background-color: vars.$mainWhite;
-  border-right: 1px solid vars.$mainGrayLight;
 
   h2 {
     @include mixins.h2;

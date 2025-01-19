@@ -7,7 +7,7 @@ export default [
     ignores: ['node_modules', 'dist'],
   },
   {
-    files: ['webapp/**/*.{ts,tsx}'],
+    files: ['webapp/**/*.{ts,tsx}', 'backend/**/*.ts'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
@@ -56,25 +56,6 @@ export default [
         },
       ],
       '@typescript-eslint/no-unused-vars': 'warn',
-    },
-  },
-  {
-    files: ['backend/**/*.ts'],
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-    },
-    rules: {
-      'no-console': [
-        'error',
-        {
-          allow: ['info', 'error', 'warn'],
-        },
-      ],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
     },

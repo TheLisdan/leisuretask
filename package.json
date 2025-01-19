@@ -7,7 +7,7 @@
     "b": "pnpm --filter @leisuretask/backend",
     "w": "pnpm --filter @leisuretask/webapp",
     "dev": "pnpm -r --parallel dev",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --config eslint.config.js",
     "typecheck": "concurrently -n backend,webapp -c red,blue \"pnpm -r --filter @leisuretask/backend typecheck\" \"pnpm -r --filter @leisuretask/webapp typecheck\"",
     "prettify": "pnpm -r --parallel prettify",
     "prepare": "husky"

@@ -9,10 +9,9 @@
 
   .navigation {
     @include mixins.flex(column);
-    align-items: center;
-    padding: 12px;
+    @include mixins.border;
+    padding: vars.$smallPadding;
     background-color: vars.$uiBackground;
-    border-right: 1px solid vars.$mainGrayLight;
 
     .link {
       color: vars.$mainGray;

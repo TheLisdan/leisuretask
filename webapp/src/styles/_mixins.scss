@@ -12,3 +12,7 @@
   align-items: $align;
   justify-content: $justify;
 }
+
+@mixin border() {
+  border: 1px solid vars.$mainGrayLight;
+}

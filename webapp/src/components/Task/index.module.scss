@@ -1,0 +1,65 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
+
+.task {
+  @include mixins.flex;
+  width: 100%;
+  padding: vars.$smallPadding;
+  border-radius: 5px;
+  position: relative;
+
+  &:hover {
+    background-color: vars.$uiBackground;
+  }
+
+  &:not(:last-child):after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background-color: vars.$mainGrayLight;
+  }
+
+  .checkboxContainer {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 8px;
+
+    .checkbox {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+
+      &:checked ~ .checkmark:before {
+        content: url('./checkmark-checked.svg');
+      }
+    }
+
+    .checkmark {
+      @include mixins.flex(row, center, center);
+      position: relative;
+      height: 20px;
+      width: 20px;
+
+      border-radius: 5px;
+
+      &:before {
+        content: url('./checkmark-unchecked.svg');
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover {
+        background-color: vars.$mainGrayLight;
+      }
+    }
+  }
+}

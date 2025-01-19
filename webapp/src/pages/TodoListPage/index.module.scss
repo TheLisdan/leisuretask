@@ -4,10 +4,11 @@
 
 .content {
   @include mixins.flex(column, normal);
-  padding: 28px;
+  flex: 1;
+  padding: vars.$bigPadding;
 
   .bigText {
-    font-size: 32px;
-    margin-bottom: 24px;
+    font-size: vars.$bigFontSize;
+    margin-bottom: vars.$bigMargin;
   }
 }
