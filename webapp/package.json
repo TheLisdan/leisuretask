@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit --project ./tsconfig.json && tsc --noEmit --project ./tsconfig.node.json && tsc --noEmit --project ./tsconfig.app.json"
   },
   "dependencies": {
-    "@leisuretask/shared": "workspace:*",
     "@leisuretask/backend": "workspace:*",
+    "@leisuretask/shared": "workspace:*",
     "@tanstack/react-query": "^4.35.3",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@types/react-modal": "^3.16.3",
     "@vitejs/plugin-react": "^4.3.4",
     "prettier": "^3.4.2",
     "stylelint": "^16.13.2",
