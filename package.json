@@ -10,7 +10,7 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --config eslint.config.js",
     "typecheck": "concurrently -n backend,webapp -c red,blue \"pnpm -r --filter @leisuretask/backend typecheck\" \"pnpm -r --filter @leisuretask/webapp typecheck\"",
     "prettify": "pnpm -r --parallel prettify",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
@@ -25,9 +25,7 @@
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "react-modal": "^3.16.3"
   }
 }

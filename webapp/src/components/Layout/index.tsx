@@ -1,9 +1,9 @@
+import { useState } from 'react';
+import Modal from 'react-modal';
 import { Link, Outlet } from 'react-router-dom';
 import { getHomeRoute } from '../../lib/routes';
 import css from './index.module.scss';
-import Modal from 'react-modal';
 import { TodoLogo } from './todo-logo';
-import { useState } from 'react';
 
 Modal.setAppElement('#root');
 
