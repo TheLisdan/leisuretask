@@ -22,7 +22,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
         <span className={css.checkmark}></span>
       </label>
 
-      <p className={css.label}>{task.name}</p>
+      <p className={css.label}>{task.taskname}</p>
     </div>
   );
 };

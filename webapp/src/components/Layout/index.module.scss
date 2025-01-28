@@ -28,4 +28,94 @@
       }
     }
   }
+
+  .openCreateTaskFormButton {
+    @include mixins.flex;
+    position: absolute;
+    right: vars.$bigPadding;
+    bottom: vars.$bigPadding;
+    padding: 15px;
+    background-color: vars.$uiBackground;
+    color: vars.$mainGray;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: vars.$mainGrayLight;
+    }
+
+    &:active {
+      background-color: vars.$mainGreenLight;
+      color: vars.$mainWhite;
+    }
+
+    &:focus {
+      outline: vars.$mainGrayLight;
+    }
+  }
+}
+
+.modalOverlay {
+  @include mixins.flex(column);
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.modal {
+  @include mixins.flex(column);
+  align-items: flex-start;
+  position: absolute;
+  top: 40px;
+  padding: vars.$bigPadding;
+  background: vars.$mainWhite;
+  border-radius: 5px;
+
+  .addTaskForm {
+    @include mixins.flex(column, flex-start);
+
+    .label {
+      margin-bottom: 8px;
+    }
+
+    .textInput {
+      width: 600px;
+      padding: vars.$smallPadding;
+      border: 0;
+      background-color: vars.$uiBackground;
+      border-radius: 5px;
+
+      &::placeholder {
+        color: vars.$mainGray;
+        opacity: 1;
+      }
+    }
+
+    .error {
+      color: vars.$mainRed;
+      margin-top: 4px;
+    }
+
+    .createTaskButton {
+      @include mixins.flex;
+      padding: 8px;
+      background-color: vars.$mainGreen;
+      color: vars.$mainWhite;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 60px;
+      align-self: flex-end;
+
+      &:hover {
+        background-color: vars.$mainGreenLight;
+      }
+
+      &:active {
+        background-color: vars.$mainGrayLight;
+      }
+    }
+  }
 }

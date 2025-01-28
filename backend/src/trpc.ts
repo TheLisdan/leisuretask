@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const tasks: TaskType[] = _.times(5, (i) => ({
   id: i + 1,
-  name: `Task ${i + 1}`,
+  taskname: `Task ${i + 1}`,
   completed: false,
 }));
 
