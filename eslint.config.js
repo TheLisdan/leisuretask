@@ -7,7 +7,7 @@ export default [
     ignores: ['node_modules', 'dist'],
   },
   {
-    files: ['webapp/**/*.{ts,tsx}', 'backend/**/*.ts'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
@@ -59,5 +59,35 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
     },
+  },
+  {
+    files: ['webapp/**/*.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@leisuretask/backend/**',
+                '!@leisuretask/backend/**/',
+                '!@leisuretask/backend/**/input',
+              ],
+              allowTypeImports: true,
+              message:
+                'Only types and input schemas are allowed to be imported from backend workspace',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['backend/**/*.ts'],
+    rules: {},
+  },
+  {
+    files: ['shared/**/*.ts'],
+    rules: {},
   },
 ];
