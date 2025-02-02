@@ -17,7 +17,7 @@ export const TodoListPage = () => {
     <>
       <Sidebar>
         <h2>Tuesday, 14th January</h2>
-        <p>There is will be a calendar</p>
+        <p>There will be a calendar</p>
       </Sidebar>
 
       <div className={css.content}>

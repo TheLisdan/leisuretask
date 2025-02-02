@@ -3,7 +3,7 @@ import React from 'react';
 import css from './index.module.scss';
 
 type TaskProps = {
-  task: Partial<TaskType>;
+  task: TaskType;
 };
 
 export const Task: React.FC<TaskProps> = ({ task }) => {

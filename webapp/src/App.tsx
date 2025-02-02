@@ -12,7 +12,7 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path={getLandingRoute()} element={<LandingPage />} />
-          <Route element={Layout()}>
+          <Route element={<Layout />}>
             <Route path={getHomeRoute()} element={<TodoListPage />} />
           </Route>
         </Routes>

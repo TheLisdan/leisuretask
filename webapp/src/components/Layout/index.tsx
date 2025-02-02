@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { Link, Outlet } from 'react-router-dom';
 import { z } from 'zod';
 import { getHomeRoute } from '../../lib/routes';
+import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 import { PlusIcon } from './plus-icon';
 import { TodoLogo } from './todo-logo';
@@ -16,6 +17,10 @@ export const Layout = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+
+  // Create task mutation
+  const createTask = trpc.createTask.useMutation();
+  const trpcContext = trpc.useUtils();
 
   // Validation schema
   const validate = withZodSchema(
@@ -56,8 +61,9 @@ export const Layout = () => {
         <Formik
           initialValues={{ taskname: '' }}
           validate={validate}
-          onSubmit={(values) => {
-            console.info(values);
+          onSubmit={async (values) => {
+            await createTask.mutateAsync(values);
+            trpcContext.getTasks.invalidate();
             closeModal();
           }}
         >
