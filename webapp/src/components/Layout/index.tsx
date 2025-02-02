@@ -1,9 +1,9 @@
+import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/createTask/input';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { Link, Outlet } from 'react-router-dom';
-import { z } from 'zod';
 import { getHomeRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
@@ -23,14 +23,7 @@ export const Layout = () => {
   const trpcContext = trpc.useUtils();
 
   // Validation schema
-  const validate = withZodSchema(
-    z.object({
-      taskname: z
-        .string()
-        .min(1, 'Enter task text')
-        .max(100, 'Task text is too long'),
-    })
-  );
+  const validate = withZodSchema(zCreateTaskTrpcInput);
 
   // Layout component
   return (
