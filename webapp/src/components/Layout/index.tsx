@@ -54,33 +54,41 @@ export const Layout = () => {
         <Formik
           initialValues={{ taskname: '' }}
           validate={validate}
-          onSubmit={async (values) => {
+          onSubmit={async (values, actions) => {
             await createTask.mutateAsync(values);
             trpcContext.getTasks.invalidate();
             closeModal();
+            actions.setSubmitting(false);
           }}
         >
-          <Form className={css.addTaskForm}>
-            <label htmlFor="taskname" className={css.label}>
-              <b>Task</b>
-            </label>
-            <Field
-              type="text"
-              id="taskname"
-              name="taskname"
-              placeholder="Task text"
-              className={css.textInput}
-            />
-            <ErrorMessage
-              name="taskname"
-              component="div"
-              className={css.error}
-            />
+          {({ isSubmitting }) => (
+            <Form className={css.addTaskForm}>
+              <label htmlFor="taskname" className={css.label}>
+                <b>Task</b>
+              </label>
+              <Field
+                type="text"
+                id="taskname"
+                name="taskname"
+                placeholder="Task text"
+                className={css.textInput}
+                disabled={isSubmitting}
+              />
+              <ErrorMessage
+                name="taskname"
+                component="div"
+                className={css.error}
+              />
 
-            <button type="submit" className={css.createTaskButton}>
-              Create task
-            </button>
-          </Form>
+              <button
+                type="submit"
+                className={css.createTaskButton}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Creating task...' : 'Create task'}
+              </button>
+            </Form>
+          )}
         </Formik>
       </Modal>
       <Outlet />
