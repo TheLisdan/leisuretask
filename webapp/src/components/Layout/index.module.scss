@@ -92,6 +92,14 @@
         color: vars.$mainGray;
         opacity: 1;
       }
+
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    .errorInput {
+      border: 1px solid vars.$mainRed;
     }
 
     .error {

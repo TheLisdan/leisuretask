@@ -1,4 +1,5 @@
 import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/createTask/input';
+import cs from 'classnames';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { useState } from 'react';
@@ -13,6 +14,8 @@ import { TodoLogo } from './todo-logo';
 Modal.setAppElement('#root');
 
 export const Layout = () => {
+  const [submittingError, setSubmittingError] = useState<string | null>(null);
+
   // Modal state
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const openModal = () => setModalIsOpen(true);
@@ -55,10 +58,19 @@ export const Layout = () => {
           initialValues={{ taskname: '' }}
           validate={validate}
           onSubmit={async (values, actions) => {
-            await createTask.mutateAsync(values);
-            trpcContext.getTasks.invalidate();
-            closeModal();
-            actions.setSubmitting(false);
+            try {
+              await createTask.mutateAsync(values);
+              trpcContext.getTasks.invalidate();
+              actions.resetForm();
+              closeModal();
+              actions.setSubmitting(false);
+            } catch (error: any) {
+              setSubmittingError(error.message);
+              actions.setSubmitting(false);
+              setTimeout(() => {
+                setSubmittingError(null);
+              }, 5000);
+            }
           }}
         >
           {({ isSubmitting }) => (
@@ -71,7 +83,10 @@ export const Layout = () => {
                 id="taskname"
                 name="taskname"
                 placeholder="Task text"
-                className={css.textInput}
+                className={cs({
+                  [css.textInput]: true,
+                  [css.disabled]: isSubmitting,
+                })}
                 disabled={isSubmitting}
               />
               <ErrorMessage
@@ -79,6 +94,10 @@ export const Layout = () => {
                 component="div"
                 className={css.error}
               />
+
+              {submittingError && (
+                <div className={css.error}>{submittingError}</div>
+              )}
 
               <button
                 type="submit"
