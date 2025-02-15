@@ -1,9 +1,9 @@
-import { TaskType } from '@leisuretask/shared/src/types/task';
 import React from 'react';
+import type { RouterOutputs } from '../../lib/trpc';
 import css from './index.module.scss';
 
 type TaskProps = {
-  task: TaskType;
+  task: RouterOutputs['getTasks']['tasks'][0];
 };
 
 export const Task: React.FC<TaskProps> = ({ task }) => {
@@ -16,13 +16,12 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           title={taskId}
           name={taskId}
           id={taskId}
-          defaultChecked={task.completed}
+          defaultChecked={task.status === 'COMPLETED'}
           className={css.checkbox}
         />
         <span className={css.checkmark}></span>
       </label>
-
-      <p className={css.label}>{task.taskname}</p>
+      <p className={css.label}>{task.title}</p>
     </div>
   );
 };

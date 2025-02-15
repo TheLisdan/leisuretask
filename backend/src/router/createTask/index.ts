@@ -9,7 +9,7 @@ export const createTaskTrpcRoute = trpc.procedure
     tasks.push({
       id: tasks.length + 1,
       taskname: input.taskname,
-      completed: false,
+      status: false,
     });
     return true;
   });
