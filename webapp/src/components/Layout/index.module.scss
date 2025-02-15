@@ -77,6 +77,11 @@
   .addTaskForm {
     @include mixins.flex(column, flex-start);
 
+    .taskField {
+      @include mixins.flex(column, flex-start);
+      margin-bottom: 60px;
+    }
+
     .label {
       margin-bottom: 8px;
     }
@@ -115,7 +120,7 @@
       border: 0;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 60px;
+      user-select: none;
       align-self: flex-end;
 
       &:hover {

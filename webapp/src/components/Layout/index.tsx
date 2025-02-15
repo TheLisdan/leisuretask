@@ -75,25 +75,27 @@ export const Layout = () => {
         >
           {({ isSubmitting }) => (
             <Form className={css.addTaskForm}>
-              <label htmlFor="taskname" className={css.label}>
-                <b>Task</b>
-              </label>
-              <Field
-                type="text"
-                id="taskname"
-                name="taskname"
-                placeholder="Task text"
-                className={cs({
-                  [css.textInput]: true,
-                  [css.disabled]: isSubmitting,
-                })}
-                disabled={isSubmitting}
-              />
-              <ErrorMessage
-                name="taskname"
-                component="div"
-                className={css.error}
-              />
+              <div className={css.taskField}>
+                <label htmlFor="taskname" className={css.label}>
+                  <b>Task</b>
+                </label>
+                <Field
+                  type="text"
+                  id="taskname"
+                  name="taskname"
+                  placeholder="Task text"
+                  className={cs({
+                    [css.textInput]: true,
+                    [css.disabled]: isSubmitting,
+                  })}
+                  disabled={isSubmitting}
+                />
+                <ErrorMessage
+                  name="taskname"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
 
               {submittingError && (
                 <div className={css.error}>{submittingError}</div>

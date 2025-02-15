@@ -4,14 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch ./src/index.ts",
+    "dev": "tsx watch ./.env --rs ./src/index.ts",
     "build": "tsc --build ./tsconfig.json",
     "start": "node ./dist/index.js",
+    "pmd": "prisma migrate dev",
+    "pgc": "prisma generate",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache",
-    "typecheck": "tsc --noEmit --project ./tsconfig.json"
+    "typecheck": "tsc --noEmit --project ./tsconfig.json",
+    "prepare": "pnpm pgc"
+  },
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
   },
   "dependencies": {
     "@leisuretask/shared": "workspace:*",
+    "@prisma/client": "^6.3.1",
     "@trpc/server": "^10.45.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
@@ -22,6 +29,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.14",
+    "prisma": "^6.3.1",
     "tsx": "^3.0.0"
   }
 }
