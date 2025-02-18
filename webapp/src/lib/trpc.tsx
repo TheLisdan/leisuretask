@@ -2,6 +2,7 @@ import { type TrpcRouter } from '@leisuretask/backend/src/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
 import { inferRouterOutputs } from '@trpc/server';
+import superjson from 'superjson';
 
 export const trpc = createTRPCReact<TrpcRouter>();
 
@@ -20,6 +21,7 @@ const trpcClient = trpc.createClient({
       url: 'http://localhost:3000/trpc',
     }),
   ],
+  transformer: superjson,
 });
 
 export const TrpcProvider = ({ children }: { children: React.ReactNode }) => {

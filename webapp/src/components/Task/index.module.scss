@@ -3,7 +3,7 @@
 @use '../../../node_modules/include-media/dist/include-media';
 
 .task {
-  @include mixins.flex;
+  @include mixins.flex(row, align, space-between);
   width: 100%;
   padding: vars.$smallPadding;
   border-radius: 5px;
@@ -21,6 +21,10 @@
     right: 40px;
     height: 1px;
     background-color: vars.$mainGrayLight;
+  }
+
+  .mainInfo {
+    @include mixins.flex;
   }
 
   .checkboxContainer {
@@ -61,5 +65,10 @@
         background-color: vars.$mainGrayLight;
       }
     }
+  }
+
+  .additionalInfo {
+    @include mixins.flex;
+    color: vars.$mainGreen;
   }
 }
