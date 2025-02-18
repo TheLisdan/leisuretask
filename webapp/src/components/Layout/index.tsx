@@ -55,7 +55,7 @@ export const Layout = () => {
         shouldCloseOnOverlayClick={true}
       >
         <Formik
-          initialValues={{ taskname: '' }}
+          initialValues={{ title: '' }}
           validate={validate}
           onSubmit={async (values, actions) => {
             try {
@@ -76,13 +76,13 @@ export const Layout = () => {
           {({ isSubmitting }) => (
             <Form className={css.addTaskForm}>
               <div className={css.taskField}>
-                <label htmlFor="taskname" className={css.label}>
+                <label htmlFor="title" className={css.label}>
                   <b>Task</b>
                 </label>
                 <Field
                   type="text"
-                  id="taskname"
-                  name="taskname"
+                  id="title"
+                  name="title"
                   placeholder="Task text"
                   className={cs({
                     [css.textInput]: true,
@@ -91,7 +91,7 @@ export const Layout = () => {
                   disabled={isSubmitting}
                 />
                 <ErrorMessage
-                  name="taskname"
+                  name="title"
                   component="div"
                   className={css.error}
                 />

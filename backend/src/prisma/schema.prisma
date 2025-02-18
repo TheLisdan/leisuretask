@@ -17,4 +17,5 @@ model Task {
   id        String   @id @default(cuid())
   title     String
   status    TaskStatus  @default(IN_PROGRESS)
+  createdAt DateTime @default(now())
 }
