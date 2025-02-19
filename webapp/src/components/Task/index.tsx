@@ -27,7 +27,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
       </div>
 
       <div className={css.additionalInfo}>
-        {format(task.createdAt, 'eo MMMM, HH:mm')}
+        {format(task.createdAt, 'do MMMM, HH:mm')}
       </div>
     </div>
   );
