@@ -20,7 +20,7 @@ void (async () => {
       res.send('pong');
     });
 
-    applyExpressMiddleware(expressApp, ctx, trpcRouter);
+    await applyExpressMiddleware(expressApp, ctx, trpcRouter);
 
     expressApp.listen(port, () => {
       console.info('Listening on http://localhost:' + port);

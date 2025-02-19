@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 export const zSignUpInput = z.object({
-  email: z.string().email('You must enter a valid email address'),
   name: z
     .string()
     .min(3, 'Name is too short')
