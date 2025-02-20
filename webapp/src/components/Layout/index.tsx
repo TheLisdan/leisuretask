@@ -25,9 +25,6 @@ export const Layout = () => {
   const createTask = trpc.createTask.useMutation();
   const trpcContext = trpc.useUtils();
 
-  // Validation schema
-  const validate = withZodSchema(zCreateTaskTrpcInput);
-
   // Layout component
   return (
     <div className={css.layout}>
@@ -56,7 +53,7 @@ export const Layout = () => {
       >
         <Formik
           initialValues={{ title: '' }}
-          validate={validate}
+          validate={withZodSchema(zCreateTaskTrpcInput)}
           onSubmit={async (values, actions) => {
             try {
               await createTask.mutateAsync(values);
