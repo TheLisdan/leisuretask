@@ -5,9 +5,9 @@ import { zSignUpInput } from './input';
 export const signUpTrpcRoute = trpc.procedure
   .input(zSignUpInput)
   .mutation(async ({ ctx, input }) => {
-    const exUser = await ctx.prisma.user.findUnique({
+    const exUser = await ctx.prisma.user.findFirst({
       where: {
-        name: input.name,
+        name: { equals: input.name, mode: 'insensitive' },
       },
     });
 

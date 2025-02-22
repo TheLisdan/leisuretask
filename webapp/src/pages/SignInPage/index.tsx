@@ -1,44 +1,29 @@
-import { zSignUpInput } from '@leisuretask/backend/src/router/signUp/input';
+import { zSignInInput } from '@leisuretask/backend/src/router/signIn/input';
 import cs from 'classnames';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { useState } from 'react';
-import { z } from 'zod';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
-export const SignUpPage = () => {
+export const SignInPage = () => {
   const [submittingError, setSubmittingError] = useState<string | null>(null);
   const [successMessageVisible, setSuccessMessageVisible] = useState(false);
 
-  const signUp = trpc.signUp.useMutation();
+  const signIn = trpc.signIn.useMutation();
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1>Sign In</h1>
       <Formik
         initialValues={{
           name: '',
           password: '',
-          passwordAgain: '',
         }}
-        validate={withZodSchema(
-          zSignUpInput
-            .extend({ passwordAgain: z.string().min(1) })
-            .superRefine((val, ctx) => {
-              if (val.password !== val.passwordAgain) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: 'Passwords must be the same',
-                  path: ['passwordAgain'],
-                });
-              }
-            })
-        )}
         onSubmit={async (values, actions) => {
           try {
             setSubmittingError(null);
-            await signUp.mutateAsync(values);
+            await signIn.mutateAsync(values);
             actions.resetForm();
             actions.setSubmitting(false);
             setSuccessMessageVisible(true);
@@ -50,9 +35,10 @@ export const SignUpPage = () => {
             actions.setSubmitting(false);
           }
         }}
+        validate={withZodSchema(zSignInInput)}
       >
         {({ isSubmitting }) => (
-          <Form className={css.signUpForm}>
+          <Form className={css.signInForm}>
             <label htmlFor="name" className={css.label}>
               <b>Name</b>
             </label>
@@ -89,39 +75,19 @@ export const SignUpPage = () => {
               className={css.error}
             />
 
-            <label htmlFor="passwordAgain" className={css.label}>
-              <b>Password again</b>
-            </label>
-            <Field
-              type="password"
-              id="passwordAgain"
-              name="passwordAgain"
-              placeholder="Password again"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage
-              name="passwordAgain"
-              component="div"
-              className={css.error}
-            />
-
             {submittingError && (
               <div className={css.error}>{submittingError}</div>
             )}
             {successMessageVisible && (
-              <div className={css.success}>Thanks for sign up!</div>
+              <div className={css.success}>Thanks for sign in!</div>
             )}
 
             <button
               type="submit"
-              className={css.signUpButton}
+              className={css.signInButton}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Signing up...' : 'Sign Up'}
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
             </button>
           </Form>
         )}

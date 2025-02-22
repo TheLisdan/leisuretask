@@ -5,9 +5,9 @@ import { zSignInInput } from './input';
 export const signInTrpcRoute = trpc.procedure
   .input(zSignInInput)
   .mutation(async ({ ctx, input }) => {
-    const user = await ctx.prisma.user.findUnique({
+    const user = await ctx.prisma.user.findFirst({
       where: {
-        name: input.name,
+        name: { equals: input.name, mode: 'insensitive' },
         passwordHash: getPasswordHash(input.password),
       },
     });
