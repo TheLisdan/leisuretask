@@ -2,6 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { AppContext, createAppContext } from './lib/ctx';
+import { applyPasswordToExpressApp } from './lib/password';
 import { applyExpressMiddleware } from './lib/trpc';
 import { trpcRouter } from './router';
 
@@ -20,6 +21,7 @@ void (async () => {
       res.send('pong');
     });
 
+    applyPasswordToExpressApp(expressApp, ctx);
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
 
     expressApp.listen(port, () => {

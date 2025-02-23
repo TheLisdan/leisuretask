@@ -1,6 +1,7 @@
 import { trpc } from '../lib/trpc';
 // @index('./**/index.ts', f => `import { ${f.path.split('/').slice(0, -1).pop()}TrpcRoute } from '${f.path.split('/').slice(0,-1).join('/')}';`) // Do not remove this comment
 import { createTaskTrpcRoute } from './createTask';
+import { getMeTrpcRoute } from './getMe';
 import { getTasksTrpcRoute } from './getTasks';
 import { signInTrpcRoute } from './signIn';
 import { signUpTrpcRoute } from './signUp';
@@ -9,6 +10,7 @@ import { signUpTrpcRoute } from './signUp';
 export const trpcRouter = trpc.router({
   // @index('./**/index.ts', f => `${f.path.split('/').slice(0, -1).pop()}: ${f.path.split('/').slice(0, -1).pop()}TrpcRoute,`)
   createTask: createTaskTrpcRoute,
+  getMe: getMeTrpcRoute,
   getTasks: getTasksTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
