@@ -11,7 +11,7 @@ const getCreateTrpcContext =
   (appContext: AppContext) =>
   ({ req }: trpcExpress.CreateExpressContextOptions) => ({
     ...appContext,
-    me: req as ExpressRequest,
+    me: (req as ExpressRequest).user || null,
   });
 
 type TrpcContext = inferAsyncReturnType<

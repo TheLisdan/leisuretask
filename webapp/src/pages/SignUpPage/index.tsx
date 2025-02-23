@@ -2,14 +2,18 @@ import { zSignUpInput } from '@leisuretask/backend/src/router/signUp/input';
 import cs from 'classnames';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
+import Cookies from 'js-cookie';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import { getHomeRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
 export const SignUpPage = () => {
   const [submittingError, setSubmittingError] = useState<string | null>(null);
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+  const trpcUtils = trpc.useUtils();
+  const navigate = useNavigate();
 
   const signUp = trpc.signUp.useMutation();
 
@@ -38,13 +42,10 @@ export const SignUpPage = () => {
         onSubmit={async (values, actions) => {
           try {
             setSubmittingError(null);
-            await signUp.mutateAsync(values);
-            actions.resetForm();
-            actions.setSubmitting(false);
-            setSuccessMessageVisible(true);
-            setTimeout(() => {
-              setSuccessMessageVisible(false);
-            }, 5000);
+            const { token } = await signUp.mutateAsync(values);
+            Cookies.set('token', token, { expires: 99999 });
+            void trpcUtils.invalidate();
+            navigate(getHomeRoute());
           } catch (error: any) {
             setSubmittingError(error.message);
             actions.setSubmitting(false);
@@ -111,9 +112,6 @@ export const SignUpPage = () => {
 
             {submittingError && (
               <div className={css.error}>{submittingError}</div>
-            )}
-            {successMessageVisible && (
-              <div className={css.success}>Thanks for sign up!</div>
             )}
 
             <button

@@ -5,10 +5,12 @@ import {
   getHomeRoute,
   getSignUpRoute,
   getSignInRoute,
+  getSignOutRoute,
 } from './lib/routes';
 import { TrpcProvider } from './lib/trpc';
 import { LandingPage } from './pages/LandingPage';
 import { SignInPage } from './pages/SignInPage';
+import { SignOutPage } from './pages/SignOutPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { TodoListPage } from './pages/TodoListPage';
 import './styles/global.scss';
@@ -18,6 +20,7 @@ export const App = () => {
     <TrpcProvider>
       <BrowserRouter>
         <Routes>
+          <Route path={getSignOutRoute()} element={<SignOutPage />} />
           <Route path={getLandingRoute()} element={<LandingPage />} />
           <Route path={getSignUpRoute()} element={<SignUpPage />} />
           <Route path={getSignInRoute()} element={<SignInPage />} />
