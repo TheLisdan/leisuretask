@@ -1,6 +1,7 @@
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
+import node from 'eslint-plugin-node';
 
 export default [
   {
@@ -20,6 +21,7 @@ export default [
     plugins: {
       '@typescript-eslint': tsPlugin,
       import: importPlugin,
+      node: node,
     },
     rules: {
       'import/order': [
@@ -57,6 +59,7 @@ export default [
       ],
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
+      'node/no-process-env': ['error'],
     },
   },
   {
