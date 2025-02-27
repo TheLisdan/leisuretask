@@ -14,15 +14,18 @@ enum TaskStatus {
 }
 
 model User {
-  id String @id @default(cuid())
-  name String @unique
+  id           String   @id @default(cuid())
+  name         String   @unique
   passwordHash String
-  createdAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  tasks        Task[]
 }
 
 model Task {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   title     String
-  status    TaskStatus  @default(IN_PROGRESS)
-  createdAt DateTime @default(now())
+  status    TaskStatus @default(IN_PROGRESS)
+  createdAt DateTime   @default(now())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
 }
