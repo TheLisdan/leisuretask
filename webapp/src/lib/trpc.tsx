@@ -1,7 +1,6 @@
 import { type TrpcRouter } from '@leisuretask/backend/src/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
-import { inferRouterOutputs } from '@trpc/server';
 import Cookies from 'js-cookie';
 import superjson from 'superjson';
 import { env } from './env';
@@ -39,5 +38,3 @@ export const TrpcProvider = ({ children }: { children: React.ReactNode }) => {
     </trpc.Provider>
   );
 };
-
-export type RouterOutputs = inferRouterOutputs<TrpcRouter>;

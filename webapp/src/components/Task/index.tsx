@@ -1,28 +1,19 @@
 import { format } from 'date-fns/format';
 import React from 'react';
-import type { RouterOutputs } from '../../lib/trpc';
+import { type TaskType } from '../../lib/trpcTypes';
+import { Checkbox } from '../Checkbox';
 import css from './index.module.scss';
 
 type TaskProps = {
-  task: RouterOutputs['getTasks']['tasks'][0];
+  task: TaskType;
+  onClick: () => void;
 };
 
-export const Task: React.FC<TaskProps> = ({ task }) => {
-  const taskId = task.id?.toString();
+export const Task: React.FC<TaskProps> = ({ task, onClick }) => {
   return (
-    <div className={css.task}>
+    <div className={css.task} onClick={onClick}>
       <div className={css.mainInfo}>
-        <label className={css.checkboxContainer}>
-          <input
-            type="checkbox"
-            title={taskId}
-            name={taskId}
-            id={taskId}
-            defaultChecked={task.status === 'COMPLETED'}
-            className={css.checkbox}
-          />
-          <span className={css.checkmark}></span>
-        </label>
+        <Checkbox task={task} />
         <p className={css.title}>{task.title}</p>
       </div>
 

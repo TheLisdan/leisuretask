@@ -1,0 +1,41 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.checkboxContainer {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  .checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkmark:before {
+      content: url('./checkmark-checked.svg');
+    }
+  }
+
+  .checkmark {
+    @include mixins.flex(row, center, center);
+    position: relative;
+    height: 20px;
+    width: 20px;
+
+    border-radius: 5px;
+
+    &:before {
+      content: url('./checkmark-unchecked.svg');
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
+      background-color: vars.$mainGrayLight;
+    }
+  }
+}

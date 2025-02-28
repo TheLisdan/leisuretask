@@ -1,0 +1,83 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.taskSidebar {
+  position: relative;
+  width: 300px;
+  @include mixins.flex(column, center);
+  height: 100%;
+  padding: 18px 12px;
+  background-color: vars.$mainWhite;
+  border-left: solid 1px vars.$mainGrayLight;
+
+  .taskHeader {
+    width: 100%;
+    position: relative;
+    padding: 0 12px 18px;
+    border-bottom: solid 1px vars.$mainGrayLight;
+    @include mixins.flex(row, center, space-between);
+
+    .taskHeaderMain {
+      @include mixins.flex(row, center);
+
+      .verticalLine {
+        position: relative;
+        height: 20px;
+        width: 1px;
+        margin: 0 12px;
+        background-color: vars.$mainGray;
+      }
+
+      .taskTime {
+        @include mixins.flex(row, center);
+        color: vars.$mainGreen;
+
+        .calendarTimeIcon {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .closeButton {
+      @include mixins.flex(row, center);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      color: vars.$mainGray;
+
+      &:hover {
+        color: vars.$mainRed;
+      }
+    }
+  }
+
+  .taskTitle {
+    align-self: flex-start;
+    font-size: 16px;
+    margin-top: 18px;
+    padding: 0 12px;
+  }
+
+  .taskFooter {
+    margin-top: auto;
+    align-self: flex-end;
+    padding: 0 12px;
+
+    .taskOptions {
+      @include mixins.flex(row, center);
+      background: none;
+      border: none;
+      height: 20px;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      color: vars.$mainGray;
+
+      &:hover {
+        color: vars.$mainGreen;
+      }
+    }
+  }
+}
