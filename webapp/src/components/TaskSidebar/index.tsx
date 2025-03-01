@@ -31,7 +31,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task, onClose }) => {
         <button
           type="button"
           className={css.closeButton}
-          title="✖"
+          title="Close sidebar"
           onClick={onClose}
         >
           <CloseIcon />
