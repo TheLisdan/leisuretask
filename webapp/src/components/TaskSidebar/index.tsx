@@ -1,9 +1,13 @@
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { format } from 'date-fns';
-import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState } from 'react';
 import { TaskType } from '../../lib/trpcTypes';
 import { Checkbox } from '../Checkbox';
 import { CalendarTimeIcon } from './calendar-time-icon';
 import { CloseIcon } from './close-icon';
+import { DeleteIcon } from './delete-icon';
+import { EditIcon } from './edit-icon';
 import css from './index.module.scss';
 import { ThreeDotsIcon } from './three-dots-icon';
 
@@ -13,6 +17,8 @@ type TaskSidebarProps = {
 };
 
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task, onClose }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   if (!task) {
     return null;
   }
@@ -39,9 +45,44 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task, onClose }) => {
       </div>
       <b className={css.taskTitle}>{task.title}</b>
       <div className={css.taskFooter}>
-        <button type="button" className={css.taskOptions} title="More">
-          <ThreeDotsIcon />
-        </button>
+        <DropdownMenu.Root
+          open={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
+        >
+          <DropdownMenu.Trigger asChild>
+            <button type="button" className={css.taskOptions} title="More">
+              <ThreeDotsIcon />
+            </button>
+          </DropdownMenu.Trigger>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <DropdownMenu.Portal forceMount>
+                <DropdownMenu.Content asChild align="end">
+                  <motion.div
+                    className={css.dropdownMenu}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                  >
+                    <DropdownMenu.Item className={css.dropdownMenuItem}>
+                      <EditIcon className={css.dropdownMenuItemIcon} />
+                      Edit
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Separator
+                      className={css.dropdownMenuSeparator}
+                    />
+                    <DropdownMenu.Item className={css.dropdownMenuItem}>
+                      <DeleteIcon className={css.dropdownMenuItemIcon} />
+                      Delete
+                    </DropdownMenu.Item>
+                  </motion.div>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            )}
+          </AnimatePresence>
+        </DropdownMenu.Root>
       </div>
     </aside>
   );
