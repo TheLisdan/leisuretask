@@ -1,11 +1,10 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { format } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { TaskType } from '../../lib/trpcTypes';
 import { Checkbox } from '../Checkbox';
 import { CalendarTimeIcon } from './calendar-time-icon';
-import { CloseIcon } from './close-icon';
 import { DeleteIcon } from './delete-icon';
 import { EditIcon } from './edit-icon';
 import css from './index.module.scss';
@@ -13,18 +12,47 @@ import { ThreeDotsIcon } from './three-dots-icon';
 
 type TaskSidebarProps = {
   task: TaskType | null;
-  onClose: () => void;
 };
 
-export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task, onClose }) => {
+export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [width, setWidth] = useState(300);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+
+  const minWidth = 200;
+  const maxWidth = 600;
+
+  const startResizing = (event: React.MouseEvent) => {
+    event.preventDefault();
+    document.addEventListener('mousemove', resize);
+    document.addEventListener('mouseup', stopResizing);
+  };
+
+  const resize = (event: MouseEvent) => {
+    if (sidebarRef.current) {
+      const newWidth = document.body.clientWidth - event.clientX;
+      if (newWidth >= minWidth && newWidth <= maxWidth) {
+        setWidth(newWidth);
+      }
+    }
+  };
+
+  const stopResizing = () => {
+    document.removeEventListener('mousemove', resize);
+    document.removeEventListener('mouseup', stopResizing);
+  };
 
   if (!task) {
     return null;
   }
 
   return (
-    <aside className={css.taskSidebar}>
+    <aside
+      className={css.taskSidebar}
+      ref={sidebarRef}
+      style={{ width }}
+      onMouseDown={startResizing}
+    >
       <div className={css.taskHeader}>
         <div className={css.taskHeaderMain}>
           <Checkbox task={task} />
@@ -34,14 +62,6 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task, onClose }) => {
             {format(task.createdAt, 'do MMMM, HH:mm')}
           </div>
         </div>
-        <button
-          type="button"
-          className={css.closeButton}
-          title="Close sidebar"
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </button>
       </div>
       <b className={css.taskTitle}>{task.title}</b>
       <div className={css.taskFooter}>

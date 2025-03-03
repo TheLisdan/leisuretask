@@ -1,9 +1,10 @@
 import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/createTask/input';
 import cs from 'classnames';
+import { format } from 'date-fns';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
-import { useState } from 'react';
-import Modal from 'react-modal';
+import { useEffect, useState } from 'react';
+import { Modal } from '../../components/Modal';
 import { PersistentSidebar } from '../../components/PersistentSidebar';
 import { Task } from '../../components/Task';
 import { TaskSidebar } from '../../components/TaskSidebar';
@@ -12,35 +13,38 @@ import { TaskType } from '../../lib/trpcTypes';
 import css from './index.module.scss';
 import { PlusIcon } from './plus-icon';
 
-Modal.setAppElement('#root');
-
 export const TodoListPage = () => {
-  const [submittingError, setSubmittingError] = useState<string | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  // Modal state
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
-
-  // Create task mutation
-  const createTask = trpc.createTask.useMutation();
-  const trpcContext = trpc.useUtils();
-
-  const { data, error, isLoading, isFetching, isError } =
-    trpc.getTasks.useQuery();
+  const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(null);
 
-  if (isLoading && isFetching) {
+  const createTaskMutation = trpc.createTask.useMutation();
+  const trpcUtils = trpc.useUtils();
+
+  const {
+    data: tasksData,
+    error: tasksError,
+    isLoading,
+    isFetching,
+  } = trpc.getTasks.useQuery();
+
+  useEffect(() => {
+    if (tasksData && tasksData.tasks.length > 0) {
+      setSelectedTask(tasksData.tasks[0]);
+    }
+  }, [tasksData]);
+
+  if (isLoading || isFetching) {
     return <span>Loading...</span>;
   }
-  if (isError) {
-    return <span>Error: {error?.message}</span>;
+  if (tasksError) {
+    return <span>Error: {tasksError.message}</span>;
   }
 
   return (
     <>
       <PersistentSidebar>
-        <h2>Tuesday, 14th January</h2>
+        <h2>{format(new Date(), 'EEEE, do MMMM')}</h2>
         <p>There will be a calendar</p>
       </PersistentSidebar>
 
@@ -48,19 +52,17 @@ export const TodoListPage = () => {
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
-        {data?.tasks.map((task) => (
+        {tasksData?.tasks.map((task) => (
           <Task
             task={task}
             key={task.id}
-            onClick={() => {
-              setSelectedTask(task);
-            }}
+            onClick={() => setSelectedTask(task)}
           />
         ))}
 
         <button
           type="button"
-          onClick={openModal}
+          onClick={() => setIsModalOpen(true)}
           className={css.openCreateTaskFormButton}
           title="Create task"
         >
@@ -68,32 +70,22 @@ export const TodoListPage = () => {
         </button>
       </div>
 
-      <TaskSidebar task={selectedTask} onClose={() => setSelectedTask(null)} />
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        className={css.modal}
-        overlayClassName={css.modalOverlay}
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-      >
+      <TaskSidebar task={selectedTask} />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <Formik
           initialValues={{ title: '' }}
           validate={withZodSchema(zCreateTaskTrpcInput)}
           onSubmit={async (values, actions) => {
             try {
-              await createTask.mutateAsync(values);
-              trpcContext.getTasks.invalidate();
+              await createTaskMutation.mutateAsync(values);
+              trpcUtils.getTasks.invalidate();
               actions.resetForm();
-              closeModal();
+              setIsModalOpen(false);
+            } catch (err: any) {
+              setError(err.message);
+              setTimeout(() => setError(null), 5000);
+            } finally {
               actions.setSubmitting(false);
-            } catch (error: any) {
-              setSubmittingError(error.message);
-              actions.setSubmitting(false);
-              setTimeout(() => {
-                setSubmittingError(null);
-              }, 5000);
             }
           }}
         >
@@ -108,8 +100,7 @@ export const TodoListPage = () => {
                   id="title"
                   name="title"
                   placeholder="Task text"
-                  className={cs({
-                    [css.textInput]: true,
+                  className={cs(css.textInput, {
                     [css.disabled]: isSubmitting,
                   })}
                   disabled={isSubmitting}
@@ -121,9 +112,7 @@ export const TodoListPage = () => {
                 />
               </div>
 
-              {submittingError && (
-                <div className={css.error}>{submittingError}</div>
-              )}
+              {error && <div className={css.error}>{error}</div>}
 
               <button
                 type="submit"

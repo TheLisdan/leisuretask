@@ -1,0 +1,47 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+:global {
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  .ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+
+  .ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+
+  .ReactModal__Content {
+    top: vars.$bigPadding;
+    transition: top 200ms ease-in-out;
+  }
+
+  .ReactModal__Content--after-open {
+    top: 40px;
+  }
+
+  .ReactModal__Content--before-close {
+    top: vars.$bigPadding;
+  }
+}
+
+.modalOverlay {
+  @include mixins.flex(column);
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.modal {
+  @include mixins.flex(column);
+  align-items: flex-start;
+  position: absolute;
+  padding: vars.$bigPadding;
+  background: vars.$mainWhite;
+  border-radius: 5px;
+}

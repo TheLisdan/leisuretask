@@ -2,13 +2,21 @@
 @use '../../styles/mixins';
 
 .taskSidebar {
-  position: relative;
-  width: 300px;
   @include mixins.flex(column, center);
   height: 100%;
   padding: 18px 12px;
   background-color: vars.$mainWhite;
   border-left: solid 1px vars.$mainGrayLight;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 5px;
+    height: 100%;
+    cursor: ew-resize;
+  }
 
   .taskHeader {
     width: 100%;

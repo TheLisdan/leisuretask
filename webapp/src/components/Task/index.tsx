@@ -16,7 +16,6 @@ export const Task: React.FC<TaskProps> = ({ task, onClick }) => {
         <Checkbox task={task} />
         <p className={css.title}>{task.title}</p>
       </div>
-
       <div className={css.additionalInfo}>
         {format(task.createdAt, 'do MMMM, HH:mm')}
       </div>

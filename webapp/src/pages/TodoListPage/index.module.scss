@@ -44,79 +44,61 @@
   }
 }
 
-.modalOverlay {
-  @include mixins.flex(column);
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
+.addTaskForm {
+  @include mixins.flex(column, flex-start);
 
-.modal {
-  @include mixins.flex(column);
-  align-items: flex-start;
-  position: absolute;
-  top: 40px;
-  padding: vars.$bigPadding;
-  background: vars.$mainWhite;
-  border-radius: 5px;
-
-  .addTaskForm {
+  .taskField {
     @include mixins.flex(column, flex-start);
+    margin-bottom: 60px;
+  }
 
-    .taskField {
-      @include mixins.flex(column, flex-start);
-      margin-bottom: 60px;
+  .label {
+    margin-bottom: 8px;
+  }
+
+  .textInput {
+    width: 600px;
+    padding: vars.$smallPadding;
+    border: 0;
+    background-color: vars.$uiBackground;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: vars.$mainGray;
+      opacity: 1;
     }
 
-    .label {
-      margin-bottom: 8px;
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .errorInput {
+    border: 1px solid vars.$mainRed;
+  }
+
+  .error {
+    color: vars.$mainRed;
+    margin-top: 4px;
+  }
+
+  .createTaskButton {
+    @include mixins.flex;
+    padding: 8px;
+    background-color: vars.$mainGreen;
+    color: vars.$mainWhite;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    align-self: flex-end;
+
+    &:hover {
+      background-color: vars.$mainGreenLight;
     }
 
-    .textInput {
-      width: 600px;
-      padding: vars.$smallPadding;
-      border: 0;
-      background-color: vars.$uiBackground;
-      border-radius: 5px;
-
-      &::placeholder {
-        color: vars.$mainGray;
-        opacity: 1;
-      }
-
-      &.disabled {
-        opacity: 0.5;
-      }
-    }
-
-    .errorInput {
-      border: 1px solid vars.$mainRed;
-    }
-
-    .error {
-      color: vars.$mainRed;
-      margin-top: 4px;
-    }
-
-    .createTaskButton {
-      @include mixins.flex;
-      padding: 8px;
-      background-color: vars.$mainGreen;
-      color: vars.$mainWhite;
-      border: 0;
-      border-radius: 5px;
-      cursor: pointer;
-      user-select: none;
-      align-self: flex-end;
-
-      &:hover {
-        background-color: vars.$mainGreenLight;
-      }
-
-      &:active {
-        background-color: vars.$mainGrayLight;
-      }
+    &:active {
+      background-color: vars.$mainGrayLight;
     }
   }
 }
