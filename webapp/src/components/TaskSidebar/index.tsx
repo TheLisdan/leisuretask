@@ -23,9 +23,12 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   const maxWidth = 600;
 
   const startResizing = (event: React.MouseEvent) => {
-    event.preventDefault();
-    document.addEventListener('mousemove', resize);
-    document.addEventListener('mouseup', stopResizing);
+    if (document.body.clientWidth - event.clientX > width - 5) {
+      event.preventDefault();
+      document.body.style.cursor = 'ew-resize';
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResizing);
+    }
   };
 
   const resize = (event: MouseEvent) => {
@@ -38,6 +41,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   };
 
   const stopResizing = () => {
+    document.body.style.cursor = 'default';
     document.removeEventListener('mousemove', resize);
     document.removeEventListener('mouseup', stopResizing);
   };

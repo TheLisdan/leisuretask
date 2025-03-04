@@ -18,5 +18,6 @@ rules:
   scss/double-slash-comment-empty-line-before: null
   declaration-block-no-redundant-longhand-properties: null
   shorthand-property-no-redundant-values: null
+  selector-pseudo-class-no-unknown: null
   color-hex-length: null
   no-empty-source: null

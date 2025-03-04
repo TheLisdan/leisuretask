@@ -9,6 +9,14 @@
   border-radius: 5px;
   position: relative;
 
+  &.selected {
+    background-color: vars.$mainGrayLight;
+
+    &:hover {
+      background-color: vars.$mainGrayLight;
+    }
+  }
+
   &:hover {
     background-color: vars.$uiBackground;
   }

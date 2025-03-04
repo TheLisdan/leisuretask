@@ -57,6 +57,7 @@ export const TodoListPage = () => {
             task={task}
             key={task.id}
             onClick={() => setSelectedTask(task)}
+            selected={task.id === selectedTask?.id}
           />
         ))}
 

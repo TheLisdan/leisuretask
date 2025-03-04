@@ -6,8 +6,19 @@
   @include mixins.flex(column);
   @include mixins.border;
   height: 100%;
+  position: relative;
   padding: vars.$mediumPadding 36px;
   background-color: vars.$mainWhite;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    cursor: ew-resize;
+  }
 
   h2 {
     @include mixins.h2;

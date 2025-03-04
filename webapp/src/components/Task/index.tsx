@@ -1,3 +1,4 @@
+import cs from 'classnames';
 import { format } from 'date-fns/format';
 import React from 'react';
 import { type TaskType } from '../../lib/trpcTypes';
@@ -7,11 +8,15 @@ import css from './index.module.scss';
 type TaskProps = {
   task: TaskType;
   onClick: () => void;
+  selected: boolean;
 };
 
-export const Task: React.FC<TaskProps> = ({ task, onClick }) => {
+export const Task: React.FC<TaskProps> = ({ task, onClick, selected }) => {
   return (
-    <div className={css.task} onClick={onClick}>
+    <div
+      className={cs(css.task, { [css.selected]: selected })}
+      onClick={onClick}
+    >
       <div className={css.mainInfo}>
         <Checkbox task={task} />
         <p className={css.title}>{task.title}</p>

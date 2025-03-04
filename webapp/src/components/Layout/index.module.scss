@@ -10,7 +10,7 @@
 
   .navigation {
     @include mixins.flex(column);
-    @include mixins.border;
+    border-right: 1px solid vars.$mainGrayLight;
     padding: vars.$smallPadding;
     background-color: vars.$uiBackground;
 
