@@ -127,3 +127,62 @@
   width: 100%;
   margin-bottom: 12px;
 }
+
+.updateTaskForm {
+  @include mixins.flex(column, flex-start);
+
+  .taskField {
+    @include mixins.flex(column, flex-start);
+    margin-bottom: 60px;
+  }
+
+  .label {
+    margin-bottom: 8px;
+  }
+
+  .textInput {
+    width: 600px;
+    padding: vars.$smallPadding;
+    border: 0;
+    background-color: vars.$uiBackground;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: vars.$mainGray;
+      opacity: 1;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .errorInput {
+    border: 1px solid vars.$mainRed;
+  }
+
+  .error {
+    color: vars.$mainRed;
+    margin-top: 4px;
+  }
+
+  .updateTaskButton {
+    @include mixins.flex;
+    padding: 8px;
+    background-color: vars.$mainGreen;
+    color: vars.$mainWhite;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    align-self: flex-end;
+
+    &:hover {
+      background-color: vars.$mainGreenLight;
+    }
+
+    &:active {
+      background-color: vars.$mainGrayLight;
+    }
+  }
+}
