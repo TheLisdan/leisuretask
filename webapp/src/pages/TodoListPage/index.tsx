@@ -52,14 +52,16 @@ export const TodoListPage = () => {
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
-        {tasksData?.tasks.map((task) => (
-          <Task
-            task={task}
-            key={task.id}
-            onClick={() => setSelectedTask(task)}
-            selected={task.id === selectedTask?.id}
-          />
-        ))}
+        <div>
+          {tasksData.tasks.map((task) => (
+            <Task
+              task={task}
+              key={task.id}
+              onClick={() => setSelectedTask(task)}
+              selected={task.id === selectedTask?.id}
+            />
+          ))}
+        </div>
 
         <button
           type="button"
@@ -91,7 +93,7 @@ export const TodoListPage = () => {
           }}
         >
           {({ isSubmitting }) => (
-            <Form className={css.addTaskForm}>
+            <Form className={css.addTaskForm} id="addTaskForm">
               <div className={css.taskField}>
                 <label htmlFor="title" className={css.label}>
                   <b>Task</b>
@@ -119,6 +121,7 @@ export const TodoListPage = () => {
                 type="submit"
                 className={css.createTaskButton}
                 disabled={isSubmitting}
+                form="addTaskForm"
               >
                 {isSubmitting ? 'Creating task...' : 'Create task'}
               </button>

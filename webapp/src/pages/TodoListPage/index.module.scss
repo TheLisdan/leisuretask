@@ -17,6 +17,7 @@
 
   .openCreateTaskFormButton {
     @include mixins.flex;
+    margin-top: auto;
     align-self: flex-end;
     position: sticky;
     bottom: 0;

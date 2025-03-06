@@ -159,7 +159,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
           }}
         >
           {({ isSubmitting }) => (
-            <Form className={css.updateTaskForm}>
+            <Form className={css.updateTaskForm} id="updateTaskForm">
               <div className={css.taskField}>
                 <label htmlFor="title" className={css.label}>
                   <b>Task</b>
