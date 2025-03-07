@@ -1,6 +1,6 @@
-@use '../../styles/vars';
-@use '../../styles/mixins';
-@use '../../../node_modules/include-media/dist/include-media';
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+@use '../../../../node_modules/include-media/dist/include-media';
 
 .task {
   @include mixins.flex(row, align, space-between);
@@ -19,16 +19,6 @@
 
   &:hover {
     background-color: vars.$uiBackground;
-  }
-
-  &:not(:last-child):after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 40px;
-    right: 40px;
-    height: 1px;
-    background-color: vars.$mainGrayLight;
   }
 
   .mainInfo {

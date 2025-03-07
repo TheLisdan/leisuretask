@@ -1,0 +1,14 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.taskWrapper {
+  position: relative;
+
+  // content: '';
+  // position: absolute;
+  // bottom: 0;
+  // left: 40px;
+  // right: 40px;
+  // height: 1px;
+  // background-color: vars.$mainGrayLight;
+}

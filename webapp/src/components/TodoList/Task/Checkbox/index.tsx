@@ -1,5 +1,5 @@
 import React from 'react';
-import { TaskType } from '../../lib/trpcTypes';
+import { TaskType } from '../../../../lib/trpcTypes';
 import css from './index.module.scss';
 
 type CheckboxProps = {

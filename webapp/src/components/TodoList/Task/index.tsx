@@ -1,8 +1,8 @@
 import cs from 'classnames';
 import { format } from 'date-fns/format';
 import React from 'react';
-import { type TaskType } from '../../lib/trpcTypes';
-import { Checkbox } from '../Checkbox';
+import { type TaskType } from '../../../lib/trpcTypes';
+import { Checkbox } from '../Task/Checkbox';
 import css from './index.module.scss';
 
 type TaskProps = {

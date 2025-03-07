@@ -3,38 +3,32 @@ import cs from 'classnames';
 import { format } from 'date-fns';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
-import { useEffect, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Modal } from '../../components/Modal';
 import { PersistentSidebar } from '../../components/PersistentSidebar';
-import { Task } from '../../components/Task';
 import { TaskSidebar } from '../../components/TaskSidebar';
-import { trpc } from '../../lib/trpc';
-import { TaskType } from '../../lib/trpcTypes';
+import { TaskDragWrapper } from '../../components/TodoList/TaskDragWrapper';
+import { useTodoList } from '../../components/TodoList/useTodoList';
 import css from './index.module.scss';
 import { PlusIcon } from './plus-icon';
 
 export const TodoListPage = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<TaskType | null>(null);
-
-  const createTaskMutation = trpc.createTask.useMutation();
-  const trpcUtils = trpc.useUtils();
-
   const {
-    data: tasksData,
-    error: tasksError,
+    tasks,
+    selectedTask,
     isLoading,
-    isFetching,
-  } = trpc.getTasks.useQuery();
+    tasksError,
+    error,
+    isModalOpen,
+    moveTask,
+    selectTask,
+    handleCreateTask,
+    openModal,
+    closeModal,
+  } = useTodoList();
 
-  useEffect(() => {
-    if (tasksData && tasksData.tasks.length > 0) {
-      setSelectedTask(tasksData.tasks[0]);
-    }
-  }, [tasksData]);
-
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <span>Loading...</span>;
   }
   if (tasksError) {
@@ -42,7 +36,7 @@ export const TodoListPage = () => {
   }
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <PersistentSidebar>
         <h2>{format(new Date(), 'EEEE, do MMMM')}</h2>
         <p>There will be a calendar</p>
@@ -52,20 +46,23 @@ export const TodoListPage = () => {
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
-        <div>
-          {tasksData.tasks.map((task) => (
-            <Task
-              task={task}
+
+        <div className={css.taskWrapper}>
+          {tasks.map((task, index) => (
+            <TaskDragWrapper
               key={task.id}
-              onClick={() => setSelectedTask(task)}
-              selected={task.id === selectedTask?.id}
+              task={task}
+              index={index}
+              moveTask={moveTask}
+              setSelectedTask={selectTask}
+              isSelected={selectedTask?.id === task.id}
             />
           ))}
         </div>
 
         <button
           type="button"
-          onClick={() => setIsModalOpen(true)}
+          onClick={openModal}
           className={css.openCreateTaskFormButton}
           title="Create task"
         >
@@ -74,19 +71,14 @@ export const TodoListPage = () => {
       </div>
 
       <TaskSidebar task={selectedTask} />
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Formik
           initialValues={{ title: '' }}
           validate={withZodSchema(zCreateTaskTrpcInput)}
           onSubmit={async (values, actions) => {
             try {
-              await createTaskMutation.mutateAsync(values);
-              trpcUtils.getTasks.invalidate();
+              await handleCreateTask(values);
               actions.resetForm();
-              setIsModalOpen(false);
-            } catch (err: any) {
-              setError(err.message);
-              setTimeout(() => setError(null), 5000);
             } finally {
               actions.setSubmitting(false);
             }
@@ -129,6 +121,6 @@ export const TodoListPage = () => {
           )}
         </Formik>
       </Modal>
-    </>
+    </DndProvider>
   );
 };
