@@ -5,11 +5,12 @@ import { TaskType } from '../../lib/trpcTypes';
 export const useTodoList = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<TaskType | null>(null);
   const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [selectedTask, setSelectedTask] = useState<TaskType | null>(null);
 
-  const createTaskMutation = trpc.createTask.useMutation();
   const trpcUtils = trpc.useUtils();
+  const createTaskMutation = trpc.createTask.useMutation();
+  const deleteTaskMutation = trpc.deleteTask.useMutation();
 
   const {
     data: tasksData,
@@ -19,25 +20,32 @@ export const useTodoList = () => {
   } = trpc.getTasks.useQuery();
 
   useEffect(() => {
-    if (tasksData?.tasks) {
-      setTasks(tasksData.tasks);
-      if (tasksData.tasks.length > 0 && !selectedTask) {
-        setSelectedTask(tasksData.tasks[0]);
-      }
-    }
-  }, [tasksData, selectedTask]);
-
-  const moveTask = useCallback((fromIndex: number, toIndex: number) => {
-    if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) {
+    if (!tasksData?.tasks) {
       return;
     }
 
-    setTasks((prevTasks) => {
-      if (fromIndex >= prevTasks.length || toIndex >= prevTasks.length) {
-        return prevTasks;
+    setTasks(tasksData.tasks);
+    setSelectedTask(
+      (prev) =>
+        tasksData.tasks.find((task) => task.id === prev?.id) ??
+        tasksData.tasks[0] ??
+        null
+    );
+  }, [tasksData]);
+
+  const moveTask = useCallback((fromIndex: number, toIndex: number) => {
+    setTasks((prev) => {
+      if (
+        fromIndex === toIndex ||
+        fromIndex < 0 ||
+        toIndex < 0 ||
+        fromIndex >= prev.length ||
+        toIndex >= prev.length
+      ) {
+        return prev;
       }
 
-      const updatedTasks = [...prevTasks];
+      const updatedTasks = [...prev];
       const [movedTask] = updatedTasks.splice(fromIndex, 1);
       updatedTasks.splice(toIndex, 0, movedTask);
 
@@ -45,32 +53,32 @@ export const useTodoList = () => {
     });
   }, []);
 
-  const openModal = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
   const handleCreateTask = useCallback(
     async (values: { title: string }) => {
       try {
-        closeModal();
+        setIsModalOpen(false);
         await createTaskMutation.mutateAsync(values);
         await trpcUtils.getTasks.invalidate();
       } catch (err: any) {
         setError(err.message);
         setTimeout(() => setError(null), 5000);
-        throw err;
       }
     },
     [createTaskMutation, trpcUtils.getTasks]
   );
 
-  const selectTask = useCallback((task: TaskType) => {
-    setSelectedTask(task);
-  }, []);
+  const handleDeleteTask = useCallback(
+    async (taskId: string) => {
+      try {
+        await deleteTaskMutation.mutateAsync({ taskId });
+        await trpcUtils.getTasks.invalidate();
+      } catch (err: any) {
+        setError(err.message);
+        setTimeout(() => setError(null), 5000);
+      }
+    },
+    [deleteTaskMutation, trpcUtils.getTasks]
+  );
 
   return {
     tasks,
@@ -80,9 +88,10 @@ export const useTodoList = () => {
     error,
     isModalOpen,
     moveTask,
-    selectTask,
+    selectTask: setSelectedTask,
     handleCreateTask,
-    openModal,
-    closeModal,
+    handleDeleteTask,
+    openModal: () => setIsModalOpen(true),
+    closeModal: () => setIsModalOpen(false),
   };
 };
