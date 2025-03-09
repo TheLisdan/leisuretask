@@ -15,6 +15,10 @@
     margin-bottom: vars.$bigMargin;
   }
 
+  .taskWrapper {
+    position: relative;
+  }
+
   .openCreateTaskFormButton {
     @include mixins.flex;
     margin-top: auto;

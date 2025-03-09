@@ -2,6 +2,7 @@ import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { TaskType } from '../../../lib/trpcTypes';
 import { Task } from '../Task';
+import css from './index.module.scss';
 
 type DragItem = {
   id: string;
@@ -43,7 +44,7 @@ export const TaskDragWrapper: React.FC<TaskDragWrapperProps> = ({
   }, [task, setSelectedTask]);
 
   return (
-    <div ref={(node) => ref(drop(node))}>
+    <div className={css.taskDragWrapper} ref={(node) => ref(drop(node))}>
       <Task task={task} onClick={handleClick} selected={isSelected} />
     </div>
   );
