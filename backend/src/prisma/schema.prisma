@@ -27,5 +27,6 @@ model Task {
   status    TaskStatus @default(IN_PROGRESS)
   createdAt DateTime   @default(now())
   userId    String
+  order     Int
   user      User       @relation(fields: [userId], references: [id])
 }

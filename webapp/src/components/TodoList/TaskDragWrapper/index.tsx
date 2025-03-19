@@ -31,7 +31,7 @@ export const TaskDragWrapper: React.FC<TaskDragWrapperProps> = ({
 
   const [, drop] = useDrop<DragItem>({
     accept: 'TASK',
-    hover: (draggedItem) => {
+    drop: async (draggedItem) => {
       if (draggedItem?.index !== undefined && draggedItem.index !== index) {
         moveTask(draggedItem.index, index);
         draggedItem.index = index;

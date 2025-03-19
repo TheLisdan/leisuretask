@@ -46,7 +46,6 @@ export const TodoListPage = () => {
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
-
         <div className={css.taskWrapper}>
           {tasks.map((task, index) => (
             <TaskDragWrapper

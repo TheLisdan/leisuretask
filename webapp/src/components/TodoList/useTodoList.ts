@@ -11,6 +11,7 @@ export const useTodoList = () => {
   const trpcUtils = trpc.useUtils();
   const createTaskMutation = trpc.createTask.useMutation();
   const deleteTaskMutation = trpc.deleteTask.useMutation();
+  const orderTasksMutation = trpc.orderTasks.useMutation();
 
   const {
     data: tasksData,
@@ -33,25 +34,29 @@ export const useTodoList = () => {
     );
   }, [tasksData]);
 
-  const moveTask = useCallback((fromIndex: number, toIndex: number) => {
-    setTasks((prev) => {
+  const moveTask = useCallback(
+    async (fromIndex: number, toIndex: number) => {
       if (
         fromIndex === toIndex ||
         fromIndex < 0 ||
         toIndex < 0 ||
-        fromIndex >= prev.length ||
-        toIndex >= prev.length
+        fromIndex >= tasks.length ||
+        toIndex >= tasks.length
       ) {
-        return prev;
+        return;
       }
-
-      const updatedTasks = [...prev];
+      const updatedTasks = [...tasks];
       const [movedTask] = updatedTasks.splice(fromIndex, 1);
       updatedTasks.splice(toIndex, 0, movedTask);
 
-      return updatedTasks.map((task, index) => ({ ...task, index }));
-    });
-  }, []);
+      await orderTasksMutation.mutateAsync({
+        tasksIds: updatedTasks.map((task) => task.id),
+      });
+
+      setTasks(updatedTasks.map((task, index) => ({ ...task, index })));
+    },
+    [tasks, orderTasksMutation]
+  );
 
   const handleCreateTask = useCallback(
     async (values: { title: string }) => {
