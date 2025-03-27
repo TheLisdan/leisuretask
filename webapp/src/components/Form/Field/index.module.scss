@@ -1,0 +1,28 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.field {
+  @include mixins.flex(column, flex-start);
+  margin-bottom: 60px;
+
+  .label {
+    margin-bottom: 8px;
+  }
+
+  .textInput {
+    width: 600px;
+    padding: vars.$smallPadding;
+    border: 0;
+    background-color: vars.$uiBackground;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: vars.$mainGray;
+      opacity: 1;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+}

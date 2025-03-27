@@ -1,14 +1,14 @@
 import { zUpdateTaskTrpcInput } from '@leisuretask/backend/src/router/updateTask/input';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import cs from 'classnames';
+
 import { format } from 'date-fns';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { pick } from 'lodash';
 import React, { useRef, useState } from 'react';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
+import { Form } from '../../Form';
+import { Field } from '../../Form/Field';
 import { Modal } from '../../Modal';
 import { Checkbox } from '../Task/Checkbox';
 import { CalendarTimeIcon } from './calendar-time-icon';
@@ -26,7 +26,6 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   const [width, setWidth] = useState(300);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
@@ -138,61 +137,23 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
       </aside>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Formik
+        <Form
+          validationSchema={zUpdateTaskTrpcInput.omit({ taskId: true })}
           initialValues={pick(task, ['title'])}
-          validate={withZodSchema(zUpdateTaskTrpcInput.omit({ taskId: true }))}
-          onSubmit={async (values, actions) => {
-            try {
-              await updateTaskMutation.mutateAsync({
-                taskId: task.id,
-                ...values,
-              });
-              trpcUtils.getTasks.invalidate();
-              actions.resetForm();
-              setIsModalOpen(false);
-            } catch (err: any) {
-              setError(err.message);
-              setTimeout(() => setError(null), 5000);
-            } finally {
-              actions.setSubmitting(false);
-            }
+          onSubmit={async (values) => {
+            await updateTaskMutation.mutateAsync({
+              taskId: task.id,
+              ...values,
+            });
+            trpcUtils.getTasks.invalidate();
+            setIsModalOpen(false);
           }}
+          resetOnSuccess
+          id="updateTaskForm"
+          submitButtonText="Update task"
         >
-          {({ isSubmitting }) => (
-            <Form className={css.updateTaskForm} id="updateTaskForm">
-              <div className={css.taskField}>
-                <label htmlFor="title" className={css.label}>
-                  <b>Task</b>
-                </label>
-                <Field
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Task text"
-                  className={cs(css.textInput, {
-                    [css.disabled]: isSubmitting,
-                  })}
-                  disabled={isSubmitting}
-                />
-                <ErrorMessage
-                  name="title"
-                  component="div"
-                  className={css.error}
-                />
-              </div>
-
-              {error && <div className={css.error}>{error}</div>}
-
-              <button
-                type="submit"
-                className={css.updateTaskButton}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Updating task...' : 'Update task'}
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <Field name="title" label="Task" placeholder="Task text" />
+        </Form>
       </Modal>
     </>
   );

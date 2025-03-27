@@ -1,0 +1,26 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.form {
+  @include mixins.flex(column, flex-start);
+
+  .submitButton {
+    @include mixins.flex;
+    padding: 8px;
+    background-color: vars.$mainGreen;
+    color: vars.$mainWhite;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    align-self: flex-end;
+
+    &:hover {
+      background-color: vars.$mainGreenLight;
+    }
+
+    &:active {
+      background-color: vars.$mainGrayLight;
+    }
+  }
+}

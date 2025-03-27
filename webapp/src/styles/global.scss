@@ -34,3 +34,8 @@ a {
 b {
   font-weight: 600;
 }
+
+.error {
+  color: vars.$mainRed;
+  margin-top: 4px;
+}

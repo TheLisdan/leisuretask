@@ -157,15 +157,6 @@
     }
   }
 
-  .errorInput {
-    border: 1px solid vars.$mainRed;
-  }
-
-  .error {
-    color: vars.$mainRed;
-    margin-top: 4px;
-  }
-
   .updateTaskButton {
     @include mixins.flex;
     padding: 8px;

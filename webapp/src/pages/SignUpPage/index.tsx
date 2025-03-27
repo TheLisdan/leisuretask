@@ -68,7 +68,7 @@ export const SignUpPage = () => {
               })}
               disabled={isSubmitting}
             />
-            <ErrorMessage name="name" component="div" className={css.error} />
+            <ErrorMessage name="name" component="div" className="error" />
 
             <label htmlFor="password" className={css.label}>
               <b>Password</b>
@@ -84,11 +84,7 @@ export const SignUpPage = () => {
               })}
               disabled={isSubmitting}
             />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className={css.error}
-            />
+            <ErrorMessage name="password" component="div" className="error" />
 
             <label htmlFor="passwordAgain" className={css.label}>
               <b>Password again</b>
@@ -107,12 +103,10 @@ export const SignUpPage = () => {
             <ErrorMessage
               name="passwordAgain"
               component="div"
-              className={css.error}
+              className="error"
             />
 
-            {submittingError && (
-              <div className={css.error}>{submittingError}</div>
-            )}
+            {submittingError && <div className="error">{submittingError}</div>}
 
             <button
               type="submit"

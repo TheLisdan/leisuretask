@@ -1,10 +1,9 @@
 import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/createTask/input';
-import cs from 'classnames';
 import { format } from 'date-fns';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Form } from '../../components/Form';
+import { Field } from '../../components/Form/Field';
 import { Modal } from '../../components/Modal';
 import { PersistentSidebar } from '../../components/PersistentSidebar';
 import { TaskDragWrapper } from '../../components/TodoList/TaskDragWrapper';
@@ -19,7 +18,6 @@ export const TodoListPage = () => {
     selectedTask,
     isLoading,
     tasksError,
-    error,
     isModalOpen,
     moveTask,
     selectTask,
@@ -71,54 +69,18 @@ export const TodoListPage = () => {
 
       <TaskSidebar task={selectedTask} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Formik
+        <Form
           initialValues={{ title: '' }}
-          validate={withZodSchema(zCreateTaskTrpcInput)}
-          onSubmit={async (values, actions) => {
-            try {
-              await handleCreateTask(values);
-              actions.resetForm();
-            } finally {
-              actions.setSubmitting(false);
-            }
+          validationSchema={zCreateTaskTrpcInput}
+          onSubmit={async (values) => {
+            await handleCreateTask(values);
           }}
+          id="addTaskForm"
+          resetOnSuccess
+          submitButtonText="Create task"
         >
-          {({ isSubmitting }) => (
-            <Form className={css.addTaskForm} id="addTaskForm">
-              <div className={css.taskField}>
-                <label htmlFor="title" className={css.label}>
-                  <b>Task</b>
-                </label>
-                <Field
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Task text"
-                  className={cs(css.textInput, {
-                    [css.disabled]: isSubmitting,
-                  })}
-                  disabled={isSubmitting}
-                />
-                <ErrorMessage
-                  name="title"
-                  component="div"
-                  className={css.error}
-                />
-              </div>
-
-              {error && <div className={css.error}>{error}</div>}
-
-              <button
-                type="submit"
-                className={css.createTaskButton}
-                disabled={isSubmitting}
-                form="addTaskForm"
-              >
-                {isSubmitting ? 'Creating task...' : 'Create task'}
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <Field name="title" label="Task" placeholder="Task text" />
+        </Form>
       </Modal>
     </DndProvider>
   );
