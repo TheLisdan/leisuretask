@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import { AppContextProvider } from './lib/ctx';
 import {
   getLandingRoute,
   getHomeRoute,
@@ -18,17 +19,19 @@ import './styles/global.scss';
 export const App = () => {
   return (
     <TrpcProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path={getSignOutRoute()} element={<SignOutPage />} />
-          <Route path={getLandingRoute()} element={<LandingPage />} />
-          <Route path={getSignUpRoute()} element={<SignUpPage />} />
-          <Route path={getSignInRoute()} element={<SignInPage />} />
-          <Route element={<Layout />}>
-            <Route path={getHomeRoute()} element={<TodoListPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AppContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path={getSignOutRoute()} element={<SignOutPage />} />
+            <Route path={getLandingRoute()} element={<LandingPage />} />
+            <Route path={getSignUpRoute()} element={<SignUpPage />} />
+            <Route path={getSignInRoute()} element={<SignInPage />} />
+            <Route element={<Layout />}>
+              <Route path={getHomeRoute()} element={<TodoListPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AppContextProvider>
     </TrpcProvider>
   );
 };

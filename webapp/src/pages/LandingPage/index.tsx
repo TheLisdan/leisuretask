@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useMe } from '../../lib/ctx';
 import {
   getHomeRoute,
   getSignInRoute,
   getSignOutRoute,
   getSignUpRoute,
 } from '../../lib/routes';
-import { trpc } from '../../lib/trpc';
 
 export const LandingPage = () => {
-  const { data, isLoading, isFetching, isError } = trpc.getMe.useQuery();
+  const me = useMe();
   return (
     <>
       <h2>Manage your tasks with ease</h2>
@@ -19,10 +19,10 @@ export const LandingPage = () => {
       <p>
         Get started by creating an account or logging in to an existing one.
       </p>
-      {isLoading || isFetching || isError ? null : data.me ? (
+      {me ? (
         <>
           <Link to={getHomeRoute()}>ToDo list (home)</Link>
-          <Link to={getSignOutRoute()}>Sign Out ({data.me.name})</Link>
+          <Link to={getSignOutRoute()}>Sign Out ({me.name})</Link>
         </>
       ) : (
         <>
