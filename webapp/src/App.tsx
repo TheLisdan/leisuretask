@@ -10,6 +10,7 @@ import {
 } from './lib/routes';
 import { TrpcProvider } from './lib/trpc';
 import { LandingPage } from './pages/LandingPage';
+import { NotFoundPage } from './pages/NotFoundPage/index.tsx';
 import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { SignUpPage } from './pages/SignUpPage';
@@ -29,6 +30,7 @@ export const App = () => {
             <Route element={<Layout />}>
               <Route path={getHomeRoute()} element={<TodoListPage />} />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </AppContextProvider>
