@@ -1,33 +1,48 @@
-import { zSignInInput } from '@leisuretask/backend/src/router/signIn/input';
+import { zSignUpInput } from '@leisuretask/backend/src/router/auth/signUp/input';
 import cs from 'classnames';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getHomeRoute } from '../../lib/routes';
-import { trpc } from '../../lib/trpc';
+import { z } from 'zod';
+import { getHomeRoute } from '../../../lib/routes';
+import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
 
-export const SignInPage = () => {
+export const SignUpPage = () => {
   const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
 
-  const signIn = trpc.signIn.useMutation();
+  const signUp = trpc.signUp.useMutation();
 
   return (
     <>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
       <Formik
         initialValues={{
           name: '',
           password: '',
+          passwordAgain: '',
         }}
+        validate={withZodSchema(
+          zSignUpInput
+            .extend({ passwordAgain: z.string().min(1) })
+            .superRefine((val, ctx) => {
+              if (val.password !== val.passwordAgain) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'Passwords must be the same',
+                  path: ['passwordAgain'],
+                });
+              }
+            })
+        )}
         onSubmit={async (values, actions) => {
           try {
             setSubmittingError(null);
-            const { token } = await signIn.mutateAsync(values);
+            const { token } = await signUp.mutateAsync(values);
             Cookies.set('token', token, { expires: 99999 });
             void trpcUtils.invalidate();
             navigate(getHomeRoute());
@@ -36,10 +51,9 @@ export const SignInPage = () => {
             actions.setSubmitting(false);
           }
         }}
-        validate={withZodSchema(zSignInInput)}
       >
         {({ isSubmitting }) => (
-          <Form className={css.signInForm}>
+          <Form className={css.signUpForm}>
             <label htmlFor="name" className={css.label}>
               <b>Name</b>
             </label>
@@ -72,14 +86,34 @@ export const SignInPage = () => {
             />
             <ErrorMessage name="password" component="div" className="error" />
 
+            <label htmlFor="passwordAgain" className={css.label}>
+              <b>Password again</b>
+            </label>
+            <Field
+              type="password"
+              id="passwordAgain"
+              name="passwordAgain"
+              placeholder="Password again"
+              className={cs({
+                [css.textInput]: true,
+                [css.disabled]: isSubmitting,
+              })}
+              disabled={isSubmitting}
+            />
+            <ErrorMessage
+              name="passwordAgain"
+              component="div"
+              className="error"
+            />
+
             {submittingError && <div className="error">{submittingError}</div>}
 
             <button
               type="submit"
-              className={css.signInButton}
+              className={css.signUpButton}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Signing in...' : 'Sign In'}
+              {isSubmitting ? 'Signing up...' : 'Sign Up'}
             </button>
           </Form>
         )}

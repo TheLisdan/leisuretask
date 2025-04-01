@@ -1,4 +1,4 @@
-import { zUpdateTaskTrpcInput } from '@leisuretask/backend/src/router/updateTask/input';
+import { zUpdateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/updateTask/input';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import { format } from 'date-fns';

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useMe } from '../../lib/ctx';
+import { useMe } from '../../../lib/ctx';
 import {
   getHomeRoute,
   getSignInRoute,
   getSignOutRoute,
   getSignUpRoute,
-} from '../../lib/routes';
+} from '../../../lib/routes';
 
 export const LandingPage = () => {
   const me = useMe();

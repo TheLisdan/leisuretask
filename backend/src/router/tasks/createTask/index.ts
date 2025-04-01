@@ -1,4 +1,4 @@
-import { trpc } from '../../lib/trpc';
+import { trpc } from '../../../lib/trpc';
 import { zCreateTaskTrpcInput } from './input';
 
 export const createTaskTrpcRoute = trpc.procedure

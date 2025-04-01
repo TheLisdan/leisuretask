@@ -1,14 +1,14 @@
-import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/createTask/input';
+import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/createTask/input';
 import { format } from 'date-fns';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Form } from '../../components/Form';
-import { Field } from '../../components/Form/Field';
-import { Modal } from '../../components/Modal';
-import { PersistentSidebar } from '../../components/PersistentSidebar';
-import { TaskDragWrapper } from '../../components/TodoList/TaskDragWrapper';
-import { TaskSidebar } from '../../components/TodoList/TaskSidebar';
-import { useTodoList } from '../../components/TodoList/useTodoList';
+import { Form } from '../../../components/Form';
+import { Field } from '../../../components/Form/Field';
+import { Modal } from '../../../components/Modal';
+import { PersistentSidebar } from '../../../components/PersistentSidebar';
+import { TaskDragWrapper } from '../../../components/TodoList/TaskDragWrapper';
+import { TaskSidebar } from '../../../components/TodoList/TaskSidebar';
+import { useTodoList } from '../../../components/TodoList/useTodoList';
 import css from './index.module.scss';
 import { PlusIcon } from './plus-icon';
 

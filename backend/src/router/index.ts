@@ -1,25 +1,25 @@
 import { trpc } from '../lib/trpc';
 // DO NOT REMOVE COMMENTS BELOW
 // @index('./**/index.ts', f => `import { ${f.path.split('/').slice(0, -1).pop()}TrpcRoute } from '${f.path.split('/').slice(0,-1).join('/')}';`)
-import { createTaskTrpcRoute } from './createTask';
-import { deleteTaskTrpcRoute } from './deleteTask';
-import { getMeTrpcRoute } from './getMe';
-import { getTasksTrpcRoute } from './getTasks';
-import { orderTasksTrpcRoute } from './orderTasks';
-import { signInTrpcRoute } from './signIn';
-import { signUpTrpcRoute } from './signUp';
-import { updateTaskTrpcRoute } from './updateTask';
+import { getMeTrpcRoute } from './auth/getMe';
+import { signInTrpcRoute } from './auth/signIn';
+import { signUpTrpcRoute } from './auth/signUp';
+import { createTaskTrpcRoute } from './tasks/createTask';
+import { deleteTaskTrpcRoute } from './tasks/deleteTask';
+import { getTasksTrpcRoute } from './tasks/getTasks';
+import { orderTasksTrpcRoute } from './tasks/orderTasks';
+import { updateTaskTrpcRoute } from './tasks/updateTask';
 // @endindex // This too
 
 export const trpcRouter = trpc.router({
   // @index('./**/index.ts', f => `${f.path.split('/').slice(0, -1).pop()}: ${f.path.split('/').slice(0, -1).pop()}TrpcRoute,`)
-  createTask: createTaskTrpcRoute,
-  deleteTask: deleteTaskTrpcRoute,
   getMe: getMeTrpcRoute,
-  getTasks: getTasksTrpcRoute,
-  orderTasks: orderTasksTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
+  createTask: createTaskTrpcRoute,
+  deleteTask: deleteTaskTrpcRoute,
+  getTasks: getTasksTrpcRoute,
+  orderTasks: orderTasksTrpcRoute,
   updateTask: updateTaskTrpcRoute,
   // @endindex
 });

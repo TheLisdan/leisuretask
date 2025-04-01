@@ -1,16 +1,18 @@
-import { trpc } from '../../lib/trpc';
-import { zDeleteTaskTrpcInput } from './input';
+import { trpc } from '../../../lib/trpc';
+import { zUpdateTaskTrpcInput } from './input';
 
-export const deleteTaskTrpcRoute = trpc.procedure
-  .input(zDeleteTaskTrpcInput)
+export const updateTaskTrpcRoute = trpc.procedure
+  .input(zUpdateTaskTrpcInput)
   .mutation(async ({ ctx, input }) => {
+    const { taskId, ...taskInput } = input;
+
     if (!ctx.me) {
       throw new Error('UNAUTHORIZED');
     }
 
     const task = await ctx.prisma.task.findFirst({
       where: {
-        id: input.taskId,
+        id: taskId,
       },
     });
 
@@ -22,10 +24,13 @@ export const deleteTaskTrpcRoute = trpc.procedure
       throw new Error('NOT_YOUR_TASK');
     }
 
-    await ctx.prisma.task.delete({
+    await ctx.prisma.task.update({
       where: {
-        id: input.taskId,
+        id: taskId,
         userId: ctx.me.id,
+      },
+      data: {
+        ...taskInput,
       },
     });
 
