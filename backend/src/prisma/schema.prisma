@@ -17,6 +17,7 @@ model User {
   id           String   @id @default(cuid())
   name         String   @unique
   passwordHash String
+  avatar       String?
   createdAt    DateTime @default(now())
   tasks        Task[]
 }

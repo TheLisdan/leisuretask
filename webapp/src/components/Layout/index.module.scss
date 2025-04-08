@@ -9,7 +9,7 @@
   position: relative;
 
   .navigation {
-    @include mixins.flex(column);
+    @include mixins.flex(column, center, space-between);
     border-right: 1px solid vars.$mainGrayLight;
     padding: vars.$smallPadding;
     background-color: vars.$uiBackground;

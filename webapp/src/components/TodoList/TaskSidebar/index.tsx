@@ -1,12 +1,10 @@
 import { zUpdateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/updateTask/input';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-
 import { format } from 'date-fns';
-import { AnimatePresence, motion } from 'framer-motion';
 import { pick } from 'lodash';
 import React, { useRef, useState } from 'react';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
+import { Dropdown } from '../../Dropdown';
 import { Form } from '../../Form';
 import { Field } from '../../Form/Field';
 import { Modal } from '../../Modal';
@@ -22,7 +20,6 @@ type TaskSidebarProps = {
 };
 
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [width, setWidth] = useState(300);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,55 +81,34 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
         </div>
         <b className={css.taskTitle}>{task.title}</b>
         <div className={css.taskFooter}>
-          <DropdownMenu.Root
-            open={isDropdownOpen}
-            onOpenChange={setIsDropdownOpen}
-          >
-            <DropdownMenu.Trigger asChild>
+          <Dropdown
+            trigger={
               <button type="button" className={css.taskOptions} title="More">
                 <ThreeDotsIcon />
               </button>
-            </DropdownMenu.Trigger>
-
-            <AnimatePresence>
-              {isDropdownOpen && (
-                <DropdownMenu.Portal forceMount>
-                  <DropdownMenu.Content asChild align="end">
-                    <motion.div
-                      className={css.dropdownMenu}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                    >
-                      <DropdownMenu.Item
-                        className={css.dropdownMenuItem}
-                        onClick={() => setIsModalOpen(true)}
-                      >
-                        <EditIcon className={css.dropdownMenuItemIcon} />
-                        Edit
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Separator
-                        className={css.dropdownMenuSeparator}
-                      />
-                      <DropdownMenu.Item
-                        className={css.dropdownMenuItem}
-                        onClick={async () => {
-                          await deleteTaskMutation.mutateAsync({
-                            taskId: task.id,
-                          });
-                          trpcUtils.getTasks.invalidate();
-                        }}
-                      >
-                        <DeleteIcon className={css.dropdownMenuItemIcon} />
-                        Delete
-                      </DropdownMenu.Item>
-                    </motion.div>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-              )}
-            </AnimatePresence>
-          </DropdownMenu.Root>
+            }
+            align="end"
+            items={[
+              {
+                label: 'Edit',
+                icon: <EditIcon />,
+                onClick: () => setIsModalOpen(true),
+              },
+              {
+                type: 'separator',
+              },
+              {
+                label: 'Delete',
+                icon: <DeleteIcon />,
+                onClick: async () => {
+                  await deleteTaskMutation.mutateAsync({
+                    taskId: task.id,
+                  });
+                  trpcUtils.getTasks.invalidate();
+                },
+              },
+            ]}
+          />
         </div>
       </aside>
 

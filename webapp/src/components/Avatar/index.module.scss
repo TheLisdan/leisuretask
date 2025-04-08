@@ -1,0 +1,35 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.avatarContainer {
+  @include mixins.flex(row, center, center);
+  cursor: pointer;
+}
+
+.avatar {
+  @include mixins.flex(row, center, center);
+  background-color: vars.$mainGray;
+  border-radius: 50%;
+  font-weight: 600;
+  user-select: none;
+  color: vars.$mainGrayLight;
+  overflow: hidden;
+
+  &.small {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  &.large {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

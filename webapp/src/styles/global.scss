@@ -35,6 +35,14 @@ b {
   font-weight: 600;
 }
 
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
 .error {
   color: vars.$mainRed;
   margin-top: 4px;

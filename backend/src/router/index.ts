@@ -4,6 +4,8 @@ import { trpc } from '../lib/trpc';
 import { getMeTrpcRoute } from './auth/getMe';
 import { signInTrpcRoute } from './auth/signIn';
 import { signUpTrpcRoute } from './auth/signUp';
+import { updateProfileTrpcRoute } from './auth/updateProfile';
+import { getUserTrpcRoute } from './other/getUser';
 import { createTaskTrpcRoute } from './tasks/createTask';
 import { deleteTaskTrpcRoute } from './tasks/deleteTask';
 import { getTasksTrpcRoute } from './tasks/getTasks';
@@ -16,6 +18,8 @@ export const trpcRouter = trpc.router({
   getMe: getMeTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
+  updateProfile: updateProfileTrpcRoute,
+  getUser: getUserTrpcRoute,
   createTask: createTaskTrpcRoute,
   deleteTask: deleteTaskTrpcRoute,
   getTasks: getTasksTrpcRoute,

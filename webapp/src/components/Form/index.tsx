@@ -1,6 +1,6 @@
 import { Formik, FormikHelpers, Form as FormikForm, FormikProps } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
-import React, { useState, isValidElement, cloneElement } from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import css from './index.module.scss';
 
@@ -55,13 +55,7 @@ export const Form = <TZodSchema extends z.ZodTypeAny>({
       {(formikProps) => (
         <FormikForm className={css.form} id={id}>
           {/* Handle both function and element children */}
-          {typeof children === 'function'
-            ? children(formikProps)
-            : React.Children.map(children, (child) =>
-                isValidElement(child)
-                  ? cloneElement(child, { formikProps } as any)
-                  : child
-              )}
+          {typeof children === 'function' ? children(formikProps) : children}
 
           {error && <div className="error">{error}</div>}
 
