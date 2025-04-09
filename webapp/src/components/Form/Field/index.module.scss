@@ -4,17 +4,46 @@
 .field {
   @include mixins.flex(column, flex-start);
   margin-bottom: 60px;
+  width: 100%;
+
+  &.inline {
+    margin-bottom: 0;
+    cursor: pointer;
+
+    .textInput {
+      background-color: transparent;
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      padding: 8px;
+
+      &:hover:not(.editing) {
+        background-color: vars.$uiBackground;
+      }
+
+      &.editing {
+        cursor: text;
+        background-color: vars.$uiBackground;
+
+        border-radius: 5px;
+      }
+    }
+  }
 
   .label {
     margin-bottom: 8px;
   }
 
   .textInput {
-    width: 600px;
     padding: vars.$smallPadding;
     border: 0;
     background-color: vars.$uiBackground;
     border-radius: 5px;
+    width: 100%;
+    font-family: vars.$defaultFontFamily;
+    font-size: vars.$defaultFontSize;
 
     &::placeholder {
       color: vars.$mainGray;

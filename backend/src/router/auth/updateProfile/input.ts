@@ -8,5 +8,6 @@ export const zUpdateProfileInput = z.object({
     .regex(
       /^[a-zA-Z0-9_]+$/,
       'Name can only contain letters, numbers and underscores'
-    ),
+    )
+    .optional(),
 });

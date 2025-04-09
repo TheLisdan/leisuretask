@@ -79,7 +79,7 @@ export const TodoListPage = () => {
           resetOnSuccess
           submitButtonText="Create task"
         >
-          <Field name="title" label="Task" placeholder="Task text" />
+          <Field name="title" label="Task" placeholder="Task text" stretch />
         </Form>
       </Modal>
     </DndProvider>

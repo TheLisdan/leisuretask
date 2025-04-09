@@ -38,10 +38,46 @@
 }
 
 .modal {
-  @include mixins.flex(column);
-  align-items: flex-start;
+  @include mixins.flex(row, normal);
   position: absolute;
-  padding: vars.$bigPadding;
+  min-width: 660px;
   background: vars.$mainWhite;
   border-radius: 5px;
+
+  .modalSidebar {
+    @include mixins.flex(column, flex-start);
+    padding: 16px 12px;
+    background: vars.$uiBackground;
+    border-right: 1px solid vars.$mainGrayLight;
+    border-radius: 5px 0 0 5px;
+
+    .sidebarTab {
+      @include mixins.flex(row, center);
+      cursor: pointer;
+      color: vars.$mainGray;
+
+      .sidebarIcon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        color: vars.$mainGreenLight;
+      }
+    }
+
+    .activeTab {
+      color: vars.$mainGreen;
+
+      &:hover {
+        color: vars.$mainGreen;
+      }
+    }
+  }
+
+  .modalContent {
+    @include mixins.flex(column);
+    width: 100%;
+
+    padding: vars.$bigPadding;
+  }
 }

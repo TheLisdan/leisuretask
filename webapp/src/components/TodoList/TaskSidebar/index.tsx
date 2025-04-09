@@ -128,7 +128,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
           id="updateTaskForm"
           submitButtonText="Update task"
         >
-          <Field name="title" label="Task" placeholder="Task text" />
+          <Field name="title" label="Task" placeholder="Task text" stretch />
         </Form>
       </Modal>
     </>

@@ -29,3 +29,11 @@
     }
   }
 }
+
+.accountSettings {
+  @include mixins.flex(column);
+
+  form {
+    margin-top: 8px;
+  }
+}

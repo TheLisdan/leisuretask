@@ -41,6 +41,11 @@ button {
   cursor: pointer;
   margin: 0;
   padding: 0;
+  font-family: vars.$defaultFontFamily;
+  font-size: vars.$defaultFontSize;
+  font-weight: vars.$defaultFontWeight;
+  line-height: vars.$defaultLineHeight;
+  color: vars.$defaultTextColor;
 }
 
 .error {

@@ -25,7 +25,7 @@ export const Form = <TZodSchema extends z.ZodTypeAny>({
   onSubmit,
   resetOnSuccess = false,
   id,
-  submitButtonText = 'Submit',
+  submitButtonText,
   children,
 }: FormProps<TZodSchema>) => {
   const [error, setError] = useState<string | null>(null);
@@ -59,14 +59,16 @@ export const Form = <TZodSchema extends z.ZodTypeAny>({
 
           {error && <div className="error">{error}</div>}
 
-          <button
-            type="submit"
-            className={css.submitButton}
-            disabled={formikProps.isSubmitting}
-            form={id}
-          >
-            {submitButtonText}
-          </button>
+          {submitButtonText && (
+            <button
+              type="submit"
+              className={css.submitButton}
+              disabled={formikProps.isSubmitting}
+              form={id}
+            >
+              {submitButtonText}
+            </button>
+          )}
         </FormikForm>
       )}
     </Formik>

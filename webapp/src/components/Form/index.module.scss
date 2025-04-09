@@ -3,6 +3,7 @@
 
 .form {
   @include mixins.flex(column, flex-start);
+  width: 100%;
 
   .submitButton {
     @include mixins.flex;
