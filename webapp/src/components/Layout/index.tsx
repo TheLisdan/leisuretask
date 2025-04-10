@@ -1,6 +1,8 @@
+import { zChangePasswordInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
 import { zUpdateProfileInput } from '@leisuretask/backend/src/router/auth/updateProfile/input';
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { z } from 'zod';
 import { useMe } from '../../lib/ctx';
 import { getHomeRoute } from '../../lib/routes';
 import { getSignOutRoute } from '../../lib/routes';
@@ -17,7 +19,9 @@ import { SignOutIcon } from './sign-out-icon';
 import { TodoLogo } from './todo-logo';
 
 export const Layout = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
+    useState(false);
   const me = useMe();
 
   if (!me) {
@@ -25,6 +29,7 @@ export const Layout = () => {
   }
 
   const updateProfileMutation = trpc.updateProfile.useMutation();
+  const changePasswordMutation = trpc.changePassword.useMutation();
   const trpcUtils = trpc.useUtils();
 
   return (
@@ -48,7 +53,7 @@ export const Layout = () => {
               label: 'Settings',
               icon: <SettingsIcon />,
               onClick: () => {
-                setIsModalOpen(true);
+                setIsSettingsModalOpen(true);
               },
             },
             {
@@ -66,8 +71,8 @@ export const Layout = () => {
       </nav>
 
       <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
         sidebarItems={[
           {
             label: 'Account',
@@ -77,25 +82,99 @@ export const Layout = () => {
               <div className={css.accountSettings}>
                 <Avatar user={me} size="large" />
 
-                <Form
-                  validationSchema={zUpdateProfileInput.pick({ name: true })}
-                  initialValues={{
-                    name: me.name,
-                  }}
-                  onSubmit={async (values) => {
-                    const updatedMe =
-                      await updateProfileMutation.mutateAsync(values);
-                    trpcUtils.getMe.setData(undefined, { me: updatedMe });
-                  }}
-                  id="updateNameForm"
-                >
-                  <Field name="name" mode="inline" />
-                </Form>
+                <div className="changeName">
+                  <Form
+                    validationSchema={zUpdateProfileInput.pick({ name: true })}
+                    initialValues={{
+                      name: me.name,
+                    }}
+                    onSubmit={async (values) => {
+                      const updatedMe =
+                        await updateProfileMutation.mutateAsync(values);
+                      trpcUtils.getMe.setData(undefined, { me: updatedMe });
+                    }}
+                    id="updateNameForm"
+                  >
+                    <Field name="name" mode="inline" />
+                  </Form>
+                </div>
+
+                <div className={css.changeSetting}>
+                  <div className={css.changeSettingLeft}>Password</div>
+                  <div className={css.changeSettingRight}>
+                    <button
+                      type="button"
+                      className={css.changeSettingButton}
+                      onClick={() => setIsChangePasswordModalOpen(true)}
+                    >
+                      Change password
+                    </button>
+                  </div>
+                </div>
               </div>
             ),
           },
         ]}
       />
+
+      <Modal
+        isOpen={isChangePasswordModalOpen}
+        onClose={() => setIsChangePasswordModalOpen(false)}
+      >
+        <Form
+          id="changePasswordForm"
+          initialValues={{
+            oldPassword: '',
+            newPassword: '',
+            newPasswordAgain: '',
+          }}
+          validationSchema={zChangePasswordInput
+            .extend({
+              newPasswordAgain: z
+                .string()
+                .min(8, 'Password must be at least 8 characters long'),
+            })
+            .superRefine((val, ctx) => {
+              if (val.newPassword !== val.newPasswordAgain) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'Passwords do not match',
+                  path: ['newPasswordAgain'],
+                });
+              }
+            })}
+          onSubmit={async ({ newPassword, oldPassword }) => {
+            await changePasswordMutation.mutateAsync({
+              newPassword,
+              oldPassword,
+            });
+            setIsChangePasswordModalOpen(false);
+          }}
+          submitButtonText="Change password"
+        >
+          <Field
+            name="oldPassword"
+            label="Old password"
+            type="password"
+            placeholder="Type your old password"
+            stretch
+          />
+          <Field
+            name="newPassword"
+            label="New password"
+            type="password"
+            placeholder="Type your new password"
+            stretch
+          />
+          <Field
+            name="newPasswordAgain"
+            label="New password again"
+            type="password"
+            placeholder="Type your new password again"
+            stretch
+          />
+        </Form>
+      </Modal>
 
       <Outlet />
     </div>

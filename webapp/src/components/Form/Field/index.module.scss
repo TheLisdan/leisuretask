@@ -3,11 +3,16 @@
 
 .field {
   @include mixins.flex(column, flex-start);
-  margin-bottom: 60px;
   width: 100%;
+  margin-bottom: 24px;
+
+  form & {
+    &:last-of-type:not(.inline) {
+      margin-bottom: 60px;
+    }
+  }
 
   &.inline {
-    margin-bottom: 0;
     cursor: pointer;
 
     .textInput {

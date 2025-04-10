@@ -32,8 +32,31 @@
 
 .accountSettings {
   @include mixins.flex(column);
+  width: 100%;
 
   form {
+    @include mixins.flex(column);
     margin-top: 8px;
+  }
+
+  .changeSetting {
+    @include mixins.flex(row, center, space-between);
+    width: 100%;
+
+    .changeSettingRight {
+      @include mixins.flex(row, center);
+
+      .changeSettingButton {
+        color: vars.$mainGreen;
+
+        &:hover {
+          color: vars.$mainGreenLight;
+        }
+
+        &:active {
+          color: vars.$mainGrayLight;
+        }
+      }
+    }
   }
 }
