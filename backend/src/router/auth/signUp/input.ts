@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zSignUpInput = z.object({
+export const zSignUpTrpcInput = z.object({
   name: z
     .string()
     .min(3, 'Name is too short')

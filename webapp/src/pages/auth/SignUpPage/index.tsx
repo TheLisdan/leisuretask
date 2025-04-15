@@ -1,4 +1,4 @@
-import { zSignUpInput } from '@leisuretask/backend/src/router/auth/signUp/input';
+import { zSignUpTrpcInput } from '@leisuretask/backend/src/router/auth/signUp/input';
 import cs from 'classnames';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
@@ -27,7 +27,7 @@ export const SignUpPage = () => {
           passwordAgain: '',
         }}
         validate={withZodSchema(
-          zSignUpInput
+          zSignUpTrpcInput
             .extend({ passwordAgain: z.string().min(1) })
             .superRefine((val, ctx) => {
               if (val.password !== val.passwordAgain) {

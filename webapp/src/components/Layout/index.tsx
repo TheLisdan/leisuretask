@@ -1,5 +1,5 @@
-import { zChangePasswordInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
-import { zUpdateProfileInput } from '@leisuretask/backend/src/router/auth/updateProfile/input';
+import { zChangePasswordTrpcInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
+import { zUpdateProfileTrpcInput } from '@leisuretask/backend/src/router/auth/updateProfile/input';
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { z } from 'zod';
@@ -84,7 +84,9 @@ export const Layout = () => {
 
                 <div className="changeName">
                   <Form
-                    validationSchema={zUpdateProfileInput.pick({ name: true })}
+                    validationSchema={zUpdateProfileTrpcInput.pick({
+                      name: true,
+                    })}
                     initialValues={{
                       name: me.name,
                     }}
@@ -128,7 +130,7 @@ export const Layout = () => {
             newPassword: '',
             newPasswordAgain: '',
           }}
-          validationSchema={zChangePasswordInput
+          validationSchema={zChangePasswordTrpcInput
             .extend({
               newPasswordAgain: z
                 .string()

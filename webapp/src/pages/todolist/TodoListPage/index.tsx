@@ -1,5 +1,6 @@
 import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/createTask/input';
 import { format } from 'date-fns';
+import { useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Form } from '../../../components/Form';
@@ -19,19 +20,17 @@ export const TodoListPage = () => {
     isLoading,
     tasksError,
     isModalOpen,
+    isFetchingNextPage,
     moveTask,
     selectTask,
     handleCreateTask,
+    hasNextPage,
+    fetchNextPage,
     openModal,
     closeModal,
   } = useTodoList();
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-  if (tasksError) {
-    return <span>Error: {tasksError.message}</span>;
-  }
+  const pageRef = useRef<HTMLDivElement>(null);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -40,7 +39,9 @@ export const TodoListPage = () => {
         <p>There will be a calendar</p>
       </PersistentSidebar>
 
-      <div className={css.content}>
+      <div className={css.content} ref={pageRef}>
+        {isLoading && <p>Loading...</p>}
+        {tasksError && <p className={css.error}>{tasksError.message}</p>}
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
@@ -55,6 +56,18 @@ export const TodoListPage = () => {
               isSelected={selectedTask?.id === task.id}
             />
           ))}
+
+          {hasNextPage && !isFetchingNextPage && (
+            <button
+              type="button"
+              onClick={() => {
+                void fetchNextPage();
+              }}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? 'Loading more...' : 'Load more'}
+            </button>
+          )}
         </div>
 
         <button

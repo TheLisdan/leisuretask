@@ -14,7 +14,6 @@
     "typecheck": "tsc --noEmit --project ./tsconfig.json && tsc --noEmit --project ./tsconfig.node.json && tsc --noEmit --project ./tsconfig.app.json"
   },
   "dependencies": {
-    "@atlaskit/pragmatic-drag-and-drop": "^1.5.2",
     "@leisuretask/backend": "workspace:*",
     "@leisuretask/shared": "workspace:*",
     "@radix-ui/react-dropdown-menu": "^2.1.6",

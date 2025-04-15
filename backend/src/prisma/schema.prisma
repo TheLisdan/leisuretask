@@ -23,11 +23,12 @@ model User {
 }
 
 model Task {
-  id        String     @id @default(cuid())
-  title     String
-  status    TaskStatus @default(IN_PROGRESS)
-  createdAt DateTime   @default(now())
-  userId    String
-  order     Int
-  user      User       @relation(fields: [userId], references: [id])
+  id           String     @id @default(cuid())
+  serialNubmer Int        @unique @default(autoincrement())
+  title        String
+  status       TaskStatus @default(IN_PROGRESS)
+  createdAt    DateTime   @default(now())
+  userId       String
+  order        Int
+  user         User       @relation(fields: [userId], references: [id])
 }

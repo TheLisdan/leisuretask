@@ -14,25 +14,38 @@ export const useTodoList = () => {
   const orderTasksMutation = trpc.orderTasks.useMutation();
 
   const {
-    data: tasksData,
+    data: getTasksData,
     error: tasksError,
     isLoading,
+    isError,
     isFetching,
-  } = trpc.getTasks.useQuery();
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isRefetching,
+  } = trpc.getTasks.useInfiniteQuery(
+    {
+      limit: 20,
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.nextCursor;
+      },
+    }
+  );
 
   useEffect(() => {
-    if (!tasksData?.tasks) {
+    if (!getTasksData?.pages) {
       return;
     }
 
-    setTasks(tasksData.tasks);
+    const allTasks = getTasksData.pages.flatMap((page) => page.tasks);
+    setTasks(allTasks);
     setSelectedTask(
       (prev) =>
-        tasksData.tasks.find((task) => task.id === prev?.id) ??
-        tasksData.tasks[0] ??
-        null
+        allTasks.find((task) => task.id === prev?.id) ?? allTasks[0] ?? null
     );
-  }, [tasksData]);
+  }, [getTasksData]);
 
   const moveTask = useCallback(
     async (fromIndex: number, toIndex: number) => {
@@ -88,9 +101,9 @@ export const useTodoList = () => {
   return {
     tasks,
     selectedTask,
-    isLoading: isLoading || isFetching,
+    isLoading: isLoading || isFetching || isRefetching,
     tasksError,
-    error,
+    error: error || (isError ? tasksError?.message : null),
     isModalOpen,
     moveTask,
     selectTask: setSelectedTask,
@@ -98,5 +111,9 @@ export const useTodoList = () => {
     handleDeleteTask,
     openModal: () => setIsModalOpen(true),
     closeModal: () => setIsModalOpen(false),
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isLoadingMore: isFetchingNextPage,
   };
 };

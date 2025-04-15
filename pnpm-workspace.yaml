@@ -2,3 +2,6 @@ packages:
   - backend
   - shared
   - webapp
+
+onlyBuiltDependencies:
+  - '@prisma/client'

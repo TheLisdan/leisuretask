@@ -1,4 +1,4 @@
-import { zSignInInput } from '@leisuretask/backend/src/router/auth/signIn/input';
+import { zSignInTrpcInput } from '@leisuretask/backend/src/router/auth/signIn/input';
 import cs from 'classnames';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
@@ -36,7 +36,7 @@ export const SignInPage = () => {
             actions.setSubmitting(false);
           }
         }}
-        validate={withZodSchema(zSignInInput)}
+        validate={withZodSchema(zSignInTrpcInput)}
       >
         {({ isSubmitting }) => (
           <Form className={css.signInForm}>
