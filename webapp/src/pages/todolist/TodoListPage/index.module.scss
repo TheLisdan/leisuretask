@@ -17,6 +17,22 @@
 
   .taskWrapper {
     position: relative;
+
+    .loadMoreButton {
+      @include mixins.flex;
+      color: vars.$mainGray;
+      margin: 16px auto;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        color: vars.$mainGreenLight;
+      }
+
+      &:active {
+        color: vars.$mainWhite;
+      }
+    }
   }
 
   .openCreateTaskFormButton {

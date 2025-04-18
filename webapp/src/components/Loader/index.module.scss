@@ -1,0 +1,29 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.loader {
+  &.type-fullscreen {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: inherit;
+    height: 100%;
+    @include mixins.loader(
+      $borderWidth: 5px,
+      $size: 40px,
+      $color: vars.$mainGreen
+    );
+  }
+
+  &.type-inline {
+    position: relative;
+    display: block;
+    height: 80px;
+    width: 100%;
+    @include mixins.loader(
+      $borderWidth: 4px,
+      $size: 30px,
+      $color: vars.$mainGreen
+    );
+  }
+}

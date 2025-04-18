@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { Loader } from '../components/Loader';
 import { trpc } from './trpc';
 import { TrpcRouterOutputs } from './trpcTypes';
 
@@ -19,7 +20,7 @@ export const AppContextProvider = ({
   return (
     <AppReactContext.Provider value={{ me: data?.me || null }}>
       {isLoading || isFetching ? (
-        <p>Loading...</p>
+        <Loader />
       ) : isError ? (
         <p>Error: {error.message}</p>
       ) : (

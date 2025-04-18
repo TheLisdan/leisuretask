@@ -5,6 +5,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Form } from '../../../components/Form';
 import { Field } from '../../../components/Form/Field';
+import { Loader } from '../../../components/Loader';
 import { Modal } from '../../../components/Modal';
 import { PersistentSidebar } from '../../../components/PersistentSidebar';
 import { TaskDragWrapper } from '../../../components/TodoList/TaskDragWrapper';
@@ -40,11 +41,11 @@ export const TodoListPage = () => {
       </PersistentSidebar>
 
       <div className={css.content} ref={pageRef}>
-        {isLoading && <p>Loading...</p>}
-        {tasksError && <p className={css.error}>{tasksError.message}</p>}
         <h1 className={css.bigText}>
           <b>2 hours</b> of free time remaining
         </h1>
+        {isLoading && <Loader type="inline" />}
+        {tasksError && <p className={css.error}>{tasksError.message}</p>}
         <div className={css.taskWrapper}>
           {tasks.map((task, index) => (
             <TaskDragWrapper
@@ -64,9 +65,15 @@ export const TodoListPage = () => {
                 void fetchNextPage();
               }}
               disabled={isFetchingNextPage}
+              className={css.loadMoreButton}
             >
-              {isFetchingNextPage ? 'Loading more...' : 'Load more'}
+              Load more
             </button>
+          )}
+          {isFetchingNextPage && (
+            <div className={css.loaderWrapper}>
+              <Loader type="inline" />
+            </div>
           )}
         </div>
 

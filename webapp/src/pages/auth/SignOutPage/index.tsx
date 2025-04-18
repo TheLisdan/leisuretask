@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../../components/Loader';
 import { getLandingRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 
@@ -14,5 +15,5 @@ export const SignOutPage = () => {
     });
   }, []);
 
-  return <p>Loading...</p>;
+  return <Loader />;
 };
