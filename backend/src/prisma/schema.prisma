@@ -24,7 +24,7 @@ model User {
 
 model Task {
   id           String     @id @default(cuid())
-  serialNubmer Int        @unique @default(autoincrement())
+  serialNumber Int        @unique @default(autoincrement())
   title        String
   status       TaskStatus @default(IN_PROGRESS)
   createdAt    DateTime   @default(now())

@@ -12,11 +12,15 @@
 
   .bigText {
     font-size: vars.$bigFontSize;
-    margin-bottom: vars.$bigMargin;
   }
 
   .taskWrapper {
     position: relative;
+
+    .sectionTitle {
+      color: vars.$mainGray;
+      margin: vars.$bigMargin 0;
+    }
 
     .loadMoreButton {
       @include mixins.flex;

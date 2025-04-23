@@ -31,6 +31,10 @@ export const TodoListPage = () => {
     closeModal,
   } = useTodoList();
 
+  const completedTasks = tasks.filter((task) => task.status === 'COMPLETED');
+  const inProgressTasks = tasks.filter((task) => task.status === 'IN_PROGRESS');
+  const failedTasks = tasks.filter((task) => task.status === 'FAILED');
+
   const pageRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -47,7 +51,8 @@ export const TodoListPage = () => {
         {isLoading && <Loader type="inline" />}
         {tasksError && <p className={css.error}>{tasksError.message}</p>}
         <div className={css.taskWrapper}>
-          {tasks.map((task, index) => (
+          <h2 className={css.sectionTitle}>In progress</h2>
+          {inProgressTasks.map((task, index) => (
             <TaskDragWrapper
               key={task.id}
               task={task}
@@ -75,6 +80,30 @@ export const TodoListPage = () => {
               <Loader type="inline" />
             </div>
           )}
+
+          <h2 className={css.sectionTitle}>Completed</h2>
+          {completedTasks.map((task, index) => (
+            <TaskDragWrapper
+              key={task.id}
+              task={task}
+              index={index}
+              moveTask={moveTask}
+              setSelectedTask={selectTask}
+              isSelected={selectedTask?.id === task.id}
+            />
+          ))}
+
+          <h2 className={css.sectionTitle}>Failed</h2>
+          {failedTasks.map((task, index) => (
+            <TaskDragWrapper
+              key={task.id}
+              task={task}
+              index={index}
+              moveTask={moveTask}
+              setSelectedTask={selectTask}
+              isSelected={selectedTask?.id === task.id}
+            />
+          ))}
         </div>
 
         <button

@@ -18,11 +18,9 @@ export const useTodoList = () => {
     error: tasksError,
     isLoading,
     isError,
-    isFetching,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isRefetching,
   } = trpc.getTasks.useInfiniteQuery(
     {
       limit: 20,
@@ -101,7 +99,7 @@ export const useTodoList = () => {
   return {
     tasks,
     selectedTask,
-    isLoading: isLoading || isFetching || isRefetching,
+    isLoading,
     tasksError,
     error: error || (isError ? tasksError?.message : null),
     isModalOpen,

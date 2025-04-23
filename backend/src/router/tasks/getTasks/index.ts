@@ -17,21 +17,21 @@ export const getTasksTrpcRoute = trpc.procedure
         status: true,
         createdAt: true,
         order: true,
-        serialNubmer: true,
+        serialNumber: true,
       },
       orderBy: [
         {
           order: 'asc',
         },
         {
-          serialNubmer: 'asc',
+          serialNumber: 'asc',
         },
       ],
-      cursor: input.cursor ? { serialNubmer: input.cursor } : undefined,
+      cursor: input.cursor ? { serialNumber: input.cursor } : undefined,
       take: input.limit + 1,
     });
     const nextTask = tasks.at(input.limit);
-    const nextCursor = nextTask?.serialNubmer;
+    const nextCursor = nextTask?.serialNumber;
     const tasksExceptLast = tasks.slice(0, input.limit);
 
     return { tasks: tasksExceptLast, nextCursor };
