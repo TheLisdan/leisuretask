@@ -11,6 +11,7 @@ import { createTaskTrpcRoute } from './tasks/createTask';
 import { deleteTaskTrpcRoute } from './tasks/deleteTask';
 import { getTasksTrpcRoute } from './tasks/getTasks';
 import { orderTasksTrpcRoute } from './tasks/orderTasks';
+import { setTaskStatusTrpcRoute } from './tasks/setTaskStatus';
 import { updateTaskTrpcRoute } from './tasks/updateTask';
 // @endindex // This too
 
@@ -26,6 +27,7 @@ export const trpcRouter = trpc.router({
   deleteTask: deleteTaskTrpcRoute,
   getTasks: getTasksTrpcRoute,
   orderTasks: orderTasksTrpcRoute,
+  setTaskStatus: setTaskStatusTrpcRoute,
   updateTask: updateTaskTrpcRoute,
   // @endindex
 });
