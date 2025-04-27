@@ -1,0 +1,10 @@
+@use '../../../styles/mixins';
+@use '../../../styles/vars';
+
+.errorContainer {
+  @include mixins.flex(column);
+
+  .bigText {
+    font-size: 58px;
+  }
+}

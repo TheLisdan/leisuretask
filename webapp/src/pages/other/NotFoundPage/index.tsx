@@ -1,3 +1,12 @@
+import css from './index.module.scss';
+
 export const NotFoundPage = () => {
-  return <b className="error">Error 404: Page not found</b>;
+  return (
+    <div className={css.errorContainer}>
+      <h1 className={css.bigText}>
+        <b>404</b>
+      </h1>
+      <b>Page not found</b>
+    </div>
+  );
 };
