@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zUpdateProfileTrpcInput = z.object({
+export const zUpdateUserNameTrpcInput = z.object({
   name: z
     .string()
     .min(3, 'Name is too short')

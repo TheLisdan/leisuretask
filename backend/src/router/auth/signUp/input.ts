@@ -9,5 +9,6 @@ export const zSignUpTrpcInput = z.object({
       /^[a-zA-Z0-9_]+$/,
       'Name can only contain letters, numbers and underscores'
     ),
+  email: z.string().min(1).email(),
   password: z.string().min(8, 'Password is too short'),
 });

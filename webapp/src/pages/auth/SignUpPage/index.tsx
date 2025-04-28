@@ -23,6 +23,7 @@ export const SignUpPage = () => {
       <Formik
         initialValues={{
           name: '',
+          email: '',
           password: '',
           passwordAgain: '',
         }}
@@ -69,6 +70,22 @@ export const SignUpPage = () => {
               disabled={isSubmitting}
             />
             <ErrorMessage name="name" component="div" className="error" />
+
+            <label htmlFor="email" className={css.label}>
+              <b>E-Mail</b>
+            </label>
+            <Field
+              type="text"
+              id="email"
+              name="email"
+              placeholder="E-Mail"
+              className={cs({
+                [css.textInput]: true,
+                [css.disabled]: isSubmitting,
+              })}
+              disabled={isSubmitting}
+            />
+            <ErrorMessage name="email" component="div" className="error" />
 
             <label htmlFor="password" className={css.label}>
               <b>Password</b>

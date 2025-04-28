@@ -5,7 +5,8 @@ import { changePasswordTrpcRoute } from './auth/changePassword';
 import { getMeTrpcRoute } from './auth/getMe';
 import { signInTrpcRoute } from './auth/signIn';
 import { signUpTrpcRoute } from './auth/signUp';
-import { updateProfileTrpcRoute } from './auth/updateProfile';
+import { updateEmailTrpcRoute } from './auth/updateEmail';
+import { updateUserNameTrpcRoute } from './auth/updateUserName';
 import { getUserTrpcRoute } from './other/getUser';
 import { createTaskTrpcRoute } from './tasks/createTask';
 import { deleteTaskTrpcRoute } from './tasks/deleteTask';
@@ -21,7 +22,8 @@ export const trpcRouter = trpc.router({
   getMe: getMeTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
-  updateProfile: updateProfileTrpcRoute,
+  updateEmail: updateEmailTrpcRoute,
+  updateUserName: updateUserNameTrpcRoute,
   getUser: getUserTrpcRoute,
   createTask: createTaskTrpcRoute,
   deleteTask: deleteTaskTrpcRoute,

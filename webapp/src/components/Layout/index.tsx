@@ -1,5 +1,6 @@
 import { zChangePasswordTrpcInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
-import { zUpdateProfileTrpcInput } from '@leisuretask/backend/src/router/auth/updateProfile/input';
+import { zUpdateEmailTrpcInput } from '@leisuretask/backend/src/router/auth/updateEmail/input';
+import { zUpdateUserNameTrpcInput } from '@leisuretask/backend/src/router/auth/updateUserName/input';
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { z } from 'zod';
@@ -20,6 +21,7 @@ import { TodoLogo } from './todo-logo';
 
 export const Layout = () => {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isUpdateEmailModalOpen, setIsUpdateEmailModalOpen] = useState(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
     useState(false);
   const me = useMe();
@@ -28,7 +30,8 @@ export const Layout = () => {
     return null;
   }
 
-  const updateProfileMutation = trpc.updateProfile.useMutation();
+  const updateUserNameMutation = trpc.updateUserName.useMutation();
+  const updateEmailMutation = trpc.updateEmail.useMutation();
   const changePasswordMutation = trpc.changePassword.useMutation();
   const trpcUtils = trpc.useUtils();
 
@@ -84,21 +87,35 @@ export const Layout = () => {
 
                 <div className="changeName">
                   <Form
-                    validationSchema={zUpdateProfileTrpcInput.pick({
+                    validationSchema={zUpdateUserNameTrpcInput.pick({
                       name: true,
                     })}
                     initialValues={{
                       name: me.name,
                     }}
-                    onSubmit={async (values) => {
+                    onSubmit={async (name) => {
                       const updatedMe =
-                        await updateProfileMutation.mutateAsync(values);
+                        await updateUserNameMutation.mutateAsync(name);
                       trpcUtils.getMe.setData(undefined, { me: updatedMe });
                     }}
                     id="updateNameForm"
                   >
                     <Field name="name" mode="inline" />
                   </Form>
+                </div>
+
+                <div className={css.changeSetting}>
+                  <div className={css.changeSettingLeft}>E-Mail</div>
+                  <div className={css.changeSettingRight}>
+                    <span className={css.changeSettingText}>{me.email}</span>
+                    <button
+                      type="button"
+                      className={css.changeSettingButton}
+                      onClick={() => setIsUpdateEmailModalOpen(true)}
+                    >
+                      Change E-Mail
+                    </button>
+                  </div>
                 </div>
 
                 <div className={css.changeSetting}>
@@ -118,6 +135,44 @@ export const Layout = () => {
           },
         ]}
       />
+
+      <Modal
+        isOpen={isUpdateEmailModalOpen}
+        onClose={() => setIsUpdateEmailModalOpen(false)}
+      >
+        <Form
+          id="updateEmailForm"
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={zUpdateEmailTrpcInput}
+          onSubmit={async ({ email, password }) => {
+            const updatedMe = await updateEmailMutation.mutateAsync({
+              email,
+              password,
+            });
+            trpcUtils.getMe.setData(undefined, { me: updatedMe });
+            setIsUpdateEmailModalOpen(false);
+          }}
+          submitButtonText="Change E-Mail"
+        >
+          <Field
+            name="email"
+            label="E-Mail"
+            type="email"
+            placeholder="Type your new E-Mail"
+            stretch
+          />
+          <Field
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="Type your password"
+            stretch
+          />
+        </Form>
+      </Modal>
 
       <Modal
         isOpen={isChangePasswordModalOpen}
