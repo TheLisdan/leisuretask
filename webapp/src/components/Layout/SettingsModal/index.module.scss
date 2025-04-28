@@ -1,0 +1,44 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+@use '../../../../node_modules/include-media/dist/include-media';
+
+.accountSettings {
+  @include mixins.flex(column);
+  width: 100%;
+
+  form {
+    @include mixins.flex(column);
+    margin-top: 8px;
+  }
+
+  .changeSetting {
+    @include mixins.flex(row, center, space-between);
+    width: 100%;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .changeSettingRight {
+      @include mixins.flex(row, center);
+
+      .changeSettingText {
+        color: vars.$mainGray;
+        margin-right: 12px;
+      }
+
+      .changeSettingButton {
+        color: vars.$mainGreen;
+
+        &:hover {
+          color: vars.$mainGreenLight;
+        }
+
+        &:active {
+          color: vars.$mainGrayLight;
+        }
+      }
+    }
+  }
+}

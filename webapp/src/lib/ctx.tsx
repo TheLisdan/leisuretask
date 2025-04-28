@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
 import { Loader } from '../components/Loader';
 import { trpc } from './trpc';
-import { TrpcRouterOutputs } from './trpcTypes';
+import { MeType } from './trpcTypes';
 
 export type AppContext = {
-  me: TrpcRouterOutputs['getMe']['me'];
+  me: MeType;
 };
 
 const AppReactContext = createContext<AppContext>({
