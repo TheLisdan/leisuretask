@@ -1,0 +1,19 @@
+<mjml>
+  <mj-head>
+    <mj-style> .unsubscribe-link { color: #b0b0b0 !important; } </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-section padding="0">
+      <mj-column>
+        <mj-text
+          mj-class="text"
+          padding-top="30px"
+          padding-bottom="20px"
+          align="left"
+          color="#aaaaaa"
+          >Change the world from yourself — make the first step to a better you
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

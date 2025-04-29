@@ -1,0 +1,19 @@
+<mjml>
+  <mj-head>
+    <mj-title>Thanks for signing up!</mj-title>
+    <mj-include path="./_head.mjml" />
+  </mj-head>
+  <mj-body mj-class="body">
+    <mj-include path="./_header.mjml" />
+    <mj-section mj-class="content">
+      <mj-column>
+        <mj-text mj-class="h1">Thanks for registration, {{userNick}}!</mj-text>
+        <mj-text mj-class="p"
+          >Now you can organize your time efficiently. Try it:
+        </mj-text>
+        <mj-button href="{{appUrl}}" mj-class="button">Go to app</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./_footer.mjml" />
+  </mj-body>
+</mjml>

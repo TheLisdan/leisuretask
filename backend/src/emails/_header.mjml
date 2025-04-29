@@ -1,0 +1,18 @@
+<mjml>
+  <mj-body>
+    <mj-section padding="0">
+      <mj-column>
+        <mj-text
+          padding-top="20px"
+          padding-bottom="30px"
+          color="#2a2a2a"
+          font-size="16px"
+          font-weight="bold"
+          line-height="38px"
+        >
+          <a class="link-nostyle" href="{{homeUrl}}">LeisureTask</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
