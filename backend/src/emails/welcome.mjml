@@ -7,7 +7,7 @@
     <mj-include path="./_header.mjml" />
     <mj-section mj-class="content">
       <mj-column>
-        <mj-text mj-class="h1">Thanks for registration, {{userNick}}!</mj-text>
+        <mj-text mj-class="h1">Thanks for registration, {{userName}}!</mj-text>
         <mj-text mj-class="p"
           >Now you can organize your time efficiently. Try it:
         </mj-text>
