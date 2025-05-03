@@ -1,0 +1,49 @@
+import axios, { AxiosResponse } from 'axios';
+import _ from 'lodash';
+import { env } from './env';
+
+const makeRequestToBrevo = async ({
+  path,
+  data,
+}: {
+  path: string;
+  data: Record<string, any>;
+}): Promise<{
+  originalResponse?: AxiosResponse;
+  loggableResponse: Pick<AxiosResponse, 'status' | 'statusText' | 'data'>;
+}> => {
+  const response = await axios({
+    method: 'POST',
+    url: `https://api.brevo.com/v3/${path}`,
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      'api-key': env.BREVO_API_KEY,
+    },
+    data,
+  });
+  return {
+    originalResponse: response,
+    loggableResponse: _.pick(response, ['status', 'statusText', 'data']),
+  };
+};
+
+export const sendEmailThroughBrevo = async ({
+  to,
+  subject,
+  html,
+}: {
+  to: string;
+  subject: string;
+  html: string;
+}) => {
+  return await makeRequestToBrevo({
+    path: 'smtp/email',
+    data: {
+      subject,
+      htmlContent: html,
+      sender: { email: env.FROM_EMAIL_ADDRESS, name: env.FROM_EMAIL_NAME },
+      to: [{ email: to }],
+    },
+  });
+};
