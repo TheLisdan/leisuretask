@@ -12,6 +12,17 @@ const makeRequestToBrevo = async ({
   originalResponse?: AxiosResponse;
   loggableResponse: Pick<AxiosResponse, 'status' | 'statusText' | 'data'>;
 }> => {
+  if (!env.BREVO_API_KEY) {
+    return {
+      loggableResponse: {
+        status: 200,
+        statusText: 'OK',
+        data: {
+          message: 'Brevo API key not set, skipping request',
+        },
+      },
+    };
+  }
   const response = await axios({
     method: 'POST',
     url: `https://api.brevo.com/v3/${path}`,
