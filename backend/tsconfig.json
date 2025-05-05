@@ -1,10 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "plugins": [{ "transform": "typescript-transform-paths" }],
+    "paths": {
+      "@leisuretask/webapp/*": ["../webapp/*"]
+    },
     "target": "ES2021",
-    "module": "ESNext",
-    "outDir": "./dist",
-    "noEmit": true
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "outDir": "./dist"
   },
   "include": ["src"]
 }

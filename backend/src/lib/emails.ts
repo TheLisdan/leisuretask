@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { getHomeRoute } from '@leisuretask/webapp/src/lib/routes';
 import { User } from '@prisma/client';
 import fg from 'fast-glob';
 import Handlebars from 'handlebars';
@@ -77,7 +78,7 @@ export const sendWelcomeEmail = async ({
     templateName: 'welcome',
     templateVariables: {
       userName: user.name,
-      appUrl: `${env.WEBAPP_URL}/app/home`,
+      appUrl: `${env.WEBAPP_URL}${getHomeRoute()}`,
     },
   });
 };

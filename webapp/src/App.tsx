@@ -6,8 +6,8 @@ import { TrpcProvider } from './lib/trpc';
 import { SignInPage } from './pages/auth/SignInPage';
 import { SignOutPage } from './pages/auth/SignOutPage';
 import { SignUpPage } from './pages/auth/SignUpPage';
-import { LandingPage } from './pages/other/LandingPage/index.tsx';
-import { NotFoundPage } from './pages/other/NotFoundPage/index.tsx';
+import { LandingPage } from './pages/other/LandingPage';
+import { NotFoundPage } from './pages/other/NotFoundPage';
 import { TodoListPage } from './pages/todolist/TodoListPage';
 import './styles/global.scss';
 

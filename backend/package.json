@@ -2,26 +2,26 @@
   "name": "@leisuretask/backend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "tsx --watch -r dotenv/config ./src/index.ts --watch ./src/emails/dist",
+    "clean": "rimraf ./dist",
     "build-emails": "rimraf ./src/emails/dist && shx mkdir -p ./src/emails/dist && mjml ./src/emails/[!_]*.mjml -o ./src/emails/dist",
     "watch-emails": "mjml -w ./src/emails/[!_]*.mjml -o ./src/emails/dist",
-    "copy-emails": "copyfiles -u 1 ./src/emails/dist/*.html ./dist",
-    "build-ts": "rimraf ./dist && tsc --build ./tsconfig.json",
-    "build": "pnpm build-ts && pnpm build-emails && pnpm copy-emails",
-    "start": "node ./dist/index.js",
+    "copy-emails": "copyfiles ./src/emails/dist/*.html ./dist/backend",
+    "build-ts": "tsc --build ./tsconfig.json",
+    "build": "pnpm clean && pnpm build-ts && pnpm build-emails && pnpm copy-emails",
+    "start": "node ./dist/backend/src/index.js",
     "pmd": "prisma migrate dev",
     "pgc": "prisma generate",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache",
     "typecheck": "tsc --noEmit --project ./tsconfig.json",
-    "prepare": "pnpm pgc"
+    "prepare": "pnpm pgc && ts-patch install -s"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
   },
   "dependencies": {
-    "@leisuretask/shared": "workspace:*",
+    "@leisuretask/webapp": "workspace:*",
     "@prisma/client": "^6.6.0",
     "@trpc/server": "^10.45.2",
     "axios": "^1.9.0",
