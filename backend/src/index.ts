@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import { applyCron } from './lib/cron';
 import { AppContext, createAppContext } from './lib/ctx';
 import { sendWelcomeEmail } from './lib/emails';
 import { env } from './lib/env';
@@ -21,6 +22,7 @@ void (async () => {
 
     applyPasswordToExpressApp(expressApp, ctx);
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
+    applyCron(ctx);
 
     expressApp.listen(env.PORT, () => {
       console.info('Listening on http://localhost:' + env.PORT);
