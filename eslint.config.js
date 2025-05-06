@@ -5,7 +5,7 @@ import node from 'eslint-plugin-node';
 
 export default [
   {
-    ignores: ['node_modules', 'dist'],
+    ignores: ['node_modules', '**/dist/**'],
   },
   {
     files: ['**/*.{ts,tsx}'],
@@ -64,6 +64,7 @@ export default [
   },
   {
     files: ['webapp/**/*.{ts,tsx}'],
+    ignores: ['node_modules', '**/dist/**'],
     rules: {
       '@typescript-eslint/no-restricted-imports': [
         'error',
@@ -93,10 +94,12 @@ export default [
   },
   {
     files: ['backend/**/*.ts'],
+    ignores: ['node_modules', '**/dist/**'],
     rules: {},
   },
   {
     files: ['shared/**/*.ts'],
+    ignores: ['node_modules', '**/dist/**'],
     rules: {},
   },
 ];

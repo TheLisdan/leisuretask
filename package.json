@@ -2,6 +2,7 @@
   "name": "leisuretask",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "b": "pnpm --filter @leisuretask/backend",
     "w": "pnpm --filter @leisuretask/webapp",

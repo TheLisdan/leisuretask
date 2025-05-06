@@ -1,4 +1,3 @@
-import { sendWelcomeEmail } from '../../../lib/emails';
 import { trpc } from '../../../lib/trpc';
 import { getPasswordHash } from '../../../utils/getPasswordHash';
 import { signJWT } from '../../../utils/signJWT';
