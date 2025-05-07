@@ -5,7 +5,10 @@ import { withZodSchema } from 'formik-validator-zod';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
+import {
+  zPasswordsMustBeTheSame,
+  zStringMin,
+} from '../../../../../shared/src/zod';
 import { getHomeRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
@@ -29,16 +32,8 @@ export const SignUpPage = () => {
         }}
         validate={withZodSchema(
           zSignUpTrpcInput
-            .extend({ passwordAgain: z.string().min(1) })
-            .superRefine((val, ctx) => {
-              if (val.password !== val.passwordAgain) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: 'Passwords must be the same',
-                  path: ['passwordAgain'],
-                });
-              }
-            })
+            .extend({ passwordAgain: zStringMin(8) })
+            .superRefine(zPasswordsMustBeTheSame('password', 'passwordAgain'))
         )}
         onSubmit={async (values, actions) => {
           try {

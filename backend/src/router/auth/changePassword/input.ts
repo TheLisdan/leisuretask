@@ -1,6 +1,7 @@
+import { zStringMin } from '@leisuretask/shared/src/zod';
 import { z } from 'zod';
 
 export const zChangePasswordTrpcInput = z.object({
-  oldPassword: z.string().min(8, 'Old password is too short'),
-  newPassword: z.string().min(8, 'New password is too short'),
+  oldPassword: zStringMin(8, 'Password must be at least'),
+  newPassword: zStringMin(8, 'Password must be at least'),
 });

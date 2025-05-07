@@ -1,6 +1,7 @@
+import { zStatusRequired, zStringRequired } from '@leisuretask/shared/src/zod';
 import { z } from 'zod';
 
 export const zSetTaskStatusTrpcInput = z.object({
-  taskId: z.string().min(1),
-  status: z.enum(['IN_PROGRESS', 'COMPLETED', 'FAILED']),
+  taskId: zStringRequired,
+  status: zStatusRequired,
 });

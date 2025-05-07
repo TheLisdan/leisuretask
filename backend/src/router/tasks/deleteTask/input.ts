@@ -1,5 +1,6 @@
+import { zStringRequired } from '@leisuretask/shared/src/zod';
 import { z } from 'zod';
 
 export const zDeleteTaskTrpcInput = z.object({
-  taskId: z.string().min(1),
+  taskId: zStringRequired,
 });

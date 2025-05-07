@@ -1,6 +1,9 @@
 import { zChangePasswordTrpcInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
 import React from 'react';
-import { z } from 'zod';
+import {
+  zPasswordsMustBeTheSame,
+  zStringMin,
+} from '../../../../../shared/src/zod';
 import { Form } from '../../Form';
 import { Field } from '../../Form/Field';
 import { Modal } from '../../Modal';
@@ -29,19 +32,11 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
       }}
       validationSchema={zChangePasswordTrpcInput
         .extend({
-          newPasswordAgain: z
-            .string()
-            .min(8, 'Password must be at least 8 characters long'),
+          newPasswordAgain: zStringMin(8),
         })
-        .superRefine((val, ctx) => {
-          if (val.newPassword !== val.newPasswordAgain) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: 'Passwords do not match',
-              path: ['newPasswordAgain'],
-            });
-          }
-        })}
+        .superRefine(
+          zPasswordsMustBeTheSame('newPassword', 'newPasswordAgain')
+        )}
       onSubmit={async ({ newPassword, oldPassword }) => {
         await changePasswordMutation.mutateAsync({
           newPassword,

@@ -1,6 +1,7 @@
+import { zEmailRequired } from '@leisuretask/shared/src/zod';
 import { z } from 'zod';
 
 export const zUpdateEmailTrpcInput = z.object({
-  email: z.string().min(1).email(),
-  password: z.string().min(1),
+  email: zEmailRequired,
+  password: z.string().min(8, 'Password is too short'),
 });
