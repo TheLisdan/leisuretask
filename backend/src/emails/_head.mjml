@@ -31,6 +31,12 @@
     line-height="30px"
   />
   <mj-class
+    name="strong"
+    font-family="Montserrat, Helvetica, Arial"
+    font-weight="bold"
+    color="#2a2a2a"
+  />
+  <mj-class
     name="button"
     font-family="Montserrat, Helvetica, Arial"
     css-class="button"

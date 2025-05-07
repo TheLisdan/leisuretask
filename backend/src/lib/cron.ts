@@ -1,7 +1,6 @@
 import { CronJob } from 'cron';
-import { AppContext } from './ctx';
 
-export const applyCron = (ctx: AppContext) => {
+export const applyCron = () => {
   new CronJob(
     '0 7 * * *',
     () => {

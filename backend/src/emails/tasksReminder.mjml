@@ -1,0 +1,19 @@
+<mjml>
+  <mj-head>
+    <mj-title>Start your day productively!</mj-title>
+    <mj-include path="./_head.mjml" />
+  </mj-head>
+  <mj-body mj-class="body">
+    <mj-include path="./_header.mjml" />
+    <mj-section mj-class="content">
+      <mj-column>
+        <mj-text mj-class="h1">Hello, {{userName}}!</mj-text>
+        <mj-text mj-class="p"
+          >You have <mj-text mj-class="strong">{{tasksCount}}</mj-text> tasks for today. Don't forget to check them out!</mj-text>
+        </mj-text>
+        <mj-button href="{{appUrl}}" mj-class="button">Go to app</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./_footer.mjml" />
+  </mj-body>
+</mjml>
