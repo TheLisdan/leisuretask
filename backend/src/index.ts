@@ -2,11 +2,11 @@ import cors from 'cors';
 import express from 'express';
 import { applyCron } from './lib/cron';
 import { AppContext, createAppContext } from './lib/ctx';
-import { sendWelcomeEmail } from './lib/emails';
 import { env } from './lib/env';
 import { applyPasswordToExpressApp } from './lib/password';
 import { applyExpressMiddleware } from './lib/trpc';
 import { trpcRouter } from './router';
+import { remindTasks } from './scripts/remindTasks';
 
 void (async () => {
   let ctx: AppContext | null = null;
@@ -22,14 +22,12 @@ void (async () => {
 
     applyPasswordToExpressApp(expressApp, ctx);
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
-    applyCron(ctx);
+    applyCron();
+
+    await remindTasks(ctx);
 
     expressApp.listen(env.PORT, () => {
       console.info('Listening on http://localhost:' + env.PORT);
-    });
-
-    void sendWelcomeEmail({
-      user: { email: `${Math.random()}@example.com`, name: 'John Doe' },
     });
   } catch (error) {
     console.error(error);

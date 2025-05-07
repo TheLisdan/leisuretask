@@ -82,3 +82,22 @@ export const sendWelcomeEmail = async ({
     },
   });
 };
+
+export const sendRemindTasksEmail = async ({
+  user,
+  tasksCount,
+}: {
+  user: Pick<User, 'name' | 'email'>;
+  tasksCount: number;
+}) => {
+  return await sendEmail({
+    to: user.email,
+    subject: 'Start your day productively!',
+    templateName: 'tasksReminder',
+    templateVariables: {
+      userName: user.name,
+      tasksCount,
+      appUrl: `${env.WEBAPP_URL}${getHomeRoute()}`,
+    },
+  });
+};

@@ -1,21 +1,21 @@
 <mj-attributes>
   <mj-font
-    name="Montserrat>"
+    name="Montserrat"
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
   />
   <mj-class
     name="body"
-    font-family="Montserrat>, Helvetica, Arial"
+    font-family="Montserrat, Helvetica, Arial"
     background-color="#ffffff"
   />
   <mj-class
     name="content"
-    font-family="Montserrat>, Helvetica, Arial"
+    font-family="Montserrat, Helvetica, Arial"
     background-color="#ffffff"
   />
   <mj-class
     name="text"
-    font-family="Montserrat>, Helvetica, Arial"
+    font-family="Montserrat, Helvetica, Arial"
     css-class="text"
     color="#2a2a2a"
     font-size="16px"
