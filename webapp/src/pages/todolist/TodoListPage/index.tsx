@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Calendar } from '../../../components/Calendar';
 import { Form } from '../../../components/Form';
 import { Field } from '../../../components/Form/Field';
 import { Loader } from '../../../components/Loader';
@@ -41,7 +42,7 @@ export const TodoListPage = () => {
     <DndProvider backend={HTML5Backend}>
       <PersistentSidebar>
         <h2>{format(new Date(), 'EEEE, do MMMM')}</h2>
-        <p>There will be a calendar</p>
+        <Calendar />
       </PersistentSidebar>
 
       <div className={css.content} ref={pageRef}>

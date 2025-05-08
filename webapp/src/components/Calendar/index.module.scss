@@ -1,0 +1,72 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.calendar {
+  @include mixins.flex(column, center);
+
+  margin-top: 16px;
+
+  .header {
+    @include mixins.flex(row, center, space-between);
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 12px;
+
+    .navigation {
+      @include mixins.flex(row, center);
+
+      .switchMonth {
+        color: vars.$mainGray;
+
+        &:first-child {
+          margin-right: 12px;
+        }
+
+        &:active {
+          color: vars.$mainGreenLight;
+        }
+      }
+    }
+  }
+
+  .weekDays {
+    @include mixins.flex(row, center, space-between);
+    margin-bottom: 6px;
+    width: 100%;
+    font-weight: 600;
+
+    .weekDay {
+      @include mixins.flex(row, center, center);
+
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .days {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 6px;
+    grid-row-gap: 2px;
+
+    .day {
+      @include mixins.flex(row, center, center);
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+    }
+
+    .otherMonth {
+      color: vars.$mainGray;
+    }
+
+    .today {
+      background-color: vars.$mainGreen;
+      color: vars.$mainWhite;
+    }
+  }
+}
