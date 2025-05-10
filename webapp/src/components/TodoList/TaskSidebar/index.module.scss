@@ -44,6 +44,10 @@
         .calendarTimeIcon {
           margin-right: 8px;
         }
+
+        &.taskFailed {
+          color: vars.$mainRed;
+        }
       }
     }
 
@@ -90,47 +94,6 @@
     }
   }
 }
-
-// .dropdownMenu {
-//   @include mixins.flex(column, flex-start);
-//   background-color: vars.$uiBackground;
-//   padding: 16px 8px;
-//   border-radius: 5px;
-// }
-
-// .dropdownMenuItem {
-//   @include mixins.flex(row, center);
-//   color: vars.$mainGray;
-//   padding: 0 4px;
-//   cursor: pointer;
-
-//   &:not(:last-child) {
-//     margin-bottom: 12px;
-
-//     &:hover {
-//       color: vars.$mainGreenLight;
-//     }
-
-//     &:active {
-//       color: vars.$mainGreen;
-//     }
-//   }
-
-//   &:hover {
-//     color: vars.$mainRed;
-//   }
-
-//   .dropdownMenuItemIcon {
-//     margin-right: 8px;
-//   }
-// }
-
-// .dropdownMenuSeparator {
-//   height: 1px;
-//   background-color: vars.$mainGray;
-//   width: 100%;
-//   margin-bottom: 12px;
-// }
 
 .updateTaskForm {
   @include mixins.flex(column, flex-start);
@@ -179,5 +142,32 @@
     &:active {
       background-color: vars.$mainGrayLight;
     }
+  }
+}
+
+.timeControls {
+  @include mixins.flex(column, flex-start);
+  margin-bottom: 24px;
+}
+
+.deadlineSection {
+  @include mixins.flex(column, flex-start);
+  width: 100%;
+  margin-bottom: 60px;
+
+  .deadlineCheckbox {
+    @include mixins.flex(row, center);
+    gap: 8px;
+
+    span {
+      color: vars.$mainGray;
+      user-select: none;
+    }
+  }
+
+  .deadlineControls {
+    @include mixins.flex(row, center, space-between);
+    margin-top: 16px;
+    width: 100%;
   }
 }

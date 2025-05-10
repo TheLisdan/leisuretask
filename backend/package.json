@@ -21,8 +21,8 @@
     "schema": "./src/prisma/schema.prisma"
   },
   "dependencies": {
-    "@leisuretask/webapp": "workspace:*",
     "@leisuretask/shared": "workspace:*",
+    "@leisuretask/webapp": "workspace:*",
     "@prisma/client": "^6.6.0",
     "@trpc/server": "^10.45.2",
     "axios": "^1.9.0",

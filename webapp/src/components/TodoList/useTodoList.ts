@@ -70,7 +70,7 @@ export const useTodoList = () => {
   );
 
   const handleCreateTask = useCallback(
-    async (values: { title: string }) => {
+    async (values: { title: string; award: number; penalty: number }) => {
       try {
         setIsModalOpen(false);
         await createTaskMutation.mutateAsync(values);

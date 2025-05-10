@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN     "statusChangeAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP;

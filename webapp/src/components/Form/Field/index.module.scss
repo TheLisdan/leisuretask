@@ -4,7 +4,10 @@
 .field {
   @include mixins.flex(column, flex-start);
   width: 100%;
-  margin-bottom: 24px;
+
+  &.marginBottom {
+    margin-bottom: 24px;
+  }
 
   form & {
     &:last-of-type:not(.inline) {
@@ -46,7 +49,6 @@
     border: 0;
     background-color: vars.$uiBackground;
     border-radius: 5px;
-    width: 100%;
     font-family: vars.$defaultFontFamily;
     font-size: vars.$defaultFontSize;
 
@@ -57,6 +59,10 @@
 
     &.disabled {
       opacity: 0.5;
+    }
+
+    &.stretch {
+      width: 100%;
     }
   }
 }

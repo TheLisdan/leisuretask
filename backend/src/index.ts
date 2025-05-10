@@ -21,7 +21,7 @@ void (async () => {
 
     applyPasswordToExpressApp(expressApp, ctx);
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
-    applyCron();
+    applyCron(ctx);
 
     expressApp.listen(env.PORT, () => {
       console.info('Listening on http://localhost:' + env.PORT);

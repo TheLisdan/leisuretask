@@ -14,6 +14,8 @@ import { getTasksTrpcRoute } from './tasks/getTasks';
 import { orderTasksTrpcRoute } from './tasks/orderTasks';
 import { setTaskStatusTrpcRoute } from './tasks/setTaskStatus';
 import { updateTaskTrpcRoute } from './tasks/updateTask';
+import { saveTimeTrpcRoute } from './timer/saveTime';
+import { toggleTimerTrpcRoute } from './timer/toggleTimer';
 // @endindex // This too
 
 export const trpcRouter = trpc.router({
@@ -31,6 +33,8 @@ export const trpcRouter = trpc.router({
   orderTasks: orderTasksTrpcRoute,
   setTaskStatus: setTaskStatusTrpcRoute,
   updateTask: updateTaskTrpcRoute,
+  saveTime: saveTimeTrpcRoute,
+  toggleTimer: toggleTimerTrpcRoute,
   // @endindex
 });
 

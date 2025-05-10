@@ -1,0 +1,29 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.timeControls {
+  @include mixins.flex(column, flex-start);
+  margin-bottom: 24px;
+}
+
+.deadlineSection {
+  @include mixins.flex(column, flex-start);
+  width: 100%;
+  margin-bottom: 60px;
+
+  .deadlineCheckbox {
+    @include mixins.flex(row, center);
+    gap: 8px;
+
+    span {
+      color: vars.$mainGray;
+      user-select: none;
+    }
+  }
+
+  .deadlineControls {
+    @include mixins.flex(row, center, space-between);
+    margin-top: 16px;
+    width: 100%;
+  }
+}

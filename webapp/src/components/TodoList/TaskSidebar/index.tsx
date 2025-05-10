@@ -1,14 +1,11 @@
-import { zUpdateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/updateTask/input';
+import cs from 'classnames';
 import { format } from 'date-fns';
-import { pick } from 'lodash';
 import React, { useRef, useState } from 'react';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
+import { Checkbox } from '../../Checkbox';
 import { Dropdown } from '../../Dropdown';
-import { Form } from '../../Form';
-import { Field } from '../../Form/Field';
-import { Modal } from '../../Modal';
-import { Checkbox } from '../Task/Checkbox';
+import { TaskModal } from '../TaskModal';
 import { CalendarTimeIcon } from './calendar-time-icon';
 import { DeleteIcon } from './delete-icon';
 import { EditIcon } from './edit-icon';
@@ -21,13 +18,13 @@ type TaskSidebarProps = {
 
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   const [width, setWidth] = useState(300);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   const updateTaskMutation = trpc.updateTask.useMutation();
   const deleteTaskMutation = trpc.deleteTask.useMutation();
+  const setTaskStatus = trpc.setTaskStatus.useMutation();
   const trpcUtils = trpc.useUtils();
 
   const minWidth = 200;
@@ -71,12 +68,32 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
       >
         <div className={css.taskHeader}>
           <div className={css.taskHeaderMain}>
-            <Checkbox task={task} />
+            <Checkbox
+              name={task.id}
+              checked={task.status === 'COMPLETED'}
+              onChange={(e) => {
+                if (!task.id) {
+                  return;
+                }
+                setTaskStatus.mutate({
+                  taskId: task.id,
+                  status: e.target.checked ? 'COMPLETED' : 'IN_PROGRESS',
+                });
+                trpcUtils.getTasks.invalidate();
+              }}
+            />
             <span className={css.verticalLine}></span>
-            <div className={css.taskTime}>
-              <CalendarTimeIcon className={css.calendarTimeIcon} />
-              {format(task.createdAt, 'do MMMM, HH:mm')}
-            </div>
+            {!!task.deadline && (
+              <div
+                className={cs({
+                  [css.taskTime]: true,
+                  [css.taskFailed]: task.status === 'FAILED',
+                })}
+              >
+                <CalendarTimeIcon className={css.calendarTimeIcon} />
+                {format(task.deadline, 'do MMMM, HH:mm')}
+              </div>
+            )}
           </div>
         </div>
         <b className={css.taskTitle}>{task.title}</b>
@@ -112,25 +129,20 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
         </div>
       </aside>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Form
-          validationSchema={zUpdateTaskTrpcInput.omit({ taskId: true })}
-          initialValues={pick(task, ['title'])}
-          onSubmit={async (values) => {
-            await updateTaskMutation.mutateAsync({
-              taskId: task.id,
-              ...values,
-            });
-            trpcUtils.getTasks.invalidate();
-            setIsModalOpen(false);
-          }}
-          resetOnSuccess
-          id="updateTaskForm"
-          submitButtonText="Update task"
-        >
-          <Field name="title" label="Task" placeholder="Task text" stretch />
-        </Form>
-      </Modal>
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={async (values) => {
+          await updateTaskMutation.mutateAsync({
+            taskId: task.id,
+            ...values,
+          });
+          trpcUtils.getTasks.invalidate();
+          setIsModalOpen(false);
+        }}
+        submitButtonText="Update task"
+        task={task}
+      />
     </>
   );
 };

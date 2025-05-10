@@ -33,4 +33,10 @@
     @include mixins.flex;
     color: vars.$mainGreen;
   }
+
+  &.failed {
+    .additionalInfo {
+      color: vars.$mainRed;
+    }
+  }
 }

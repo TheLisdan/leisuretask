@@ -1,5 +1,5 @@
-@use '../../../../styles/vars';
-@use '../../../../styles/mixins';
+@use '../../styles/vars';
+@use '../../styles/mixins';
 
 .checkboxContainer {
   position: relative;
@@ -15,6 +15,10 @@
 
     &:checked ~ .checkmark:before {
       content: url('./checkmark-checked.svg');
+    }
+
+    &.failed ~ .checkmark:before {
+      content: url('./checkmark-failed.svg');
     }
   }
 

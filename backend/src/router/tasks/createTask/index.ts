@@ -21,6 +21,9 @@ export const createTaskTrpcRoute = trpc.procedure
         userId: ctx.me.id,
         title: input.title,
         status: 'IN_PROGRESS',
+        award: input.award * 60,
+        penalty: input.penalty * 60,
+        deadline: input.deadline ? new Date(input.deadline) : undefined,
         order: lastTask ? lastTask.order + 1 : 1,
       },
     });

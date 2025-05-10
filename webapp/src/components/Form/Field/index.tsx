@@ -12,6 +12,7 @@ type FieldProps = {
   mode?: 'default' | 'inline';
   stretch?: boolean;
   [key: string]: any;
+  marginBottom?: boolean;
 };
 
 export const Field: React.FC<FieldProps> = ({
@@ -22,6 +23,7 @@ export const Field: React.FC<FieldProps> = ({
   type = 'text',
   mode = 'default',
   stretch = false,
+  marginBottom = false,
   ...rest
 }) => {
   const { isSubmitting: contextIsSubmitting } = useFormikContext();
@@ -50,7 +52,10 @@ export const Field: React.FC<FieldProps> = ({
 
   return (
     <div
-      className={cs(css.field, { [css.inline]: mode === 'inline' })}
+      className={cs(css.field, {
+        [css.inline]: mode === 'inline',
+        [css.marginBottom]: marginBottom,
+      })}
       onClick={handleClick}
     >
       {mode === 'default' && label && (

@@ -11,7 +11,11 @@ export const zNumberRequired = z
   .number({
     required_error: 'Required',
   })
-  .min(1, 'Required');
+  .min(0, 'Required');
+
+export const zBooleanRequired = z.boolean({
+  required_error: 'Required',
+});
 
 // String length validators
 export const zStringMin = (min: number, message?: string) =>
@@ -22,6 +26,13 @@ export const zStringMin = (min: number, message?: string) =>
 
 export const zStringMax = (max: number, message?: string) =>
   zStringRequired.max(max, `${message || 'Must be at most'} ${max} characters`);
+
+// Number length validators
+export const zNumberMin = (min: number, message?: string) =>
+  zNumberRequired.min(min, `${message || 'Must be at least'} ${min}`);
+
+export const zNumberMax = (max: number, message?: string) =>
+  zNumberRequired.max(max, `${message || 'Must be at most'} ${max}`);
 
 // Environment validators
 export const zEnvNonemptyTrimmed = z.string().trim().min(1);
@@ -76,3 +87,25 @@ export const zPasswordsMustBeTheSame =
       });
     }
   };
+
+export const zCorrectDeadlineFormat = z
+  .union([
+    z.null(),
+    zStringOptional.refine(
+      (date) => {
+        if (!date) {
+          return true;
+        }
+        const inputDate = new Date(date);
+        return (
+          inputDate.getFullYear() <= 9999 &&
+          inputDate.getFullYear() >= new Date().getFullYear() &&
+          inputDate.getTime() > new Date().getTime()
+        );
+      },
+      {
+        message: 'Deadline must be valid date in the future',
+      }
+    ),
+  ])
+  .default(null);

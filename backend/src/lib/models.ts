@@ -2,5 +2,16 @@ import { User } from '@prisma/client';
 import _ from 'lodash';
 
 export const toClientMe = (user: User | null) => {
-  return user && _.pick(user, ['id', 'name', 'email', 'avatar']);
+  return (
+    user &&
+    _.pick(user, [
+      'id',
+      'name',
+      'email',
+      'avatar',
+      'avaiableTime',
+      'timerActive',
+      'lastTimerUpdate',
+    ])
+  );
 };

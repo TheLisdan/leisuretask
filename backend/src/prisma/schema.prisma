@@ -14,22 +14,29 @@ enum TaskStatus {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  name         String   @unique
-  email        String   @unique
-  passwordHash String
-  avatar       String?
-  createdAt    DateTime @default(now())
-  tasks        Task[]
+  id              String   @id @default(cuid())
+  name            String   @unique
+  email           String   @unique
+  passwordHash    String
+  avatar          String?
+  createdAt       DateTime @default(now())
+  avaiableTime    Int      @default(0)
+  timerActive     Boolean  @default(false)
+  lastTimerUpdate DateTime @default(now())
+  tasks           Task[]
 }
 
 model Task {
-  id           String     @id @default(cuid())
-  serialNumber Int        @unique @default(autoincrement())
-  title        String
-  status       TaskStatus @default(IN_PROGRESS)
-  createdAt    DateTime   @default(now())
-  userId       String
-  order        Int
-  user         User       @relation(fields: [userId], references: [id])
+  id             String     @id @default(cuid())
+  serialNumber   Int        @unique @default(autoincrement())
+  title          String
+  status         TaskStatus @default(IN_PROGRESS)
+  createdAt      DateTime   @default(now())
+  userId         String
+  order          Int
+  award          Int
+  penalty        Int
+  deadline       DateTime?
+  statusChangeAt DateTime?
+  user           User       @relation(fields: [userId], references: [id])
 }

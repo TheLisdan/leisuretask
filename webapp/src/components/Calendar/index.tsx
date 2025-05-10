@@ -13,8 +13,7 @@ import {
   isSameDay,
 } from 'date-fns';
 import React, { useState } from 'react';
-import { ArrowLeftLogo } from './arrow-left-logo';
-import { ArrowRightLogo } from './arrow-right-logo';
+import { Arrow } from '../Arrow/arrow';
 import css from './index.module.scss';
 
 export const Calendar: React.FC = () => {
@@ -46,7 +45,7 @@ export const Calendar: React.FC = () => {
             title="Previous month"
             className={css.switchMonth}
           >
-            <ArrowLeftLogo />
+            <Arrow direction="left" />
           </button>
           <button
             type="button"
@@ -54,7 +53,7 @@ export const Calendar: React.FC = () => {
             title="Next month"
             className={css.switchMonth}
           >
-            <ArrowRightLogo />
+            <Arrow direction="right" />
           </button>
         </div>
       </div>

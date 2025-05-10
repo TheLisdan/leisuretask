@@ -1,0 +1,42 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.timeSelector {
+  @include mixins.flex(column);
+
+  label {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .controls {
+    @include mixins.flex(row, center);
+    background-color: vars.$uiBackground;
+    border-radius: 5px;
+    padding: 8px;
+
+    button {
+      @include mixins.flex(row, center);
+      background: none;
+      border: none;
+      color: vars.$mainGreen;
+      cursor: pointer;
+      padding: 8px;
+      font-size: 16px;
+
+      &:hover:not(:disabled) {
+        color: vars.$mainGreenLight;
+      }
+
+      &:disabled {
+        color: vars.$mainGray;
+        cursor: default;
+      }
+    }
+
+    span {
+      min-width: 60px;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.timerContainer {
+  @include mixins.flex;
+
+  .time {
+    width: 260px;
+    margin-right: 28px;
+  }
+
+  .toggleButton {
+    @include mixins.flex;
+    padding: 8px 16px;
+    background-color: vars.$mainGreen;
+    color: vars.$mainWhite;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    align-self: flex-end;
+
+    &:hover {
+      background-color: vars.$mainGreenLight;
+    }
+
+    &:active {
+      background-color: vars.$mainGrayLight;
+    }
+  }
+}

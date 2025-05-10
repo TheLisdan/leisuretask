@@ -22,15 +22,37 @@ export const setTaskStatusTrpcRoute = trpc.procedure
       throw new Error('NOT_YOUR_TASK');
     }
 
-    await ctx.prisma.task.update({
-      where: {
-        id: input.taskId,
-        userId: ctx.me.id,
-      },
-      data: {
-        status: input.status,
-      },
-    });
+    let timeBonus = 0;
+
+    if (!task.statusChangeAt) {
+      if (input.status === 'COMPLETED') {
+        timeBonus = task.award;
+      }
+    }
+
+    await ctx.prisma.$transaction([
+      ctx.prisma.task.update({
+        where: {
+          id: input.taskId,
+          userId: ctx.me.id,
+        },
+        data: {
+          status: input.status,
+          statusChangeAt: new Date(),
+        },
+      }),
+      ctx.prisma.user.update({
+        where: {
+          id: ctx.me.id,
+        },
+        data: {
+          lastTimerUpdate: new Date(),
+          avaiableTime: {
+            increment: timeBonus,
+          },
+        },
+      }),
+    ]);
 
     return true;
   });

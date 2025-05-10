@@ -1,15 +1,13 @@
-import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/createTask/input';
 import { format } from 'date-fns';
 import { useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Calendar } from '../../../components/Calendar';
-import { Form } from '../../../components/Form';
-import { Field } from '../../../components/Form/Field';
 import { Loader } from '../../../components/Loader';
-import { Modal } from '../../../components/Modal';
 import { PersistentSidebar } from '../../../components/PersistentSidebar';
+import { Timer } from '../../../components/Timer';
 import { TaskDragWrapper } from '../../../components/TodoList/TaskDragWrapper';
+import { TaskModal } from '../../../components/TodoList/TaskModal';
 import { TaskSidebar } from '../../../components/TodoList/TaskSidebar';
 import { useTodoList } from '../../../components/TodoList/useTodoList';
 import css from './index.module.scss';
@@ -47,7 +45,7 @@ export const TodoListPage = () => {
 
       <div className={css.content} ref={pageRef}>
         <h1 className={css.bigText}>
-          <b>2 hours</b> of free time remaining
+          <Timer />
         </h1>
         {isLoading && <Loader type="inline" />}
         {tasksError && <p className={css.error}>{tasksError.message}</p>}
@@ -118,20 +116,12 @@ export const TodoListPage = () => {
       </div>
 
       <TaskSidebar task={selectedTask} />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Form
-          initialValues={{ title: '' }}
-          validationSchema={zCreateTaskTrpcInput}
-          onSubmit={async (values) => {
-            await handleCreateTask(values);
-          }}
-          id="addTaskForm"
-          resetOnSuccess
-          submitButtonText="Create task"
-        >
-          <Field name="title" label="Task" placeholder="Task text" stretch />
-        </Form>
-      </Modal>
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={handleCreateTask}
+        submitButtonText="Create task"
+      />
     </DndProvider>
   );
 };

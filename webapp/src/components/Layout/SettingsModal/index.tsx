@@ -54,7 +54,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   }}
                   id="updateNameForm"
                 >
-                  <Field name="name" mode="inline" />
+                  <Field name="name" mode="inline" marginBottom />
                 </Form>
               </div>
 
