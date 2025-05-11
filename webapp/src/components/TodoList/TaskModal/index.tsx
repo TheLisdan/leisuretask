@@ -16,7 +16,6 @@ type TaskModalProps = {
   onSubmit: (values: {
     title: string;
     award: number;
-    penalty: number;
     deadline?: string | null;
   }) => Promise<void>;
   submitButtonText: string;
@@ -31,7 +30,6 @@ export const TaskModal: React.FC<TaskModalProps> = ({
   task,
 }) => {
   const [award, setAward] = useState(() => (task ? task.award / 60 : 30));
-  const [penalty, setPenalty] = useState(() => (task ? task.penalty / 60 : 0));
   const [hasDeadline, setHasDeadline] = useState(() => !!task?.deadline);
 
   return (
@@ -41,7 +39,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         initialValues={{
           title: task?.title ?? '',
           award,
-          penalty,
+
           deadline:
             task?.deadline && hasDeadline
               ? format(task.deadline, "yyyy-MM-dd'T'HH:mm")
@@ -51,7 +49,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
           await onSubmit({
             ...values,
             award,
-            penalty,
+
             deadline: hasDeadline ? values.deadline : undefined,
           });
         }}
@@ -88,11 +86,6 @@ export const TaskModal: React.FC<TaskModalProps> = ({
           {hasDeadline && (
             <div className={css.deadlineControls}>
               <Field name="deadline" type="datetime-local" label="Deadline" />
-              <TimeSelector
-                value={penalty}
-                onChange={setPenalty}
-                label="Time Penalty"
-              />
             </div>
           )}
         </div>

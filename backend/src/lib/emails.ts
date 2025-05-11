@@ -7,6 +7,7 @@ import Handlebars from 'handlebars';
 import _ from 'lodash';
 import { sendEmailThroughBrevo } from './brevo';
 import { env } from './env';
+import { logger } from './logger';
 
 const getHbrTemplates = _.memoize(async () => {
   const htmlPaths = await fg('src/emails/dist/**/*.html', { absolute: true });
@@ -53,7 +54,7 @@ const sendEmail = async ({
       subject,
       html,
     });
-    console.info('Sending email', {
+    logger.info('Sending email', {
       to,
       templateName,
       fullTemplateVariables,
@@ -62,7 +63,7 @@ const sendEmail = async ({
     });
     return { ok: true };
   } catch (error) {
-    console.error('Error sending email', { to, subject, templateName, error });
+    logger.error('Error sending email', { to, subject, templateName, error });
     return { ok: false };
   }
 };

@@ -32,7 +32,6 @@ export const updateTaskTrpcRoute = trpc.procedure
       data: {
         ...taskInput,
         award: taskInput.award * 60,
-        penalty: taskInput.penalty * 60,
         deadline: taskInput.deadline ? new Date(taskInput.deadline) : null,
       },
     });

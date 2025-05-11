@@ -51,12 +51,6 @@ export default [
           skipStrings: true,
         },
       ],
-      'no-console': [
-        'error',
-        {
-          allow: ['info', 'error', 'warn'],
-        },
-      ],
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
       'node/no-process-env': ['error'],
@@ -66,6 +60,12 @@ export default [
     files: ['webapp/**/*.{ts,tsx}'],
     ignores: ['node_modules', '**/dist/**'],
     rules: {
+      'no-console': [
+        'error',
+        {
+          allow: ['info', 'error', 'warn'],
+        },
+      ],
       '@typescript-eslint/no-restricted-imports': [
         'error',
         {
@@ -95,7 +95,9 @@ export default [
   {
     files: ['backend/**/*.ts'],
     ignores: ['node_modules', '**/dist/**'],
-    rules: {},
+    rules: {
+      'no-console': ['error'],
+    },
   },
   {
     files: ['shared/**/*.ts'],

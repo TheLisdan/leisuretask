@@ -38,6 +38,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "trpc-playground": "^1.0.4",
+    "winston": "^3.17.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

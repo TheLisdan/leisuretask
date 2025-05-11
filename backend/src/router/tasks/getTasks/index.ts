@@ -19,7 +19,6 @@ export const getTasksTrpcRoute = trpc.procedure
         order: true,
         serialNumber: true,
         award: true,
-        penalty: true,
         deadline: true,
       },
       orderBy: [

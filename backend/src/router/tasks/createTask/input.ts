@@ -8,6 +8,5 @@ import { z } from 'zod';
 export const zCreateTaskTrpcInput = z.object({
   title: zStringRequired,
   award: zNumberRequired,
-  penalty: zNumberRequired,
   deadline: zCorrectDeadlineFormat,
 });

@@ -82,17 +82,19 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
                 trpcUtils.getTasks.invalidate();
               }}
             />
-            <span className={css.verticalLine}></span>
             {!!task.deadline && (
-              <div
-                className={cs({
-                  [css.taskTime]: true,
-                  [css.taskFailed]: task.status === 'FAILED',
-                })}
-              >
-                <CalendarTimeIcon className={css.calendarTimeIcon} />
-                {format(task.deadline, 'do MMMM, HH:mm')}
-              </div>
+              <>
+                <span className={css.verticalLine}></span>
+                <div
+                  className={cs({
+                    [css.taskTime]: true,
+                    [css.taskFailed]: task.status === 'FAILED',
+                  })}
+                >
+                  <CalendarTimeIcon className={css.calendarTimeIcon} />
+                  {format(task.deadline, 'do MMMM, HH:mm')}
+                </div>
+              </>
             )}
           </div>
         </div>

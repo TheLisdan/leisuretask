@@ -3,6 +3,7 @@ import express from 'express';
 import { applyCron } from './lib/cron';
 import { AppContext, createAppContext } from './lib/ctx';
 import { env } from './lib/env';
+import { logger } from './lib/logger';
 import { applyPasswordToExpressApp } from './lib/password';
 import { applyExpressMiddleware } from './lib/trpc';
 import { trpcRouter } from './router';
@@ -24,10 +25,10 @@ void (async () => {
     applyCron(ctx);
 
     expressApp.listen(env.PORT, () => {
-      console.info('Listening on http://localhost:' + env.PORT);
+      logger.info('Listening on http://localhost:' + env.PORT);
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     await ctx?.stop();
   }
 })();

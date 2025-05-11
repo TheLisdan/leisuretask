@@ -17,15 +17,13 @@ export const saveTimeTrpcRoute = trpc.procedure
     if (!user) {
       throw new Error('USER_NOT_FOUND');
     }
-    const timeDifference = input.remainingTime - user.avaiableTime;
 
     await ctx.prisma.user.update({
       where: {
         id: ctx.me.id,
       },
       data: {
-        avaiableTime:
-          timeDifference < 0 ? user.avaiableTime : input.remainingTime,
+        avaiableTime: input.remainingTime,
         lastTimerUpdate: ctx.me.timerActive ? new Date() : undefined,
       },
     });
