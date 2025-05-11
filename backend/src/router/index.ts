@@ -1,4 +1,4 @@
-import { trpc } from '../lib/trpc';
+import { createTRPCRouter } from '../lib/trpc';
 // DO NOT REMOVE COMMENTS BELOW
 // @index('./**/index.ts', f => `import { ${f.path.split('/').slice(0, -1).pop()}TrpcRoute } from '${f.path.split('/').slice(0,-1).join('/')}';`)
 import { changePasswordTrpcRoute } from './auth/changePassword';
@@ -18,7 +18,7 @@ import { saveTimeTrpcRoute } from './timer/saveTime';
 import { toggleTimerTrpcRoute } from './timer/toggleTimer';
 // @endindex // This too
 
-export const trpcRouter = trpc.router({
+export const trpcRouter = createTRPCRouter({
   // @index('./**/index.ts', f => `${f.path.split('/').slice(0, -1).pop()}: ${f.path.split('/').slice(0, -1).pop()}TrpcRoute,`)
   changePassword: changePasswordTrpcRoute,
   getMe: getMeTrpcRoute,

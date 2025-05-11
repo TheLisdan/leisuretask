@@ -17,7 +17,10 @@ export const checkDeadlines = async (ctx: AppContext) => {
     },
   });
 
-  logger.info(`Found ${expiredTasks.length} expired tasks`);
+  logger.info({
+    logType: 'deadlines',
+    message: `Found ${expiredTasks.length} expired tasks`,
+  });
 
   for (const task of expiredTasks) {
     if (!task.statusChangeAt) {
@@ -32,7 +35,11 @@ export const checkDeadlines = async (ctx: AppContext) => {
           },
         });
       } catch (error) {
-        logger.error(`Error updating task ${task.id}:`, error);
+        logger.error({
+          logType: 'deadlines',
+          error: error,
+          meta: { taskId: task.id },
+        });
       }
     }
   }

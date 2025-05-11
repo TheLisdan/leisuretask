@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zToggleTimerTrpcInput } from './input';
 
-export const toggleTimerTrpcRoute = trpc.procedure
+export const toggleTimerTrpcRoute = trpcLoggedProcedure
   .input(zToggleTimerTrpcInput)
   .mutation(async ({ ctx, input }) => {
     if (!ctx.me) {

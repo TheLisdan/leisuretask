@@ -1,7 +1,15 @@
+import { EOL } from 'os';
+import debug from 'debug';
+import _ from 'lodash';
+import pc from 'picocolors';
+import { serializeError } from 'serialize-error';
+import { MESSAGE } from 'triple-beam';
 import winston from 'winston';
+import * as yaml from 'yaml';
+import { deepMap } from '../utils/deepMap';
 import { env } from './env';
 
-export const logger = winston.createLogger({
+export const winstonLogger = winston.createLogger({
   level: 'debug',
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -11,7 +19,92 @@ export const logger = winston.createLogger({
   defaultMeta: { service: 'backend', hostEnv: env.HOST_ENV },
   transports: [
     new winston.transports.Console({
-      format: winston.format.json(),
+      format:
+        env.HOST_ENV !== 'local'
+          ? winston.format.json()
+          : winston.format((logData) => {
+              const setColor = {
+                info: (str: string) => pc.blue(str),
+                error: (str: string) => pc.red(str),
+                debug: (str: string) => pc.cyan(str),
+              }[logData.level as 'info' | 'error' | 'debug'];
+              const levelAndType = `${logData.level} ${logData.logType}`;
+              const topMessage = `${setColor(levelAndType)} ${pc.green(String(logData.timestamp))}${EOL}${logData.message}`;
+
+              const visibleMessageTags = _.omit(logData, [
+                'level',
+                'logType',
+                'timestamp',
+                'message',
+                'service',
+                'hostEnv',
+              ]);
+
+              const stringifyedLogData = _.trim(
+                yaml.stringify(visibleMessageTags, (_k, v) =>
+                  _.isFunction(v) ? 'Function' : v
+                )
+              );
+
+              const resultLogData = {
+                ...logData,
+                [MESSAGE]:
+                  [
+                    topMessage,
+                    Object.keys(visibleMessageTags).length > 0
+                      ? `${EOL}${stringifyedLogData}`
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join('') + EOL,
+              };
+
+              return resultLogData;
+            })(),
     }),
   ],
 });
+
+type Meta = Record<string, any> | undefined;
+const prettifyMeta = (meta: Meta): Meta => {
+  return deepMap(meta, ({ key, value }) => {
+    if (
+      [
+        'email',
+        'password',
+        'newPassword',
+        'oldPassword',
+        'token',
+        'text',
+        'description',
+      ].includes(key)
+    ) {
+      return '🙈';
+    }
+    return value;
+  });
+};
+
+export const logger = {
+  info: (props: { logType: string; message: string; meta?: Meta }) => {
+    if (!debug.enabled(`leisuretask:${props.logType}`)) {
+      return;
+    }
+    winstonLogger.info(props.message, {
+      logType: props.logType,
+      ...prettifyMeta(props.meta),
+    });
+  },
+  error: (props: { logType: string; error: any; meta?: Meta }) => {
+    if (!debug.enabled(`leisuretask:${props.logType}`)) {
+      return;
+    }
+    const serializedError = serializeError(props.error);
+    winstonLogger.error(serializedError.message || 'Unknown error', {
+      logType: props.logType,
+      error: props.error,
+      errorStack: serializedError.stack,
+      ...prettifyMeta(props.meta),
+    });
+  },
+};

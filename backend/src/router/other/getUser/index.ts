@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zGetUserTrpcInput } from './input';
 
-export const getUserTrpcRoute = trpc.procedure
+export const getUserTrpcRoute = trpcLoggedProcedure
   .input(zGetUserTrpcInput)
   .query(async ({ ctx, input }) => {
     const user = await ctx.prisma.user.findUnique({

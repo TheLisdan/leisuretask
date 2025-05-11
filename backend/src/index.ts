@@ -24,11 +24,30 @@ void (async () => {
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
     applyCron(ctx);
 
+    expressApp.use(
+      (
+        error: unknown,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+      ) => {
+        logger.error({ logType: 'express', error: error });
+        if (res.headersSent) {
+          next(error);
+          return;
+        }
+        res.status(500).send('Internal server error');
+      }
+    );
+
     expressApp.listen(env.PORT, () => {
-      logger.info('Listening on http://localhost:' + env.PORT);
+      logger.info({
+        logType: 'express',
+        message: `Listening on http://localhost:${env.PORT}`,
+      });
     });
   } catch (error) {
-    logger.error(error);
+    logger.error({ logType: 'app', error: error });
     await ctx?.stop();
   }
 })();

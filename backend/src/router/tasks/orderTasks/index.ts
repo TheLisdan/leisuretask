@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zOrderTasksTrpcInput } from './input';
 
-export const orderTasksTrpcRoute = trpc.procedure
+export const orderTasksTrpcRoute = trpcLoggedProcedure
   .input(zOrderTasksTrpcInput)
   .mutation(async ({ ctx, input }) => {
     if (!ctx.me || !ctx.me.id) {

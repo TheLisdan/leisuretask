@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zGetTasksTrpcInput } from './input';
 
-export const getTasksTrpcRoute = trpc.procedure
+export const getTasksTrpcRoute = trpcLoggedProcedure
   .input(zGetTasksTrpcInput)
   .query(async ({ ctx, input }) => {
     if (!ctx.me) {

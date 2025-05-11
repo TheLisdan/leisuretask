@@ -9,7 +9,7 @@ export const applyCron = (ctx: AppContext) => {
     '* * * * *',
     () => {
       checkDeadlines(ctx).catch((error) => {
-        logger.error('cron', error);
+        logger.error({ logType: 'cron', error: error });
       });
     },
     null,
@@ -20,7 +20,7 @@ export const applyCron = (ctx: AppContext) => {
     '0 7 * * *',
     () => {
       remindTasks(ctx).catch((error) => {
-        logger.error('cron', error);
+        logger.error({ logType: 'cron', error: error });
       });
     },
     null,

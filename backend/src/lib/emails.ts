@@ -54,16 +54,24 @@ const sendEmail = async ({
       subject,
       html,
     });
-    logger.info('Sending email', {
-      to,
-      templateName,
-      fullTemplateVariables,
-      templateVariables,
-      response: loggableResponse,
+    logger.info({
+      logType: 'email',
+      message: 'Sending email',
+      meta: {
+        to,
+        templateName,
+        fullTemplateVariables,
+        templateVariables,
+        response: loggableResponse,
+      },
     });
     return { ok: true };
   } catch (error) {
-    logger.error('Error sending email', { to, subject, templateName, error });
+    logger.error({
+      logType: 'email',
+      error: error,
+      meta: { to, subject, templateName },
+    });
     return { ok: false };
   }
 };

@@ -1,9 +1,9 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { getPasswordHash } from '../../../utils/getPasswordHash';
 import { signJWT } from '../../../utils/signJWT';
 import { zSignInTrpcInput } from './input';
 
-export const signInTrpcRoute = trpc.procedure
+export const signInTrpcRoute = trpcLoggedProcedure
   .input(zSignInTrpcInput)
   .mutation(async ({ ctx, input }) => {
     const user = await ctx.prisma.user.findFirst({

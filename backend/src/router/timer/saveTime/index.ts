@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zSaveTimeTrpcInput } from './input';
 
-export const saveTimeTrpcRoute = trpc.procedure
+export const saveTimeTrpcRoute = trpcLoggedProcedure
   .input(zSaveTimeTrpcInput)
   .mutation(async ({ ctx, input }) => {
     if (!ctx.me) {

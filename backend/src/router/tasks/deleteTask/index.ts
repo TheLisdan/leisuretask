@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc';
+import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zDeleteTaskTrpcInput } from './input';
 
-export const deleteTaskTrpcRoute = trpc.procedure
+export const deleteTaskTrpcRoute = trpcLoggedProcedure
   .input(zDeleteTaskTrpcInput)
   .mutation(async ({ ctx, input }) => {
     if (!ctx.me) {
