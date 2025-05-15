@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { AppContextProvider } from './lib/ctx';
 import { routes } from './lib/routes';
+import { SentryUser } from './lib/sentry';
 import { TrpcProvider } from './lib/trpc';
 import { SignInPage } from './pages/auth/SignInPage';
 import { SignOutPage } from './pages/auth/SignOutPage';
@@ -16,6 +17,7 @@ export const App = () => {
     <TrpcProvider>
       <AppContextProvider>
         <BrowserRouter>
+          <SentryUser />
           <Routes>
             <Route path={routes.getSignOutRoute()} element={<SignOutPage />} />
             <Route path={routes.getLandingRoute()} element={<LandingPage />} />

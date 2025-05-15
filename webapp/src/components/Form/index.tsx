@@ -1,7 +1,9 @@
+import { TRPCClientError } from '@trpc/client';
 import { Formik, FormikHelpers, Form as FormikForm, FormikProps } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import React, { useState } from 'react';
 import { z } from 'zod';
+import { sentryCaptureException } from '../../lib/sentry';
 import css from './index.module.scss';
 
 type FormProps<TZodSchema extends z.ZodTypeAny> = {
@@ -40,7 +42,10 @@ export const Form = <TZodSchema extends z.ZodTypeAny>({
           if (resetOnSuccess) {
             formikHelpers.resetForm();
           }
-        } catch (error: unknown) {
+        } catch (error: any) {
+          if (!(error instanceof TRPCClientError)) {
+            sentryCaptureException(error);
+          }
           setError(
             error instanceof Error
               ? error.message
