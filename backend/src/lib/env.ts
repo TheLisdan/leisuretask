@@ -19,6 +19,8 @@ const zEnv = z.object({
   FROM_EMAIL_NAME: zEnvNonemptyTrimmed,
   FROM_EMAIL_ADDRESS: zEnvNonemptyTrimmed,
   DEBUG: zEnvNonemptyTrimmed,
+  BACKEND_SENTRY_DSN: zEnvNonemptyTrimmedRequiredOnNotLocal,
+  SOURCE_VERSION: zEnvNonemptyTrimmedRequiredOnNotLocal,
 });
 
 // eslint-disable-next-line node/no-process-env

@@ -3,13 +3,16 @@
   "compilerOptions": {
     "plugins": [{ "transform": "typescript-transform-paths" }],
     "paths": {
-      "@leisuretask/webapp/*": ["../webapp/*"]
+      "@leisuretask/webapp/*": ["../webapp/*"],
+      "@leisuretask/shared/*": ["../shared/*"]
     },
     "target": "ES2021",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "moduleDetection": "force",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "sourceMap": true,
+    "sourceRoot": "/"
   },
   "include": ["src"]
 }

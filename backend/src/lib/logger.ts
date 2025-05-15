@@ -1,4 +1,5 @@
 import { EOL } from 'os';
+import { TRPCError } from '@trpc/server';
 import debug from 'debug';
 import _ from 'lodash';
 import pc from 'picocolors';
@@ -8,6 +9,8 @@ import winston from 'winston';
 import * as yaml from 'yaml';
 import { deepMap } from '../utils/deepMap';
 import { env } from './env';
+import { ExpectedError } from './error';
+import { sentryCaptureException } from './sentry';
 
 export const winstonLogger = winston.createLogger({
   level: 'debug',
@@ -65,8 +68,8 @@ export const winstonLogger = winston.createLogger({
   ],
 });
 
-type Meta = Record<string, any> | undefined;
-const prettifyMeta = (meta: Meta): Meta => {
+export type LoggerMetaData = Record<string, any> | undefined;
+const prettifyMeta = (meta: LoggerMetaData): LoggerMetaData => {
   return deepMap(meta, ({ key, value }) => {
     if (
       [
@@ -86,7 +89,11 @@ const prettifyMeta = (meta: Meta): Meta => {
 };
 
 export const logger = {
-  info: (props: { logType: string; message: string; meta?: Meta }) => {
+  info: (props: {
+    logType: string;
+    message: string;
+    meta?: LoggerMetaData;
+  }) => {
     if (!debug.enabled(`leisuretask:${props.logType}`)) {
       return;
     }
@@ -95,7 +102,15 @@ export const logger = {
       ...prettifyMeta(props.meta),
     });
   },
-  error: (props: { logType: string; error: any; meta?: Meta }) => {
+  error: (props: { logType: string; error: any; meta?: LoggerMetaData }) => {
+    const isNativeExpectedError = props.error instanceof ExpectedError;
+    const isTrpcExpectedError =
+      props.error instanceof TRPCError &&
+      props.error.cause instanceof ExpectedError;
+    const prettifiedMetaData = prettifyMeta(props.meta);
+    if (!isNativeExpectedError && !isTrpcExpectedError) {
+      sentryCaptureException(props.error, prettifiedMetaData);
+    }
     if (!debug.enabled(`leisuretask:${props.logType}`)) {
       return;
     }
@@ -104,7 +119,7 @@ export const logger = {
       logType: props.logType,
       error: props.error,
       errorStack: serializedError.stack,
-      ...prettifyMeta(props.meta),
+      ...prettifiedMetaData,
     });
   },
 };

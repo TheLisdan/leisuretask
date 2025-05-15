@@ -9,7 +9,6 @@ export const zEnv = z.object({
   NODE_ENV: z.enum(['development', 'production']),
   HOST_ENV: zEnvEnum,
   SOURCE_VERSION: zEnvNonemptyTrimmedRequiredOnNotLocal,
-  SENTRY_AUTH_TOKEN: zEnvNonemptyTrimmedRequiredOnNotLocal,
   VITE_BACKEND_TRPC_URL: zEnvNonemptyTrimmed,
   VITE_WEBAPP_URL: zEnvNonemptyTrimmed,
   VITE_WEBAPP_SENTRY_DSN: zEnvNonemptyTrimmedRequiredOnNotLocal,
