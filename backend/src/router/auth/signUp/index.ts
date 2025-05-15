@@ -1,4 +1,5 @@
 import { sendWelcomeEmail } from '../../../lib/emails';
+import { ExpectedError } from '../../../lib/error';
 import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { getPasswordHash } from '../../../utils/getPasswordHash';
 import { signJWT } from '../../../utils/signJWT';
@@ -14,7 +15,7 @@ export const signUpTrpcRoute = trpcLoggedProcedure
     });
 
     if (exName) {
-      throw new Error('User with this name already exists');
+      throw new ExpectedError('User with this name already exists');
     }
 
     const exEmail = await ctx.prisma.user.findFirst({
@@ -24,7 +25,7 @@ export const signUpTrpcRoute = trpcLoggedProcedure
     });
 
     if (exEmail) {
-      throw new Error('User with this E-Mail already exists');
+      throw new ExpectedError('User with this E-Mail already exists');
     }
 
     const user = await ctx.prisma.user.create({

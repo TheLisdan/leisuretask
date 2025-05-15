@@ -1,3 +1,4 @@
+import { ExpectedError } from '../../../lib/error';
 import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zGetTasksTrpcInput } from './input';
 
@@ -5,7 +6,7 @@ export const getTasksTrpcRoute = trpcLoggedProcedure
   .input(zGetTasksTrpcInput)
   .query(async ({ ctx, input }) => {
     if (!ctx.me) {
-      throw new Error('Not authenticated');
+      throw new ExpectedError('Not authenticated');
     }
     const tasks = await ctx.prisma.task.findMany({
       where: {

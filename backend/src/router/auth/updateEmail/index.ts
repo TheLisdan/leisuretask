@@ -1,3 +1,4 @@
+import { ExpectedError } from '../../../lib/error';
 import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { getPasswordHash } from '../../../utils/getPasswordHash';
 import { zUpdateEmailTrpcInput } from './input';
@@ -9,10 +10,10 @@ export const updateEmailTrpcRoute = trpcLoggedProcedure
       throw new Error('UNAUTHORIZED');
     }
     if (ctx.me.passwordHash !== getPasswordHash(input.password)) {
-      throw new Error('Wrong password');
+      throw new ExpectedError('Wrong password');
     }
     if (ctx.me.email === input.email) {
-      throw new Error('Email is the same as current email');
+      throw new ExpectedError('Email is the same as current email');
     }
     const exUser = await ctx.prisma.user.findUnique({
       where: {
@@ -20,7 +21,7 @@ export const updateEmailTrpcRoute = trpcLoggedProcedure
       },
     });
     if (exUser) {
-      throw new Error('Email already in use');
+      throw new ExpectedError('Email already in use');
     }
 
     const updatedMe = await ctx.prisma.user.update({

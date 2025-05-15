@@ -1,3 +1,4 @@
+import { ExpectedError } from '../../../lib/error';
 import { toClientMe } from '../../../lib/models';
 import { trpcLoggedProcedure } from '../../../lib/trpc';
 import { zUpdateUserNameTrpcInput } from './input';
@@ -15,7 +16,7 @@ export const updateUserNameTrpcRoute = trpcLoggedProcedure
         },
       });
       if (exUser) {
-        throw new Error('User with that name already exists');
+        throw new ExpectedError('User with that name already exists');
       }
     }
     const updatedMe = await ctx.prisma.user.update({
