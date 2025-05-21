@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "tsx --watch -r dotenv/config ./src/index.ts --watch ./src/emails/dist",
+    "test": "jest",
     "clean": "rimraf ./dist",
     "build-emails": "rimraf ./src/emails/dist && shx mkdir -p ./src/emails/dist && mjml ./src/emails/[!_]*.mjml -o ./src/emails/dist",
     "watch-emails": "mjml -w ./src/emails/[!_]*.mjml -o ./src/emails/dist",

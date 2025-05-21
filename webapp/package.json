@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "jest",
     "build": "tsc -b && vite build",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache",
     "stylelint": "stylelint --cache --cache-location ./node_modules/.cache/.stylelintcache '**/*.{css,scss}'",

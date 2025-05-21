@@ -15,7 +15,6 @@ export const applyCron = (ctx: AppContext) => {
     null,
     true
   );
-
   new CronJob(
     '0 7 * * *',
     () => {

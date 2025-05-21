@@ -2,6 +2,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import node from 'eslint-plugin-node';
+import jest from 'eslint-plugin-jest';
 
 export default [
   {
@@ -22,6 +23,7 @@ export default [
       '@typescript-eslint': tsPlugin,
       import: importPlugin,
       node: node,
+      jest: jest,
     },
     rules: {
       'import/order': [
@@ -54,11 +56,12 @@ export default [
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
       'node/no-process-env': ['error'],
+      'jest/no-focused-tests': 'error',
     },
   },
   {
     files: ['webapp/**/*.{ts,tsx}'],
-    ignores: ['node_modules', '**/dist/**'],
+    ignores: ['node_modules', '**/dist/**', '*.config.js'],
     rules: {
       'no-console': [
         'error',
