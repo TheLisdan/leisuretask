@@ -18,7 +18,7 @@ export const applyCron = (ctx: AppContext) => {
   new CronJob(
     '0 7 * * *',
     () => {
-      remindTasks(ctx).catch((error) => {
+      remindTasks({ ctx }).catch((error) => {
         logger.error({ logType: 'cron', error: error });
       });
     },

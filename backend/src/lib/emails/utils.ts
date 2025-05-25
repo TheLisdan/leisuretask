@@ -1,13 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { getHomeRoute } from '@leisuretask/webapp/src/lib/routes';
-import { User } from '@prisma/client';
 import fg from 'fast-glob';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
-import { sendEmailThroughBrevo } from './brevo';
-import { env } from './env';
-import { logger } from './logger';
+import { sendEmailThroughBrevo } from '../brevo';
+import { env } from '../env';
+import { logger } from '../logger';
 
 const getHbrTemplates = _.memoize(async () => {
   const htmlPaths = await fg('src/emails/dist/**/*.html', { absolute: true });
@@ -32,7 +30,7 @@ const getEmailHtml = async (
   return html;
 };
 
-const sendEmail = async ({
+export const sendEmail = async ({
   to,
   subject,
   templateName,
@@ -74,39 +72,4 @@ const sendEmail = async ({
     });
     return { ok: false };
   }
-};
-
-export const sendWelcomeEmail = async ({
-  user,
-}: {
-  user: Pick<User, 'name' | 'email'>;
-}) => {
-  return await sendEmail({
-    to: user.email,
-    subject: 'Thanks for signing up!',
-    templateName: 'welcome',
-    templateVariables: {
-      userName: user.name,
-      appUrl: `${env.WEBAPP_URL}${getHomeRoute()}`,
-    },
-  });
-};
-
-export const sendRemindTasksEmail = async ({
-  user,
-  tasksCount,
-}: {
-  user: Pick<User, 'name' | 'email'>;
-  tasksCount: number;
-}) => {
-  return await sendEmail({
-    to: user.email,
-    subject: 'Start your day productively!',
-    templateName: 'tasksReminder',
-    templateVariables: {
-      userName: user.name,
-      tasksCount,
-      appUrl: `${env.WEBAPP_URL}${getHomeRoute()}`,
-    },
-  });
 };

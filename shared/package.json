@@ -8,9 +8,11 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.3"
   }
 }

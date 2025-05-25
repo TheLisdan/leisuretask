@@ -1,10 +1,10 @@
+import { pick } from '@leisuretask/shared/src/pick';
 import { User } from '@prisma/client';
-import _ from 'lodash';
 
 export const toClientMe = (user: User | null) => {
   return (
     user &&
-    _.pick(user, [
+    pick(user, [
       'id',
       'name',
       'email',

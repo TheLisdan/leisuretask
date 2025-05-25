@@ -100,8 +100,27 @@ export default [
     ignores: ['node_modules', '**/dist/**'],
     rules: {
       'no-console': ['error'],
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+          pathGroups: [
+            {
+              pattern: '{.,..}/**/test/integration',
+              group: 'builtin',
+              position: 'before',
+            },
+          ],
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: false,
+            orderImportKind: 'asc',
+          },
+        },
+      ],
     },
   },
+
   {
     files: ['shared/**/*.ts'],
     ignores: ['node_modules', '**/dist/**'],

@@ -1,7 +1,7 @@
 import { AppContext } from '../lib/ctx';
 import { sendRemindTasksEmail } from '../lib/emails';
 
-export const remindTasks = async (ctx: AppContext) => {
+export const remindTasks = async ({ ctx }: { ctx: AppContext }) => {
   const users = await ctx.prisma.user.findMany({
     where: {
       tasks: {

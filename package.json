@@ -6,7 +6,7 @@
   "scripts": {
     "b": "pnpm --filter @leisuretask/backend",
     "w": "pnpm --filter @leisuretask/webapp",
-    "s": "pnpm --filter @leisuretask/shared",
+    "sh": "pnpm --filter @leisuretask/shared",
     "dev": "pnpm -r --parallel dev",
     "test": "pnpm -r test",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --config eslint.config.js",
@@ -21,6 +21,7 @@
     "@typescript-eslint/parser": "^8.19.0",
     "concurrently": "^9.1.2",
     "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
     "eslint": "^9.17.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",

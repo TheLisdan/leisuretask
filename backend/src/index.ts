@@ -5,12 +5,14 @@ import { AppContext, createAppContext } from './lib/ctx';
 import { env } from './lib/env';
 import { logger } from './lib/logger';
 import { applyPasswordToExpressApp } from './lib/password';
+import { initSentry } from './lib/sentry';
 import { applyExpressMiddleware } from './lib/trpc';
 import { trpcRouter } from './router';
 
 void (async () => {
   let ctx: AppContext | null = null;
   try {
+    initSentry();
     ctx = createAppContext();
     const expressApp = express();
 
