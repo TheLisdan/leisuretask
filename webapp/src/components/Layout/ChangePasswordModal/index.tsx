@@ -52,6 +52,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         type="password"
         placeholder="Type your old password"
         stretch
+        marginBottom
       />
       <Field
         name="newPassword"
@@ -59,6 +60,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         type="password"
         placeholder="Type your new password"
         stretch
+        marginBottom
       />
       <Field
         name="newPasswordAgain"
@@ -66,6 +68,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         type="password"
         placeholder="Type your new password again"
         stretch
+        marginBottom
       />
     </Form>
   </Modal>

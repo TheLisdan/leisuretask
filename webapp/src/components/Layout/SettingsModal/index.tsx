@@ -1,9 +1,11 @@
+import { zUpdateAvatarTrpcInput } from '@leisuretask/backend/src/router/auth/updateAvatar/input';
 import { zUpdateUserNameTrpcInput } from '@leisuretask/backend/src/router/auth/updateUserName/input';
 import { trpc } from '../../../lib/trpc';
 import { MeType } from '../../../lib/trpcTypes';
 import { Avatar } from '../../Avatar';
 import { Form } from '../../Form';
 import { Field } from '../../Form/Field';
+import { UploadToCloudinary } from '../../Form/UploadToCloudinary';
 import { Modal } from '../../Modal';
 import { AccountIcon } from './account-icon';
 import css from './index.module.scss';
@@ -13,6 +15,7 @@ type SettingsModalProps = {
   setIsSettingsModalOpen: (isOpen: boolean) => void;
   me: NonNullable<MeType>;
   updateUserNameMutation: any;
+  updateAvatarMutation: any;
   setIsUpdateEmailModalOpen: (isOpen: boolean) => void;
   setIsChangePasswordModalOpen: (isOpen: boolean) => void;
 };
@@ -22,6 +25,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   setIsSettingsModalOpen,
   me,
   updateUserNameMutation,
+  updateAvatarMutation,
   setIsUpdateEmailModalOpen,
   setIsChangePasswordModalOpen,
 }) => {
@@ -37,7 +41,20 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           tabName: 'account',
           content: (
             <div className={css.accountSettings}>
-              <Avatar user={me} size="large" />
+              <Form
+                validationSchema={zUpdateAvatarTrpcInput}
+                initialValues={{ avatar: me.avatar }}
+                onSubmit={async (avatar) => {
+                  const updatedMe =
+                    await updateAvatarMutation.mutateAsync(avatar);
+                  trpcUtils.getMe.setData(undefined, { me: updatedMe });
+                }}
+                id="updateAvatarForm"
+              >
+                <UploadToCloudinary name="avatar" type="avatar">
+                  <Avatar user={me} size="big" />
+                </UploadToCloudinary>
+              </Form>
 
               <div className="changeName">
                 <Form

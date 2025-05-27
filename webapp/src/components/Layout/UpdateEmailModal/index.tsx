@@ -45,6 +45,7 @@ export const UpdateEmailModal: React.FC<UpdateEmailModalProps> = ({
           type="email"
           placeholder="Type your new E-Mail"
           stretch
+          marginBottom
         />
         <Field
           name="password"
@@ -52,6 +53,7 @@ export const UpdateEmailModal: React.FC<UpdateEmailModalProps> = ({
           type="password"
           placeholder="Type your password"
           stretch
+          marginBottom
         />
       </Form>
     </Modal>

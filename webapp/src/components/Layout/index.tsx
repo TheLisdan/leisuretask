@@ -19,6 +19,7 @@ export const Layout = () => {
     setIsChangePasswordModalOpen,
     updateUserNameMutation,
     updateEmailMutation,
+    updateAvatarMutation,
     changePasswordMutation,
   } = useLayout();
 
@@ -50,6 +51,7 @@ export const Layout = () => {
         setIsUpdateEmailModalOpen={setIsUpdateEmailModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
         updateUserNameMutation={updateUserNameMutation}
+        updateAvatarMutation={updateAvatarMutation}
       />
 
       <UpdateEmailModal

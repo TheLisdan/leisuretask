@@ -5,6 +5,7 @@ import { changePasswordTrpcRoute } from './auth/changePassword';
 import { getMeTrpcRoute } from './auth/getMe';
 import { signInTrpcRoute } from './auth/signIn';
 import { signUpTrpcRoute } from './auth/signUp';
+import { updateAvatarTrpcRoute } from './auth/updateAvatar';
 import { updateEmailTrpcRoute } from './auth/updateEmail';
 import { updateUserNameTrpcRoute } from './auth/updateUserName';
 import { getUserTrpcRoute } from './other/getUser';
@@ -16,6 +17,7 @@ import { setTaskStatusTrpcRoute } from './tasks/setTaskStatus';
 import { updateTaskTrpcRoute } from './tasks/updateTask';
 import { saveTimeTrpcRoute } from './timer/saveTime';
 import { toggleTimerTrpcRoute } from './timer/toggleTimer';
+import { prepareCloudinaryUploadTrpcRoute } from './upload/prepareCloudinaryUpload';
 // @endindex // This too
 
 export const trpcRouter = createTRPCRouter({
@@ -24,6 +26,7 @@ export const trpcRouter = createTRPCRouter({
   getMe: getMeTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
+  updateAvatar: updateAvatarTrpcRoute,
   updateEmail: updateEmailTrpcRoute,
   updateUserName: updateUserNameTrpcRoute,
   getUser: getUserTrpcRoute,
@@ -35,6 +38,7 @@ export const trpcRouter = createTRPCRouter({
   updateTask: updateTaskTrpcRoute,
   saveTime: saveTimeTrpcRoute,
   toggleTimer: toggleTimerTrpcRoute,
+  prepareCloudinaryUpload: prepareCloudinaryUploadTrpcRoute,
   // @endindex
 });
 

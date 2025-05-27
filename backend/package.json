@@ -32,6 +32,7 @@
     "@sentry/node": "^9.19.0",
     "@trpc/server": "^10.45.2",
     "axios": "^1.9.0",
+    "cloudinary": "^2.6.1",
     "cors": "^2.8.5",
     "cron": "^4.3.0",
     "debug": "^4.4.0",

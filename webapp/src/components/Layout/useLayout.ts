@@ -9,6 +9,7 @@ export const useLayout = () => {
   const updateUserNameMutation = trpc.updateUserName.useMutation();
   const updateEmailMutation = trpc.updateEmail.useMutation();
   const changePasswordMutation = trpc.changePassword.useMutation();
+  const updateAvatarMutation = trpc.updateAvatar.useMutation();
 
   return {
     isSettingsModalOpen,
@@ -20,5 +21,6 @@ export const useLayout = () => {
     updateUserNameMutation,
     updateEmailMutation,
     changePasswordMutation,
+    updateAvatarMutation,
   };
 };
