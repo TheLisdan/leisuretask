@@ -1,6 +1,6 @@
+import { env } from '../env';
 import { getHomeRoute } from '@leisuretask/webapp/src/lib/routes';
 import { User } from '@prisma/client';
-import { env } from '../env';
 import { sendEmail } from './utils';
 
 export const sendWelcomeEmail = async ({

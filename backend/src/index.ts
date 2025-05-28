@@ -1,8 +1,8 @@
+import { env } from './lib/env';
 import cors from 'cors';
 import express from 'express';
 import { applyCron } from './lib/cron';
 import { AppContext, createAppContext } from './lib/ctx';
-import { env } from './lib/env';
 import { logger } from './lib/logger';
 import { applyPasswordToExpressApp } from './lib/password';
 import { initSentry } from './lib/sentry';

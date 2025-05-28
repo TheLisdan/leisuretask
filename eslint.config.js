@@ -110,6 +110,11 @@ export default [
               group: 'builtin',
               position: 'before',
             },
+            {
+              pattern: '{.,..}/**/env',
+              group: 'builtin',
+              position: 'before',
+            },
           ],
           alphabetize: {
             order: 'asc',

@@ -2,11 +2,11 @@ import '../lib/brevo.mock';
 import '../lib/emails/utils.mock';
 import '../lib/sentry.mock';
 
+import { env } from '../lib/env';
 import { omit } from '@leisuretask/shared/src/omit';
 import { type Task, type User } from '@prisma/client';
 import _ from 'lodash';
 import { createAppContext } from '../lib/ctx';
-import { env } from '../lib/env';
 import { getTrpcContext } from '../lib/trpc';
 import { trpcRouter } from '../router';
 import { deepMap } from '../utils/deepMap';

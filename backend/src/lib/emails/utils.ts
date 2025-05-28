@@ -1,10 +1,10 @@
+import { env } from '../env';
 import { promises as fs } from 'fs';
 import path from 'path';
 import fg from 'fast-glob';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
 import { sendEmailThroughBrevo } from '../brevo';
-import { env } from '../env';
 import { logger } from '../logger';
 
 const getHbrTemplates = _.memoize(async () => {

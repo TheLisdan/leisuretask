@@ -1,6 +1,6 @@
+import { env } from './env';
 import path from 'path';
 import * as Sentry from '@sentry/node';
-import { env } from './env';
 import { LoggerMetaData } from './logger';
 
 const isSentryEnabled = env.BACKEND_SENTRY_DSN;

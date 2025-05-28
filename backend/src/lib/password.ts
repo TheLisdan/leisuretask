@@ -1,8 +1,8 @@
+import { env } from './env';
 import { type Express } from 'express';
 import { Passport } from 'passport';
 import { ExtractJwt, Strategy as JWTstrategy } from 'passport-jwt';
 import { type AppContext } from './ctx';
-import { env } from './env';
 
 export const applyPasswordToExpressApp = (
   expressApp: Express,
