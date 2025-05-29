@@ -40,7 +40,22 @@ export default defineConfig(({ mode }) => {
           }),
     ],
     build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom'],
+            vendor: ['lodash', 'date-fns', 'js-cookie'],
+            query: ['@tanstack/react-query'],
+            ui: [
+              'framer-motion',
+              '@radix-ui/react-dropdown-menu',
+              'react-modal',
+            ],
+          },
+        },
+      },
       sourcemap: true,
+      chunkSizeWarningLimit: 650,
     },
     server: {
       port: +env.PORT,

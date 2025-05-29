@@ -6,6 +6,7 @@ import { AppContext, createAppContext } from './lib/ctx';
 import { logger } from './lib/logger';
 import { applyPasswordToExpressApp } from './lib/password';
 import { initSentry } from './lib/sentry';
+import { applyServeWebApp } from './lib/serveWebApp';
 import { applyExpressMiddleware } from './lib/trpc';
 import { trpcRouter } from './router';
 
@@ -24,6 +25,7 @@ void (async () => {
 
     applyPasswordToExpressApp(expressApp, ctx);
     await applyExpressMiddleware(expressApp, ctx, trpcRouter);
+    await applyServeWebApp(expressApp);
     applyCron(ctx);
 
     expressApp.use(

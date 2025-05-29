@@ -1,6 +1,7 @@
 import cs from 'classnames';
 import { format } from 'date-fns';
 import React, { useRef, useState } from 'react';
+import { mixpanelCompleteTask } from '../../../lib/mixpanel';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
 import { Checkbox } from '../../Checkbox';
@@ -24,7 +25,38 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
 
   const updateTaskMutation = trpc.updateTask.useMutation();
   const deleteTaskMutation = trpc.deleteTask.useMutation();
-  const setTaskStatus = trpc.setTaskStatus.useMutation();
+  const setTaskStatus = trpc.setTaskStatus.useMutation({
+    onMutate: async ({ taskId, status }) => {
+      const prevData = trpcUtils.getTasks.getInfiniteData();
+
+      trpcUtils.getTasks.setInfiniteData({ limit: 20 }, (old) => {
+        if (!old) {
+          return old;
+        }
+
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            ...page,
+            tasks: page.tasks.map((t) =>
+              t.id === taskId ? { ...t, status } : t
+            ),
+          })),
+        };
+      });
+
+      return { prevData };
+    },
+    onError: (err, variables, context) => {
+      if (context?.prevData) {
+        trpcUtils.getTasks.setInfiniteData({ limit: 20 }, context.prevData);
+      }
+    },
+    onSettled: () => {
+      trpcUtils.getTasks.invalidate();
+      trpcUtils.getMe.invalidate();
+    },
+  });
   const trpcUtils = trpc.useUtils();
 
   const minWidth = 200;
@@ -71,15 +103,29 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
             <Checkbox
               name={task.id}
               checked={task.status === 'COMPLETED'}
+              failed={task.status === 'FAILED'}
               onChange={(e) => {
                 if (!task.id) {
                   return;
                 }
-                setTaskStatus.mutate({
-                  taskId: task.id,
-                  status: e.target.checked ? 'COMPLETED' : 'IN_PROGRESS',
-                });
-                trpcUtils.getTasks.invalidate();
+
+                const isDeadlinePassed =
+                  task.deadline && new Date() > new Date(task.deadline);
+
+                void setTaskStatus
+                  .mutateAsync({
+                    taskId: task.id,
+                    status: isDeadlinePassed
+                      ? 'FAILED'
+                      : e.target.checked
+                        ? 'COMPLETED'
+                        : 'IN_PROGRESS',
+                  })
+                  .then(() => {
+                    if (task.status === 'IN_PROGRESS') {
+                      mixpanelCompleteTask(task);
+                    }
+                  });
               }}
             />
             {!!task.deadline && (
