@@ -5,6 +5,7 @@ import { withZodSchema } from 'formik-validator-zod';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { mixpanelIdentify, mixpanelTrackSignIn } from '../../../lib/mixpanel';
 import { getHomeRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
@@ -27,7 +28,9 @@ export const SignInPage = () => {
         onSubmit={async (values, actions) => {
           try {
             setSubmittingError(null);
-            const { token } = await signIn.mutateAsync(values);
+            const { token, userId } = await signIn.mutateAsync(values);
+            mixpanelIdentify(userId);
+            mixpanelTrackSignIn();
             Cookies.set('token', token, { expires: 99999 });
             void trpcUtils.invalidate();
             navigate(getHomeRoute());

@@ -38,5 +38,5 @@ export const signUpTrpcRoute = trpcLoggedProcedure
 
     void sendWelcomeEmail({ user });
     const token = signJWT(user.id);
-    return { token };
+    return { token, userId: user.id };
   });

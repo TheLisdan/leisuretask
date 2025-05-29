@@ -19,5 +19,5 @@ export const signInTrpcRoute = trpcLoggedProcedure
     }
 
     const token = signJWT(user.id);
-    return { token };
+    return { token, userId: user.id };
   });

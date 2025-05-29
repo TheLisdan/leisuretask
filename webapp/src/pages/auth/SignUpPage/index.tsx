@@ -9,6 +9,7 @@ import {
   zPasswordsMustBeTheSame,
   zStringMin,
 } from '../../../../../shared/src/zod';
+import { mixpanelAlias, mixpanelTrackSignUp } from '../../../lib/mixpanel';
 import { getHomeRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
@@ -38,7 +39,9 @@ export const SignUpPage = () => {
         onSubmit={async (values, actions) => {
           try {
             setSubmittingError(null);
-            const { token } = await signUp.mutateAsync(values);
+            const { token, userId } = await signUp.mutateAsync(values);
+            mixpanelAlias(userId);
+            mixpanelTrackSignUp();
             Cookies.set('token', token, { expires: 99999 });
             void trpcUtils.invalidate();
             navigate(getHomeRoute());

@@ -1,6 +1,7 @@
 import cs from 'classnames';
 import { format } from 'date-fns/format';
 import React from 'react';
+import { mixpanelCompleteTask } from '../../../lib/mixpanel';
 import { trpc } from '../../../lib/trpc';
 import { type TaskType } from '../../../lib/trpcTypes';
 import { Checkbox } from '../../Checkbox';
@@ -70,14 +71,20 @@ export const Task: React.FC<TaskProps> = ({ task, onClick, selected }) => {
             const isDeadlinePassed =
               task.deadline && new Date() > new Date(task.deadline);
 
-            setTaskStatus.mutate({
-              taskId,
-              status: isDeadlinePassed
-                ? 'FAILED'
-                : e.target.checked
-                  ? 'COMPLETED'
-                  : 'IN_PROGRESS',
-            });
+            void setTaskStatus
+              .mutateAsync({
+                taskId,
+                status: isDeadlinePassed
+                  ? 'FAILED'
+                  : e.target.checked
+                    ? 'COMPLETED'
+                    : 'IN_PROGRESS',
+              })
+              .then(() => {
+                if (task.status === 'IN_PROGRESS') {
+                  mixpanelCompleteTask(task);
+                }
+              });
           }}
         />
         <p className={css.title}>{task.title}</p>

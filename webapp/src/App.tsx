@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { AppContextProvider } from './lib/ctx';
+import { MixpanelUser } from './lib/mixpanel';
 import { routes } from './lib/routes';
 import { SentryUser } from './lib/sentry';
 import { TrpcProvider } from './lib/trpc';
@@ -18,6 +19,7 @@ export const App = () => {
       <AppContextProvider>
         <BrowserRouter>
           <SentryUser />
+          <MixpanelUser />
           <Routes>
             <Route path={routes.getSignOutRoute()} element={<SignOutPage />} />
             <Route path={routes.getLandingRoute()} element={<LandingPage />} />
