@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMe } from '../../lib/ctx';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
@@ -12,6 +13,7 @@ const formatTime = (seconds: number): string => {
 };
 
 export const Timer: React.FC = () => {
+  const { t } = useTranslation();
   const me = useMe();
   const utils = trpc.useUtils();
 
@@ -95,7 +97,9 @@ export const Timer: React.FC = () => {
   return (
     <div className={css.timerContainer}>
       <div className={css.time}>
-        <b>Free time: {formatTime(time)}</b>
+        <b>
+          {t('avaiableTime')}: {formatTime(time)}
+        </b>
       </div>
       <button
         type="button"
@@ -103,7 +107,7 @@ export const Timer: React.FC = () => {
         onClick={handleToggleTimer}
         disabled={time <= 0}
       >
-        {isActive ? 'Stop' : 'Start'}
+        {isActive ? t('stop') : t('start')}
       </button>
     </div>
   );

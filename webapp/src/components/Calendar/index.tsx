@@ -13,6 +13,7 @@ import {
   isSameDay,
 } from 'date-fns';
 import React, { useState } from 'react';
+import { getCurrentDateFnsLocale } from '../../i18n/config';
 import { Arrow } from '../Arrow/arrow';
 import css from './index.module.scss';
 
@@ -31,13 +32,19 @@ export const Calendar: React.FC = () => {
   const onNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
   const weekDays = Array.from(Array(7)).map((_, index) =>
-    format(addDays(calendarStart, index), 'EEEEEE')
+    format(addDays(calendarStart, index), 'EEEEEE', {
+      locale: getCurrentDateFnsLocale(),
+    })
   );
 
   return (
     <div className={css.calendar}>
       <div className={css.header}>
-        <span>{format(currentDate, 'LLLL, yyyy')}</span>
+        <span>
+          {format(currentDate, 'LLLL, yyyy', {
+            locale: getCurrentDateFnsLocale(),
+          })}
+        </span>
         <div className={css.navigation}>
           <button
             type="button"
@@ -76,7 +83,7 @@ export const Calendar: React.FC = () => {
               [css.today]: isSameDay(day, today),
             })}
           >
-            {format(day, 'd')}
+            {format(day, 'd', { locale: getCurrentDateFnsLocale() })}
           </div>
         ))}
       </div>

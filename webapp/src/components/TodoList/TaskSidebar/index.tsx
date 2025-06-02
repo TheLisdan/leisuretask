@@ -1,6 +1,8 @@
 import cs from 'classnames';
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getCurrentDateFnsLocale } from '../../../i18n/config';
 import { mixpanelCompleteTask } from '../../../lib/mixpanel';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
@@ -18,6 +20,7 @@ type TaskSidebarProps = {
 };
 
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
+  const { t } = useTranslation();
   const [width, setWidth] = useState(300);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -149,7 +152,9 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
                   })}
                 >
                   <CalendarTimeIcon className={css.calendarTimeIcon} />
-                  {format(task.deadline, 'do MMMM, HH:mm')}
+                  {format(task.deadline, 'do MMMM, HH:mm', {
+                    locale: getCurrentDateFnsLocale(),
+                  })}
                 </div>
               </>
             )}
@@ -159,14 +164,18 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
         <div className={css.taskFooter}>
           <Dropdown
             trigger={
-              <button type="button" className={css.taskOptions} title="More">
+              <button
+                type="button"
+                className={css.taskOptions}
+                title={t('more')}
+              >
                 <ThreeDotsIcon />
               </button>
             }
             align="end"
             items={[
               {
-                label: 'Edit',
+                label: t('edit'),
                 icon: <EditIcon />,
                 onClick: () => setIsModalOpen(true),
               },
@@ -174,7 +183,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
                 type: 'separator',
               },
               {
-                label: 'Delete',
+                label: t('delete'),
                 icon: <DeleteIcon />,
                 onClick: async () => {
                   await deleteTaskMutation.mutateAsync({
@@ -199,7 +208,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
           trpcUtils.getTasks.invalidate();
           setIsModalOpen(false);
         }}
-        submitButtonText="Update task"
+        submitButtonText={t('updateTask')}
         task={task}
       />
     </>

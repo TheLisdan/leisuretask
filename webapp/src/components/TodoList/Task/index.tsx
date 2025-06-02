@@ -1,6 +1,7 @@
 import cs from 'classnames';
 import { format } from 'date-fns/format';
 import React from 'react';
+import { getCurrentDateFnsLocale } from '../../../i18n/config';
 import { mixpanelCompleteTask } from '../../../lib/mixpanel';
 import { trpc } from '../../../lib/trpc';
 import { type TaskType } from '../../../lib/trpcTypes';
@@ -91,7 +92,9 @@ export const Task: React.FC<TaskProps> = ({ task, onClick, selected }) => {
       </div>
       {!!task.deadline && (
         <div className={css.additionalInfo}>
-          {format(task.deadline, 'do MMMM, HH:mm')}
+          {format(task.deadline, 'do MMMM, HH:mm', {
+            locale: getCurrentDateFnsLocale(),
+          })}
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { zChangePasswordTrpcInput } from '@leisuretask/backend/src/router/auth/changePassword/input';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   zPasswordsMustBeTheSame,
   zStringMin,
@@ -18,58 +19,62 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   isChangePasswordModalOpen,
   setIsChangePasswordModalOpen,
   changePasswordMutation,
-}) => (
-  <Modal
-    isOpen={isChangePasswordModalOpen}
-    onClose={() => setIsChangePasswordModalOpen(false)}
-  >
-    <Form
-      id="changePasswordForm"
-      initialValues={{
-        oldPassword: '',
-        newPassword: '',
-        newPasswordAgain: '',
-      }}
-      validationSchema={zChangePasswordTrpcInput
-        .extend({
-          newPasswordAgain: zStringMin(8),
-        })
-        .superRefine(
-          zPasswordsMustBeTheSame('newPassword', 'newPasswordAgain')
-        )}
-      onSubmit={async ({ newPassword, oldPassword }) => {
-        await changePasswordMutation.mutateAsync({
-          newPassword,
-          oldPassword,
-        });
-        setIsChangePasswordModalOpen(false);
-      }}
-      submitButtonText="Change password"
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Modal
+      isOpen={isChangePasswordModalOpen}
+      onClose={() => setIsChangePasswordModalOpen(false)}
     >
-      <Field
-        name="oldPassword"
-        label="Old password"
-        type="password"
-        placeholder="Type your old password"
-        stretch
-        marginBottom
-      />
-      <Field
-        name="newPassword"
-        label="New password"
-        type="password"
-        placeholder="Type your new password"
-        stretch
-        marginBottom
-      />
-      <Field
-        name="newPasswordAgain"
-        label="New password again"
-        type="password"
-        placeholder="Type your new password again"
-        stretch
-        marginBottom
-      />
-    </Form>
-  </Modal>
-);
+      <Form
+        id="changePasswordForm"
+        initialValues={{
+          oldPassword: '',
+          newPassword: '',
+          newPasswordAgain: '',
+        }}
+        validationSchema={zChangePasswordTrpcInput
+          .extend({
+            newPasswordAgain: zStringMin(8),
+          })
+          .superRefine(
+            zPasswordsMustBeTheSame('newPassword', 'newPasswordAgain')
+          )}
+        onSubmit={async ({ newPassword, oldPassword }) => {
+          await changePasswordMutation.mutateAsync({
+            newPassword,
+            oldPassword,
+          });
+          setIsChangePasswordModalOpen(false);
+        }}
+        submitButtonText={t('changePassword')}
+      >
+        <Field
+          name="oldPassword"
+          label={t('oldPassword')}
+          type="password"
+          placeholder={t('typeOldPassword')}
+          stretch
+          marginBottom
+        />
+        <Field
+          name="newPassword"
+          label={t('newPassword')}
+          type="password"
+          placeholder={t('typeNewPassword')}
+          stretch
+          marginBottom
+        />
+        <Field
+          name="newPasswordAgain"
+          label={t('newPasswordAgain')}
+          type="password"
+          placeholder={t('typeNewPasswordAgain')}
+          stretch
+          marginBottom
+        />
+      </Form>
+    </Modal>
+  );
+};

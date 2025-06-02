@@ -8,10 +8,10 @@ type PersistentSidebarProps = {
 export const PersistentSidebar: React.FC<PersistentSidebarProps> = ({
   children,
 }) => {
-  const [width, setWidth] = useState(270);
+  const [width, setWidth] = useState(300);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-  const minWidth = 270;
+  const minWidth = 300;
   const maxWidth = 600;
 
   const startResizing = (event: React.MouseEvent) => {

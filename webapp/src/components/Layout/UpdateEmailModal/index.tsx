@@ -1,4 +1,5 @@
 import { zUpdateEmailTrpcInput } from '@leisuretask/backend/src/router/auth/updateEmail/input';
+import { useTranslation } from 'react-i18next';
 import { trpc } from '../../../lib/trpc';
 import { Form } from '../../Form';
 import { Field } from '../../Form/Field';
@@ -15,6 +16,7 @@ export const UpdateEmailModal: React.FC<UpdateEmailModalProps> = ({
   setIsUpdateEmailModalOpen,
   updateEmailMutation,
 }) => {
+  const { t } = useTranslation();
   const trpcUtils = trpc.useUtils();
 
   return (
@@ -37,21 +39,21 @@ export const UpdateEmailModal: React.FC<UpdateEmailModalProps> = ({
           trpcUtils.getMe.setData(undefined, { me: updatedMe });
           setIsUpdateEmailModalOpen(false);
         }}
-        submitButtonText="Change E-Mail"
+        submitButtonText={t('changeEmail')}
       >
         <Field
           name="email"
-          label="E-Mail"
+          label={t('email')}
           type="email"
-          placeholder="Type your new E-Mail"
+          placeholder={t('typeNewEmail')}
           stretch
           marginBottom
         />
         <Field
           name="password"
-          label="Password"
+          label={t('password')}
           type="password"
-          placeholder="Type your password"
+          placeholder={t('typePassword')}
           stretch
           marginBottom
         />

@@ -1,56 +1,51 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Logo } from '../../../components/Logo';
-import { routes } from '../../../lib/routes';
+import { getSignInRoute, getSignUpRoute } from '../../../lib/routes';
 import css from './index.module.scss';
 
 export const LandingPage = () => {
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className={css.landing}>
       <header className={css.header}>
         <Logo />
-        <div className={css.nav}>
-          <Link to={routes.getSignInRoute()} className={css.signInButton}>
-            Sign In
+        <nav className={css.nav}>
+          <Link to={getSignInRoute()} className={css.signInButton}>
+            {t('signIn')}
           </Link>
-          <Link to={routes.getSignUpRoute()} className={css.signUpButton}>
-            Sign Up
+          <Link to={getSignUpRoute()} className={css.signUpButton}>
+            {t('signUp')}
           </Link>
-        </div>
+        </nav>
       </header>
 
       <main className={css.main}>
         <div className={css.hero}>
-          <h1>Manage Your Time with Pleasure</h1>
-          <p>
-            LeisureTask helps you efficiently plan tasks and get rewards for
-            completing them
-          </p>
-          <Link to={routes.getSignUpRoute()} className={css.ctaButton}>
-            Start Free
+          <h1>{t('heroTitle')}</h1>
+          <p>{t('heroSubtitle')}</p>
+          <Link to={getSignUpRoute()} className={css.ctaButton}>
+            {t('signUp')}
           </Link>
         </div>
 
         <div className={css.features}>
           <div className={css.feature}>
             <div className={css.featureIcon}>⏱️</div>
-            <h3>Smart Timer</h3>
-            <p>
-              Track your task completion time and earn bonus time for finishing
-              them
-            </p>
+            <h3>{t('featureTimer')}</h3>
+            <p>{t('featureTimerDesc')}</p>
           </div>
           <div className={css.feature}>
             <div className={css.featureIcon}>📋</div>
-            <h3>Easy Task Management</h3>
-            <p>
-              Create, organize and mark tasks as completed in a user-friendly
-              interface
-            </p>
+            <h3>{t('featureManagement')}</h3>
+            <p>{t('featureManagementDesc')}</p>
           </div>
           <div className={css.feature}>
             <div className={css.featureIcon}>🎯</div>
-            <h3>Reward System</h3>
-            <p>Get extra time for completing tasks on schedule</p>
+            <h3>{t('featureRewards')}</h3>
+            <p>{t('featureRewardsDesc')}</p>
           </div>
         </div>
       </main>
@@ -58,7 +53,7 @@ export const LandingPage = () => {
       <footer className={css.footer}>
         <div className={css.container}>
           <div className={css.copyright}>
-            © {new Date().getFullYear()} Leisure Task. All rights reserved.
+            © {currentYear} Leisure Task. All rights reserved.
           </div>
           <div className={css.footerNav}>
             <a

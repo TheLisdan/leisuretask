@@ -12,6 +12,7 @@ import { LandingPage } from './pages/other/LandingPage';
 import { NotFoundPage } from './pages/other/NotFoundPage';
 import { TodoListPage } from './pages/todolist/TodoListPage';
 import './styles/global.scss';
+import './i18n/config';
 
 export const App = () => {
   return (

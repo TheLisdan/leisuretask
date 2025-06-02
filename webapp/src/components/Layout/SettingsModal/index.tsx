@@ -1,5 +1,6 @@
 import { zUpdateAvatarTrpcInput } from '@leisuretask/backend/src/router/auth/updateAvatar/input';
 import { zUpdateUserNameTrpcInput } from '@leisuretask/backend/src/router/auth/updateUserName/input';
+import { useTranslation } from 'react-i18next';
 import { trpc } from '../../../lib/trpc';
 import { MeType } from '../../../lib/trpcTypes';
 import { Avatar } from '../../Avatar';
@@ -29,6 +30,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   setIsUpdateEmailModalOpen,
   setIsChangePasswordModalOpen,
 }) => {
+  const { t } = useTranslation();
   const trpcUtils = trpc.useUtils();
   return (
     <Modal
@@ -36,7 +38,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       onClose={() => setIsSettingsModalOpen(false)}
       sidebarItems={[
         {
-          label: 'Account',
+          label: t('account'),
           icon: <AccountIcon />,
           tabName: 'account',
           content: (
@@ -61,9 +63,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   validationSchema={zUpdateUserNameTrpcInput.pick({
                     name: true,
                   })}
-                  initialValues={{
-                    name: me.name,
-                  }}
+                  initialValues={{ name: me.name }}
                   onSubmit={async (name) => {
                     const updatedMe =
                       await updateUserNameMutation.mutateAsync(name);
@@ -76,7 +76,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               <div className={css.changeSetting}>
-                <div className={css.changeSettingLeft}>E-Mail</div>
+                <div className={css.changeSettingLeft}>{t('email')}</div>
                 <div className={css.changeSettingRight}>
                   <span className={css.changeSettingText}>{me.email}</span>
                   <button
@@ -84,20 +84,20 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     className={css.changeSettingButton}
                     onClick={() => setIsUpdateEmailModalOpen(true)}
                   >
-                    Change E-Mail
+                    {t('changeEmail')}
                   </button>
                 </div>
               </div>
 
               <div className={css.changeSetting}>
-                <div className={css.changeSettingLeft}>Password</div>
+                <div className={css.changeSettingLeft}>{t('password')}</div>
                 <div className={css.changeSettingRight}>
                   <button
                     type="button"
                     className={css.changeSettingButton}
                     onClick={() => setIsChangePasswordModalOpen(true)}
                   >
-                    Change password
+                    {t('changePassword')}
                   </button>
                 </div>
               </div>

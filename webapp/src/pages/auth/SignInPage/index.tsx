@@ -1,26 +1,28 @@
 import { zSignInTrpcInput } from '@leisuretask/backend/src/router/auth/signIn/input';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from '../../../components/Form';
 import { Field } from '../../../components/Form/Field';
 import { Logo } from '../../../components/Logo';
 import { mixpanelIdentify, mixpanelTrackSignIn } from '../../../lib/mixpanel';
-import { getHomeRoute, routes } from '../../../lib/routes';
+import { getHomeRoute, getSignUpRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
 
 export const SignInPage = () => {
+  const { t } = useTranslation();
   const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
-  const signIn = trpc.signIn.useMutation();
+  const signInMutation = trpc.signIn.useMutation();
 
   return (
     <div className={css.authContainer}>
-      <Logo marginBottom />
       <div className={css.authCard}>
-        <h1>Welcome Back</h1>
+        <Logo marginBottom />
+        <h1>{t('signIn')}</h1>
         <Form
           id="signInForm"
           initialValues={{
@@ -31,7 +33,8 @@ export const SignInPage = () => {
           onSubmit={async (values) => {
             try {
               setSubmittingError(null);
-              const { token, userId } = await signIn.mutateAsync(values);
+              const { token, userId } =
+                await signInMutation.mutateAsync(values);
               mixpanelIdentify(userId);
               mixpanelTrackSignIn();
               Cookies.set('token', token, { expires: 99999 });
@@ -41,20 +44,22 @@ export const SignInPage = () => {
               setSubmittingError(error.message);
             }
           }}
-          submitButtonText="Sign In"
+          submitButtonText={t('signIn')}
         >
           <Field
             name="name"
-            label="Username"
-            placeholder="Enter your username"
+            label={t('name')}
+            type="text"
+            placeholder={t('name')}
             stretch
             marginBottom
           />
+
           <Field
             name="password"
+            label={t('password')}
             type="password"
-            label="Password"
-            placeholder="Enter your password"
+            placeholder={t('typePassword')}
             stretch
             marginBottom
           />
@@ -62,10 +67,10 @@ export const SignInPage = () => {
             <div className={css.error}>{submittingError}</div>
           )}
         </Form>
-      </div>
-      <div className={css.switchAuth}>
-        Don't have an account?
-        <Link to={routes.getSignUpRoute()}>Sign Up</Link>
+        <div className={css.switchAuth}>
+          {t('dontHaveAccount')}
+          <Link to={getSignUpRoute()}>{t('signUp')}</Link>
+        </div>
       </div>
     </div>
   );

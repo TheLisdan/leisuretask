@@ -1,7 +1,8 @@
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import { useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useTranslation } from 'react-i18next';
 import { Calendar } from '../../../components/Calendar';
 import { Loader } from '../../../components/Loader';
 import { PersistentSidebar } from '../../../components/PersistentSidebar';
@@ -10,6 +11,7 @@ import { TaskDragWrapper } from '../../../components/TodoList/TaskDragWrapper';
 import { TaskModal } from '../../../components/TodoList/TaskModal';
 import { TaskSidebar } from '../../../components/TodoList/TaskSidebar';
 import { useTodoList } from '../../../components/TodoList/useTodoList';
+import { getCurrentDateFnsLocale } from '../../../i18n/config';
 import css from './index.module.scss';
 import { PlusIcon } from './plus-icon';
 
@@ -35,11 +37,16 @@ export const TodoListPage = () => {
   const failedTasks = tasks.filter((task) => task.status === 'FAILED');
 
   const pageRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   return (
     <DndProvider backend={HTML5Backend}>
       <PersistentSidebar>
-        <h2>{format(new Date(), 'EEEE, do MMMM')}</h2>
+        <h2>
+          {format(new Date(), 'EEEE, do MMMM', {
+            locale: getCurrentDateFnsLocale(),
+          })}
+        </h2>
         <Calendar />
       </PersistentSidebar>
 
@@ -50,7 +57,7 @@ export const TodoListPage = () => {
         {isLoading && <Loader type="inline" />}
         {tasksError && <p className={css.error}>{tasksError.message}</p>}
         <div className={css.taskWrapper}>
-          <h2 className={css.sectionTitle}>In progress</h2>
+          <h2 className={css.sectionTitle}>{t('inProgress')}</h2>
           {inProgressTasks.map((task, index) => (
             <TaskDragWrapper
               key={task.id}
@@ -71,7 +78,7 @@ export const TodoListPage = () => {
               disabled={isFetchingNextPage}
               className={css.loadMoreButton}
             >
-              Load more
+              {t('loadMore')}
             </button>
           )}
           {isFetchingNextPage && (
@@ -80,7 +87,7 @@ export const TodoListPage = () => {
             </div>
           )}
 
-          <h2 className={css.sectionTitle}>Completed</h2>
+          <h2 className={css.sectionTitle}>{t('completed')}</h2>
           {completedTasks.map((task, index) => (
             <TaskDragWrapper
               key={task.id}
@@ -92,7 +99,7 @@ export const TodoListPage = () => {
             />
           ))}
 
-          <h2 className={css.sectionTitle}>Failed</h2>
+          <h2 className={css.sectionTitle}>{t('failed')}</h2>
           {failedTasks.map((task, index) => (
             <TaskDragWrapper
               key={task.id}
@@ -109,7 +116,7 @@ export const TodoListPage = () => {
           type="button"
           onClick={openModal}
           className={css.openCreateTaskFormButton}
-          title="Create task"
+          title={t('createTask')}
         >
           <PlusIcon className={css.plusIcon} />
         </button>
@@ -120,7 +127,7 @@ export const TodoListPage = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleCreateTask}
-        submitButtonText="Create task"
+        submitButtonText={t('createTask')}
       />
     </DndProvider>
   );

@@ -1,6 +1,8 @@
 import { zCreateTaskTrpcInput } from '@leisuretask/backend/src/router/tasks/createTask/input';
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getCurrentDateFnsLocale } from '../../../i18n/config';
 import { TaskType } from '../../../lib/trpcTypes';
 import { Checkbox } from '../../Checkbox';
 import { Form } from '../../Form';
@@ -29,6 +31,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
   submitButtonText,
   task,
 }) => {
+  const { t } = useTranslation();
   const [award, setAward] = useState(() => (task ? task.award / 60 : 30));
   const [hasDeadline, setHasDeadline] = useState(() => !!task?.deadline);
 
@@ -42,7 +45,9 @@ export const TaskModal: React.FC<TaskModalProps> = ({
 
           deadline:
             task?.deadline && hasDeadline
-              ? format(task.deadline, "yyyy-MM-dd'T'HH:mm")
+              ? format(task.deadline, "yyyy-MM-dd'T'HH:mm", {
+                  locale: getCurrentDateFnsLocale(),
+                })
               : '',
         }}
         onSubmit={async (values) => {
@@ -59,16 +64,18 @@ export const TaskModal: React.FC<TaskModalProps> = ({
       >
         <Field
           name="title"
-          label="Task"
-          placeholder="Task text"
+          label={t('taskTitle')}
+          placeholder={t('title')}
           stretch
           marginBottom
         />
 
-        <Line />
-
         <div className={css.timeControls}>
-          <TimeSelector value={award} onChange={setAward} label="Time Award" />
+          <TimeSelector
+            value={award}
+            onChange={setAward}
+            label={t('timeAward')}
+          />
         </div>
 
         <Line />
@@ -80,12 +87,16 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               checked={hasDeadline}
               onChange={(e) => setHasDeadline(e.target.checked)}
             />
-            <span>Set deadline</span>
+            <span>{t('setDeadline')}</span>
           </div>
 
           {hasDeadline && (
             <div className={css.deadlineControls}>
-              <Field name="deadline" type="datetime-local" label="Deadline" />
+              <Field
+                name="deadline"
+                type="datetime-local"
+                label={t('deadline')}
+              />
             </div>
           )}
         </div>
