@@ -1,5 +1,6 @@
 @use '../../../styles/vars';
 @use '../../../styles/mixins';
+@use '../../../../node_modules/include-media/dist/include-media';
 
 .field {
   @include mixins.flex(column, flex-start);
@@ -7,11 +8,19 @@
 
   &.marginBottom {
     margin-bottom: 24px;
+
+    @include include-media.media('<=phone') {
+      margin-bottom: 16px;
+    }
   }
 
   form & {
     &:last-of-type:not(.inline) {
       margin-bottom: 60px;
+
+      @include include-media.media('<=phone') {
+        margin-bottom: 40px;
+      }
     }
   }
 
@@ -27,6 +36,11 @@
       transition: all 0.2s ease;
       padding: 8px;
 
+      @include include-media.media('<=phone') {
+        font-size: 14px;
+        padding: 6px;
+      }
+
       &:hover:not(.editing) {
         background-color: vars.$uiBackground;
       }
@@ -34,7 +48,6 @@
       &.editing {
         cursor: text;
         background-color: vars.$uiBackground;
-
         border-radius: 5px;
       }
     }
@@ -42,6 +55,12 @@
 
   .label {
     margin-bottom: 8px;
+    font-size: vars.$defaultFontSize;
+
+    @include include-media.media('<=phone') {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
   }
 
   .textInput {
@@ -51,6 +70,11 @@
     border-radius: 5px;
     font-family: vars.$defaultFontFamily;
     font-size: vars.$defaultFontSize;
+
+    @include include-media.media('<=phone') {
+      padding: 10px;
+      font-size: 14px;
+    }
 
     &::placeholder {
       color: vars.$mainGray;

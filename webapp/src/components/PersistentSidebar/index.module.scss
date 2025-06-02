@@ -9,6 +9,13 @@
   position: relative;
   padding: vars.$mediumPadding 36px;
   background-color: vars.$mainWhite;
+  min-width: 270px;
+  max-width: 600px;
+  transition: width 0.3s ease;
+
+  @include include-media.media('<=tablet') {
+    display: none;
+  }
 
   &:after {
     content: '';
@@ -18,9 +25,17 @@
     width: 5px;
     height: 100%;
     cursor: ew-resize;
+
+    @include include-media.media('<=tablet') {
+      display: none;
+    }
   }
 
   h2 {
     @include mixins.h2;
+
+    @include include-media.media('<=phone') {
+      font-size: 14px;
+    }
   }
 }

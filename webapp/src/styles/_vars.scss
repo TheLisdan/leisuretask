@@ -1,5 +1,12 @@
 @import 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap';
 
+$breakpoints: (
+  'phone': 480px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'large': 1200px,
+);
+
 $mainGreen: #4caf50;
 $mainGreenLight: #81c784;
 $mainGreenDark: #388e3c;

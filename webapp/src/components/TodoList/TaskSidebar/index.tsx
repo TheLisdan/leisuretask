@@ -1,6 +1,6 @@
 import cs from 'classnames';
 import { format } from 'date-fns';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { mixpanelCompleteTask } from '../../../lib/mixpanel';
 import { trpc } from '../../../lib/trpc';
 import { TaskType } from '../../../lib/trpcTypes';
@@ -20,6 +20,17 @@ type TaskSidebarProps = {
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
   const [width, setWidth] = useState(300);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    };
+
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
@@ -95,8 +106,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({ task }) => {
       <aside
         className={css.taskSidebar}
         ref={sidebarRef}
-        style={{ width }}
-        onMouseDown={startResizing}
+        style={isMobile ? undefined : { width }}
+        onMouseDown={!isMobile ? startResizing : undefined}
       >
         <div className={css.taskHeader}>
           <div className={css.taskHeaderMain}>

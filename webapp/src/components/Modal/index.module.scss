@@ -1,5 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 :global {
   .ReactModal__Overlay {
@@ -18,10 +19,22 @@
   .ReactModal__Content {
     top: vars.$bigPadding;
     transition: top 200ms ease-in-out;
+
+    @include include-media.media('<=tablet') {
+      top: vars.$mediumPadding;
+    }
+
+    @include include-media.media('<=phone') {
+      top: vars.$smallPadding;
+    }
   }
 
   .ReactModal__Content--after-open {
     top: 40px;
+
+    @include include-media.media('<=phone') {
+      top: 20px;
+    }
   }
 
   .ReactModal__Content--before-close {
@@ -35,14 +48,31 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  padding: 0 vars.$mediumPadding;
+
+  @include include-media.media('<=phone') {
+    padding: 0 vars.$smallPadding;
+  }
 }
 
 .modal {
   @include mixins.flex(row, normal);
-  position: absolute;
+  position: relative;
   min-width: 660px;
   background: vars.$mainWhite;
   border-radius: 5px;
+  overflow: hidden;
+
+  @include include-media.media('<=tablet') {
+    min-width: auto;
+    width: 100%;
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  @include include-media.media('<=phone') {
+    flex-direction: column;
+  }
 
   .modalSidebar {
     @include mixins.flex(column, flex-start);
@@ -51,13 +81,32 @@
     border-right: 1px solid vars.$mainGrayLight;
     border-radius: 5px 0 0 5px;
 
+    @include include-media.media('<=phone') {
+      flex-direction: row;
+      padding: 12px;
+      border-right: none;
+      border-bottom: 1px solid vars.$mainGrayLight;
+      border-radius: 5px 5px 0 0;
+      overflow-x: auto;
+      gap: 16px;
+    }
+
     .sidebarTab {
       @include mixins.flex(row, center);
       cursor: pointer;
       color: vars.$mainGray;
+      white-space: nowrap;
+
+      @include include-media.media('<=phone') {
+        font-size: 14px;
+      }
 
       .sidebarIcon {
         margin-right: 8px;
+
+        @include include-media.media('<=phone') {
+          margin-right: 6px;
+        }
       }
 
       &:hover {
@@ -77,7 +126,14 @@
   .modalContent {
     @include mixins.flex(column);
     width: 100%;
-
     padding: vars.$bigPadding;
+
+    @include include-media.media('<=tablet') {
+      padding: vars.$mediumPadding;
+    }
+
+    @include include-media.media('<=phone') {
+      padding: vars.$smallPadding;
+    }
   }
 }

@@ -1,12 +1,19 @@
 @use '../../../styles/vars';
 @use '../../../styles/mixins';
+@use '../../../../node_modules/include-media/dist/include-media';
 
 .timeSelector {
   @include mixins.flex(column);
+  width: 100%;
 
   label {
     margin-bottom: 8px;
     font-weight: bold;
+
+    @include include-media.media('<=phone') {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
   }
 
   .controls {
@@ -14,6 +21,12 @@
     background-color: vars.$uiBackground;
     border-radius: 5px;
     padding: 8px;
+    width: 100%;
+    justify-content: space-between;
+
+    @include include-media.media('<=phone') {
+      padding: 6px;
+    }
 
     button {
       @include mixins.flex(row, center);
@@ -23,6 +36,15 @@
       cursor: pointer;
       padding: 8px;
       font-size: 16px;
+      min-width: 44px;
+      min-height: 44px;
+
+      @include include-media.media('<=phone') {
+        padding: 6px;
+        font-size: 14px;
+        min-width: 36px;
+        min-height: 36px;
+      }
 
       &:hover:not(:disabled) {
         color: vars.$mainGreenLight;
@@ -37,6 +59,12 @@
     span {
       min-width: 60px;
       text-align: center;
+      font-size: vars.$defaultFontSize;
+
+      @include include-media.media('<=phone') {
+        min-width: 50px;
+        font-size: 14px;
+      }
     }
   }
 }

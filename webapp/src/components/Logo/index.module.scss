@@ -1,5 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .logo {
   @include mixins.flex(row, center);
@@ -7,8 +8,31 @@
   font-size: 24px;
   font-weight: 600;
   color: vars.$mainGreen;
+  transition: transform 0.2s ease;
+
+  @include include-media.media('<=tablet') {
+    font-size: 20px;
+    gap: 8px;
+  }
+
+  @include include-media.media('<=phone') {
+    font-size: 18px;
+    gap: 6px;
+  }
 
   &.marginBottom {
     margin-bottom: 40px;
+
+    @include include-media.media('<=tablet') {
+      margin-bottom: 30px;
+    }
+
+    @include include-media.media('<=phone') {
+      margin-bottom: 20px;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.05);
   }
 }

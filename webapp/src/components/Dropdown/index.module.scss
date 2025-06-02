@@ -1,24 +1,44 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .dropdownMenu {
   @include mixins.flex(column, flex-start);
   background-color: vars.$uiBackground;
   padding: 16px 8px;
   border-radius: 5px;
+  min-width: 180px;
+
+  @include include-media.media('<=phone') {
+    padding: 12px 6px;
+    min-width: 150px;
+  }
 }
 
 .dropdownMenuItem {
   @include mixins.flex(row, center);
   color: vars.$mainGray;
-  padding: 0 4px;
+  padding: 8px;
   cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  @include include-media.media('<=phone') {
+    padding: 6px;
+    font-size: 14px;
+  }
 
   &:not(:last-child) {
     margin-bottom: 12px;
 
+    @include include-media.media('<=phone') {
+      margin-bottom: 8px;
+    }
+
     &:hover {
       color: vars.$mainGreenLight;
+      background-color: rgba(vars.$mainGreenLight, 0.1);
     }
 
     &:active {
@@ -28,10 +48,15 @@
 
   &:hover {
     color: vars.$mainRed;
+    background-color: rgba(vars.$mainRed, 0.1);
   }
 
   .dropdownMenuItemIcon {
     margin-right: 8px;
+
+    @include include-media.media('<=phone') {
+      margin-right: 6px;
+    }
   }
 }
 
@@ -40,4 +65,9 @@
   background-color: vars.$mainGray;
   width: 100%;
   margin-bottom: 12px;
+  opacity: 0.3;
+
+  @include include-media.media('<=phone') {
+    margin-bottom: 8px;
+  }
 }

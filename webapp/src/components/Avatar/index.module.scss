@@ -1,9 +1,15 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .avatarContainer {
   @include mixins.flex(row, center, center);
   cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .avatar {
@@ -14,17 +20,40 @@
   user-select: none;
   color: vars.$mainGrayLight;
   overflow: hidden;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 
   &.small {
     width: 30px;
     height: 30px;
     font-size: 14px;
+
+    @include include-media.media('<=phone') {
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
+    }
   }
 
   &.big {
     width: 60px;
     height: 60px;
     font-size: 24px;
+
+    @include include-media.media('<=tablet') {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+    }
+
+    @include include-media.media('<=phone') {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
   }
 
   img {

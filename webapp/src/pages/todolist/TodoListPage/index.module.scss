@@ -10,8 +10,21 @@
   height: 100vh;
   overflow-y: auto;
 
+  @include include-media.media('<=tablet') {
+    padding: vars.$mediumPadding;
+  }
+
+  @include include-media.media('<=phone') {
+    padding: vars.$smallPadding;
+    height: calc(100vh - 60px);
+  }
+
   .bigText {
     font-size: vars.$bigFontSize;
+
+    @include include-media.media('<=phone') {
+      font-size: vars.$mediumFontSize;
+    }
   }
 
   .taskWrapper {
@@ -20,6 +33,11 @@
     .sectionTitle {
       color: vars.$mainGray;
       margin: vars.$bigMargin 0;
+
+      @include include-media.media('<=phone') {
+        margin: vars.$mediumMargin 0;
+        font-size: 14px;
+      }
     }
 
     .loadMoreButton {
@@ -28,13 +46,22 @@
       margin: 16px auto;
       cursor: pointer;
       user-select: none;
+      padding: 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+
+      @include include-media.media('<=phone') {
+        margin: 12px auto;
+        font-size: 14px;
+      }
 
       &:hover {
         color: vars.$mainGreenLight;
+        background-color: rgba(vars.$mainGreenLight, 0.1);
       }
 
       &:active {
-        color: vars.$mainWhite;
+        color: vars.$mainGreen;
       }
     }
   }
@@ -44,7 +71,7 @@
     margin-top: auto;
     align-self: flex-end;
     position: sticky;
-    bottom: 0;
+    bottom: vars.$mediumPadding;
     width: fit-content;
     padding: 15px;
     background-color: vars.$uiBackground;
@@ -53,18 +80,30 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 1000;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    @include include-media.media('<=tablet') {
+      bottom: vars.$smallPadding;
+      padding: 12px;
+    }
+
+    @include include-media.media('<=phone') {
+      position: fixed;
+      right: vars.$smallPadding;
+      bottom: vars.$smallMargin;
+    }
 
     &:hover {
       background-color: vars.$mainGrayLight;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     &:active {
       background-color: vars.$mainGreenLight;
       color: vars.$mainWhite;
-    }
-
-    &:focus {
-      outline: vars.$mainGrayLight;
+      transform: translateY(0);
     }
   }
 }
@@ -75,18 +114,38 @@
   .taskField {
     @include mixins.flex(column, flex-start);
     margin-bottom: 60px;
+    width: 100%;
+
+    @include include-media.media('<=tablet') {
+      margin-bottom: 40px;
+    }
   }
 
   .label {
     margin-bottom: 8px;
+
+    @include include-media.media('<=phone') {
+      font-size: 14px;
+    }
   }
 
   .textInput {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     padding: vars.$smallPadding;
     border: 0;
     background-color: vars.$uiBackground;
     border-radius: 5px;
+    font-size: vars.$defaultFontSize;
+
+    @include include-media.media('<=tablet') {
+      max-width: none;
+    }
+
+    @include include-media.media('<=phone') {
+      padding: 10px;
+      font-size: 14px;
+    }
 
     &::placeholder {
       color: vars.$mainGray;
@@ -100,7 +159,7 @@
 
   .createTaskButton {
     @include mixins.flex;
-    padding: 8px;
+    padding: 8px 16px;
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
@@ -108,13 +167,27 @@
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
+    font-size: vars.$mediumFontSize;
+    transition: all 0.2s ease;
+
+    @include include-media.media('<=tablet') {
+      width: 100%;
+      justify-content: center;
+    }
+
+    @include include-media.media('<=phone') {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
 
     &:hover {
       background-color: vars.$mainGreenLight;
+      transform: translateY(-1px);
     }
 
     &:active {
       background-color: vars.$mainGrayLight;
+      transform: translateY(0);
     }
   }
 }

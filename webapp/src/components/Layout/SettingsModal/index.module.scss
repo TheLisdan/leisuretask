@@ -9,12 +9,30 @@
   form {
     @include mixins.flex(column);
     margin-top: 8px;
+
+    @include include-media.media('<=phone') {
+      margin-top: 4px;
+    }
   }
 
   .changeSetting {
     @include mixins.flex(row, center, space-between);
     width: 100%;
     margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+
+    @include include-media.media('<=tablet') {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    &:hover {
+      background-color: vars.$uiBackground;
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -23,20 +41,42 @@
     .changeSettingRight {
       @include mixins.flex(row, center);
 
+      @include include-media.media('<=tablet') {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       .changeSettingText {
         color: vars.$mainGray;
         margin-right: 12px;
+        font-size: vars.$defaultFontSize;
+
+        @include include-media.media('<=phone') {
+          font-size: 14px;
+          margin-right: 8px;
+        }
       }
 
       .changeSettingButton {
         color: vars.$mainGreen;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-size: vars.$defaultFontSize;
+
+        @include include-media.media('<=phone') {
+          font-size: 14px;
+        }
 
         &:hover {
           color: vars.$mainGreenLight;
+          background-color: rgba(vars.$mainGreenLight, 0.1);
         }
 
         &:active {
           color: vars.$mainGrayLight;
+          background-color: rgba(vars.$mainGrayLight, 0.1);
         }
       }
     }

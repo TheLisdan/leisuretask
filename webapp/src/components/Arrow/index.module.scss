@@ -1,5 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .left {
   transform: rotate(180deg);
@@ -11,4 +12,20 @@
 
 .bottom {
   transform: rotate(90deg);
+}
+
+@include include-media.media('<=phone') {
+  svg {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+  }
+}
+
+@include include-media.media('<=tablet') {
+  svg {
+    width: 24px;
+    height: 24px;
+    padding: 3px;
+  }
 }

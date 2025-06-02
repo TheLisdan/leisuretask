@@ -1,5 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .loader {
   &.type-fullscreen {
@@ -13,6 +14,22 @@
       $size: 40px,
       $color: vars.$mainGreen
     );
+
+    @include include-media.media('<=tablet') {
+      @include mixins.loader(
+        $borderWidth: 4px,
+        $size: 35px,
+        $color: vars.$mainGreen
+      );
+    }
+
+    @include include-media.media('<=phone') {
+      @include mixins.loader(
+        $borderWidth: 3px,
+        $size: 30px,
+        $color: vars.$mainGreen
+      );
+    }
   }
 
   &.type-inline {
@@ -25,5 +42,23 @@
       $size: 30px,
       $color: vars.$mainGreen
     );
+
+    @include include-media.media('<=tablet') {
+      height: 60px;
+      @include mixins.loader(
+        $borderWidth: 3px,
+        $size: 25px,
+        $color: vars.$mainGreen
+      );
+    }
+
+    @include include-media.media('<=phone') {
+      height: 50px;
+      @include mixins.loader(
+        $borderWidth: 2px,
+        $size: 20px,
+        $color: vars.$mainGreen
+      );
+    }
   }
 }

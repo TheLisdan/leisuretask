@@ -1,5 +1,6 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .form {
   @include mixins.flex(column, flex-start);
@@ -7,7 +8,7 @@
 
   .submitButton {
     @include mixins.flex;
-    padding: 8px;
+    padding: 8px 16px;
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
@@ -15,13 +16,35 @@
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
+    font-size: vars.$mediumFontSize;
+    min-width: 120px;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    @include include-media.media('<=tablet') {
+      align-self: stretch;
+    }
+
+    @include include-media.media('<=phone') {
+      padding: 8px 12px;
+      font-size: 14px;
+      min-width: 100px;
+    }
 
     &:hover {
       background-color: vars.$mainGreenLight;
+      transform: translateY(-1px);
     }
 
     &:active {
       background-color: vars.$mainGrayLight;
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
     }
   }
 }

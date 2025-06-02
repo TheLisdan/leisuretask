@@ -1,10 +1,11 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .calendar {
   @include mixins.flex(column, center);
-
   margin-top: 16px;
+  width: 100%;
 
   .header {
     @include mixins.flex(row, center, space-between);
@@ -17,6 +18,7 @@
 
       .switchMonth {
         color: vars.$mainGray;
+        padding: 4px;
 
         &:first-child {
           margin-right: 12px;
@@ -37,11 +39,15 @@
 
     .weekDay {
       @include mixins.flex(row, center, center);
-
       margin-right: 10px;
+      width: calc(100% / 7);
 
       &:last-child {
-        margin-right: 5px;
+        margin-right: 0;
+      }
+
+      @include include-media.media('<=phone') {
+        margin-right: 6px;
       }
     }
   }
@@ -58,10 +64,12 @@
       width: 25px;
       height: 25px;
       border-radius: 50%;
+      cursor: pointer;
     }
 
     .otherMonth {
       color: vars.$mainGray;
+      cursor: default;
     }
 
     .today {

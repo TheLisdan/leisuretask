@@ -1,12 +1,30 @@
 @use '../../styles/vars';
 @use '../../styles/mixins';
+@use '../../../node_modules/include-media/dist/include-media';
 
 .timerContainer {
   @include mixins.flex;
+  width: 100%;
+
+  @include include-media.media('<=tablet') {
+    flex-direction: column;
+    gap: 16px;
+  }
 
   .time {
     width: 300px;
     margin-right: 28px;
+    font-size: vars.$mediumFontSize;
+
+    @include include-media.media('<=tablet') {
+      width: 100%;
+      margin-right: 0;
+      text-align: center;
+    }
+
+    @include include-media.media('<=phone') {
+      font-size: 14px;
+    }
   }
 
   .toggleButton {
@@ -19,6 +37,20 @@
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
+    font-size: vars.$mediumFontSize;
+    min-width: 120px;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    @include include-media.media('<=tablet') {
+      align-self: stretch;
+    }
+
+    @include include-media.media('<=phone') {
+      padding: 8px 12px;
+      font-size: 14px;
+      min-width: 100px;
+    }
 
     &:hover {
       background-color: vars.$mainGreenLight;
