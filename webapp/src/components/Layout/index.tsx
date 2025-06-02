@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
+import { TimerLogo } from '../../../assets/timer-logo';
 import { useMe } from '../../lib/ctx';
 import { getHomeRoute } from '../../lib/routes';
 import { ChangePasswordModal } from './ChangePasswordModal';
@@ -6,7 +7,6 @@ import { LayoutDropdown } from './LayoutDropdown';
 import { SettingsModal } from './SettingsModal';
 import { UpdateEmailModal } from './UpdateEmailModal';
 import css from './index.module.scss';
-import { TodoLogo } from './todo-logo';
 import { useLayout } from './useLayout';
 
 export const Layout = () => {
@@ -34,7 +34,7 @@ export const Layout = () => {
       <nav className={css.navigation}>
         <div className={css.routes}>
           <Link to={getHomeRoute()} className={css.link}>
-            <TodoLogo className={css.logo} />
+            <TimerLogo className={css.logo} />
           </Link>
         </div>
 

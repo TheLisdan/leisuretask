@@ -5,6 +5,7 @@
 .layout {
   @include mixins.flex(row, normal, normal);
   height: 100%;
+  overflow: hidden;
   background: url('./app-background-image.png') repeat;
   position: relative;
 

@@ -1,0 +1,14 @@
+@use '../../styles/vars';
+@use '../../styles/mixins';
+
+.logo {
+  @include mixins.flex(row, center);
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: vars.$mainGreen;
+
+  &.marginBottom {
+    margin-bottom: 40px;
+  }
+}

@@ -1,16 +1,16 @@
 import { zSignUpTrpcInput } from '@leisuretask/backend/src/router/auth/signUp/input';
-import cs from 'classnames';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   zPasswordsMustBeTheSame,
   zStringMin,
 } from '../../../../../shared/src/zod';
+import { Form } from '../../../components/Form';
+import { Field } from '../../../components/Form/Field';
+import { Logo } from '../../../components/Logo';
 import { mixpanelAlias, mixpanelTrackSignUp } from '../../../lib/mixpanel';
-import { getHomeRoute } from '../../../lib/routes';
+import { getHomeRoute, routes } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
 
@@ -18,121 +18,79 @@ export const SignUpPage = () => {
   const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
-
   const signUp = trpc.signUp.useMutation();
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <Formik
-        initialValues={{
-          name: '',
-          email: '',
-          password: '',
-          passwordAgain: '',
-        }}
-        validate={withZodSchema(
-          zSignUpTrpcInput
+    <div className={css.authContainer}>
+      <Logo marginBottom />
+      <div className={css.authCard}>
+        <h1>Create Account</h1>
+        <Form
+          id="signUpForm"
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            passwordAgain: '',
+          }}
+          validationSchema={zSignUpTrpcInput
             .extend({ passwordAgain: zStringMin(8) })
-            .superRefine(zPasswordsMustBeTheSame('password', 'passwordAgain'))
-        )}
-        onSubmit={async (values, actions) => {
-          try {
-            setSubmittingError(null);
-            const { token, userId } = await signUp.mutateAsync(values);
-            mixpanelAlias(userId);
-            mixpanelTrackSignUp();
-            Cookies.set('token', token, { expires: 99999 });
-            void trpcUtils.invalidate();
-            navigate(getHomeRoute());
-          } catch (error: any) {
-            setSubmittingError(error.message);
-            actions.setSubmitting(false);
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form className={css.signUpForm}>
-            <label htmlFor="name" className={css.label}>
-              <b>Name</b>
-            </label>
-            <Field
-              type="text"
-              id="name"
-              name="name"
-              placeholder="NickName"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage name="name" component="div" className="error" />
-
-            <label htmlFor="email" className={css.label}>
-              <b>E-Mail</b>
-            </label>
-            <Field
-              type="text"
-              id="email"
-              name="email"
-              placeholder="E-Mail"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage name="email" component="div" className="error" />
-
-            <label htmlFor="password" className={css.label}>
-              <b>Password</b>
-            </label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage name="password" component="div" className="error" />
-
-            <label htmlFor="passwordAgain" className={css.label}>
-              <b>Password again</b>
-            </label>
-            <Field
-              type="password"
-              id="passwordAgain"
-              name="passwordAgain"
-              placeholder="Password again"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage
-              name="passwordAgain"
-              component="div"
-              className="error"
-            />
-
-            {submittingError && <div className="error">{submittingError}</div>}
-
-            <button
-              type="submit"
-              className={css.signUpButton}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Signing up...' : 'Sign Up'}
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </>
+            .superRefine(zPasswordsMustBeTheSame('password', 'passwordAgain'))}
+          onSubmit={async (values) => {
+            try {
+              setSubmittingError(null);
+              const { token, userId } = await signUp.mutateAsync(values);
+              mixpanelAlias(userId);
+              mixpanelTrackSignUp();
+              Cookies.set('token', token, { expires: 99999 });
+              void trpcUtils.invalidate();
+              navigate(getHomeRoute());
+            } catch (error: any) {
+              setSubmittingError(error.message);
+            }
+          }}
+          submitButtonText="Create Account"
+        >
+          <Field
+            name="name"
+            label="Username"
+            placeholder="Choose your username"
+            stretch
+            marginBottom
+          />
+          <Field
+            name="email"
+            type="email"
+            label="Email"
+            placeholder="Enter your email"
+            stretch
+            marginBottom
+          />
+          <Field
+            name="password"
+            type="password"
+            label="Password"
+            placeholder="Create a password"
+            stretch
+            marginBottom
+          />
+          <Field
+            name="passwordAgain"
+            type="password"
+            label="Confirm Password"
+            placeholder="Confirm your password"
+            stretch
+            marginBottom
+          />
+          {submittingError && (
+            <div className={css.error}>{submittingError}</div>
+          )}
+        </Form>
+      </div>
+      <div className={css.switchAuth}>
+        Already have an account?
+        <Link to={routes.getSignInRoute()}>Sign In</Link>
+      </div>
+    </div>
   );
 };

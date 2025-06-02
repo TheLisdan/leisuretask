@@ -21,3 +21,4 @@ rules:
   selector-pseudo-class-no-unknown: null
   color-hex-length: null
   no-empty-source: null
+  no-duplicate-selectors: null

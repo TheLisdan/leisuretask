@@ -1,12 +1,12 @@
 import { zSignInTrpcInput } from '@leisuretask/backend/src/router/auth/signIn/input';
-import cs from 'classnames';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Form } from '../../../components/Form';
+import { Field } from '../../../components/Form/Field';
+import { Logo } from '../../../components/Logo';
 import { mixpanelIdentify, mixpanelTrackSignIn } from '../../../lib/mixpanel';
-import { getHomeRoute } from '../../../lib/routes';
+import { getHomeRoute, routes } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
 
@@ -14,79 +14,59 @@ export const SignInPage = () => {
   const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
-
   const signIn = trpc.signIn.useMutation();
 
   return (
-    <>
-      <h1>Sign In</h1>
-      <Formik
-        initialValues={{
-          name: '',
-          password: '',
-        }}
-        onSubmit={async (values, actions) => {
-          try {
-            setSubmittingError(null);
-            const { token, userId } = await signIn.mutateAsync(values);
-            mixpanelIdentify(userId);
-            mixpanelTrackSignIn();
-            Cookies.set('token', token, { expires: 99999 });
-            void trpcUtils.invalidate();
-            navigate(getHomeRoute());
-          } catch (error: any) {
-            setSubmittingError(error.message);
-            actions.setSubmitting(false);
-          }
-        }}
-        validate={withZodSchema(zSignInTrpcInput)}
-      >
-        {({ isSubmitting }) => (
-          <Form className={css.signInForm}>
-            <label htmlFor="name" className={css.label}>
-              <b>Name</b>
-            </label>
-            <Field
-              type="text"
-              id="name"
-              name="name"
-              placeholder="NickName"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage name="name" component="div" className="error" />
-
-            <label htmlFor="password" className={css.label}>
-              <b>Password</b>
-            </label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              className={cs({
-                [css.textInput]: true,
-                [css.disabled]: isSubmitting,
-              })}
-              disabled={isSubmitting}
-            />
-            <ErrorMessage name="password" component="div" className="error" />
-
-            {submittingError && <div className="error">{submittingError}</div>}
-
-            <button
-              type="submit"
-              className={css.signInButton}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Signing in...' : 'Sign In'}
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <div className={css.authContainer}>
+      <Logo marginBottom />
+      <div className={css.authCard}>
+        <h1>Welcome Back</h1>
+        <Form
+          id="signInForm"
+          initialValues={{
+            name: '',
+            password: '',
+          }}
+          validationSchema={zSignInTrpcInput}
+          onSubmit={async (values) => {
+            try {
+              setSubmittingError(null);
+              const { token, userId } = await signIn.mutateAsync(values);
+              mixpanelIdentify(userId);
+              mixpanelTrackSignIn();
+              Cookies.set('token', token, { expires: 99999 });
+              void trpcUtils.invalidate();
+              navigate(getHomeRoute());
+            } catch (error: any) {
+              setSubmittingError(error.message);
+            }
+          }}
+          submitButtonText="Sign In"
+        >
+          <Field
+            name="name"
+            label="Username"
+            placeholder="Enter your username"
+            stretch
+            marginBottom
+          />
+          <Field
+            name="password"
+            type="password"
+            label="Password"
+            placeholder="Enter your password"
+            stretch
+            marginBottom
+          />
+          {submittingError && (
+            <div className={css.error}>{submittingError}</div>
+          )}
+        </Form>
+      </div>
+      <div className={css.switchAuth}>
+        Don't have an account?
+        <Link to={routes.getSignUpRoute()}>Sign Up</Link>
+      </div>
+    </div>
   );
 };

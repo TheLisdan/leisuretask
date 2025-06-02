@@ -1,10 +1,10 @@
 import React from 'react';
 
-type TodoLogoProps = {
+type TimerLogoProps = {
   className?: string;
 };
 
-export const TodoLogo: React.FC<TodoLogoProps> = ({ className }) => (
+export const TimerLogo: React.FC<TimerLogoProps> = ({ className }) => (
   <svg
     width="34"
     height="30"

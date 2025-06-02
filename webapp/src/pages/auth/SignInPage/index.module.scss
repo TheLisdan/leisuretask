@@ -1,0 +1,112 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.authContainer {
+  @include mixins.flex(column, center, center);
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    vars.$mainWhite 0%,
+    vars.$uiBackground 100%
+  );
+  padding: vars.$bigPadding;
+
+  .authCard {
+    background: vars.$mainWhite;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: vars.$mainText;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form {
+      @include mixins.flex(column, flex-start);
+      width: 100%;
+
+      .field {
+        width: 100%;
+        margin-bottom: 20px;
+
+        label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: vars.$mainText;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid vars.$mainGrayLight;
+          border-radius: 5px;
+          font-size: 16px;
+          transition: border-color 0.2s ease;
+
+          &:focus {
+            border-color: vars.$mainGreen;
+            outline: none;
+          }
+
+          &.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .error {
+        color: vars.$mainRed;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+
+      .submitButton {
+        width: 100%;
+        padding: 14px;
+        background-color: vars.$mainGreen;
+        color: vars.$mainWhite;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: vars.$mainGreenLight;
+        }
+
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .switchAuth {
+    margin-top: 20px;
+    color: vars.$mainGray;
+    text-align: center;
+
+    a {
+      color: vars.$mainGreen;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 5px;
+
+      &:hover {
+        color: vars.$mainGreenLight;
+      }
+    }
+  }
+}

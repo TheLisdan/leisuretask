@@ -1,0 +1,249 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+@use '../../../../node_modules/include-media/dist/include-media';
+
+.landing {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    vars.$mainWhite 0%,
+    vars.$uiBackground 100%
+  );
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    @include mixins.flex(row, center, space-between);
+    padding: vars.$bigPadding;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+
+    @include include-media.media('<=tablet') {
+      padding: vars.$mediumPadding;
+    }
+
+    .nav {
+      @include mixins.flex(row, center);
+      gap: 20px;
+
+      @include include-media.media('<=phone') {
+        gap: 10px;
+      }
+
+      .signInButton {
+        color: vars.$mainGreen;
+        font-weight: 500;
+
+        & {
+          &:hover {
+            color: vars.$mainGreenLight;
+          }
+        }
+      }
+
+      .signUpButton {
+        padding: 10px 20px;
+        background-color: vars.$mainGreen;
+        color: vars.$mainWhite;
+        border-radius: 5px;
+        font-weight: 500;
+
+        & {
+          transition: all 0.2s ease;
+        }
+
+        @include include-media.media('<=phone') {
+          padding: 8px 16px;
+        }
+
+        & {
+          &:hover {
+            background-color: vars.$mainGreenLight;
+          }
+        }
+      }
+    }
+  }
+
+  .main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px vars.$bigPadding;
+
+    @include include-media.media('<=tablet') {
+      padding: 40px vars.$mediumPadding;
+    }
+
+    .hero {
+      @include mixins.flex(column, center);
+      text-align: center;
+      margin-bottom: 80px;
+
+      @include include-media.media('<=tablet') {
+        margin-bottom: 60px;
+      }
+
+      h1 {
+        font-size: 48px;
+        font-weight: 700;
+        color: vars.$mainText;
+        margin-bottom: 20px;
+        line-height: 1.2;
+
+        @include include-media.media('<=tablet') {
+          font-size: 36px;
+        }
+
+        @include include-media.media('<=phone') {
+          font-size: 28px;
+        }
+      }
+
+      p {
+        font-size: 20px;
+        color: vars.$mainGray;
+        margin-bottom: 40px;
+        max-width: 600px;
+
+        @include include-media.media('<=tablet') {
+          font-size: 18px;
+          margin-bottom: 30px;
+        }
+
+        @include include-media.media('<=phone') {
+          font-size: 16px;
+        }
+      }
+
+      .ctaButton {
+        padding: 15px 40px;
+        background-color: vars.$mainGreen;
+        color: vars.$mainWhite;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: 500;
+
+        & {
+          transition: all 0.2s ease;
+        }
+
+        @include include-media.media('<=phone') {
+          padding: 12px 30px;
+          font-size: 16px;
+        }
+
+        &:hover {
+          background-color: vars.$mainGreenLight;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .features {
+      @include mixins.flex(row, stretch, center);
+      gap: 40px;
+      padding: 0 20px;
+
+      @include include-media.media('<=tablet') {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0;
+      }
+
+      .feature {
+        @include mixins.flex(column, center);
+        text-align: center;
+        flex: 1;
+        padding: 30px;
+        background: vars.$mainWhite;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        & {
+          transition: transform 0.3s ease;
+        }
+
+        @include include-media.media('<=tablet') {
+          padding: 20px;
+        }
+
+        .featureIcon {
+          font-size: 40px;
+          margin-bottom: 20px;
+
+          @include include-media.media('<=tablet') {
+            font-size: 32px;
+            margin-bottom: 15px;
+          }
+        }
+
+        h3 {
+          font-size: 20px;
+          font-weight: 600;
+          color: vars.$mainText;
+          margin-bottom: 15px;
+
+          @include include-media.media('<=tablet') {
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+        }
+
+        p {
+          color: vars.$mainGray;
+          line-height: 1.6;
+
+          @include include-media.media('<=tablet') {
+            font-size: 14px;
+          }
+        }
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+      }
+    }
+  }
+
+  .footer {
+    @include mixins.flex(column, center, center);
+    width: 100%;
+    padding: 24px;
+    background-color: vars.$uiBackground;
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      @include mixins.flex(column, center, space-between);
+
+      @include include-media.media('<=tablet') {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+
+      .footerNav {
+        @include mixins.flex(row, center, center);
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .copyright {
+        color: vars.$mainGray;
+      }
+
+      .footerLink {
+        color: vars.$mainGreen;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: vars.$mainGreenLight;
+        }
+      }
+    }
+  }
+}

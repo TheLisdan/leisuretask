@@ -1,0 +1,38 @@
+@use '../../../styles/vars';
+@use '../../../styles/mixins';
+
+.footer {
+  @include mixins.flex(column, center, center);
+  width: 100%;
+  padding: 24px;
+  background-color: vars.$uiBackground;
+  position: absolute;
+}
+
+.footerNav {
+  @include mixins.flex(row, center, center);
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.footerLink {
+  color: vars.$mainGray;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: vars.$mainGreen;
+  }
+}
+
+.divider {
+  color: vars.$mainGray;
+  font-size: 12px;
+}
+
+.copyright {
+  color: vars.$mainGray;
+  font-size: 14px;
+  text-align: center;
+}
