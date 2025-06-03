@@ -9,7 +9,7 @@
   padding: 4px;
 
   @include include-media.media('<=phone') {
-    padding: 6px; // Увеличиваем область касания для мобильных устройств
+    padding: 6px;
   }
 
   .checkbox {
@@ -39,7 +39,7 @@
       background-color 0.2s ease;
 
     @include include-media.media('<=phone') {
-      height: 24px; // Увеличиваем размер для лучшей видимости на мобильных
+      height: 24px;
       width: 24px;
     }
 

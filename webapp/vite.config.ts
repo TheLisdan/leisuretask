@@ -1,4 +1,5 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
+import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv } from 'vite';
@@ -21,6 +22,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
+      legacy({
+        targets: ['> 0.01%'],
+      }),
       env.HOST_ENV !== 'local'
         ? undefined
         : visualizer({

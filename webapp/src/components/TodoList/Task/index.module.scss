@@ -10,7 +10,7 @@
   position: relative;
 
   @include include-media.media('<=phone') {
-    padding: vars.$smallPadding vars.$smallPadding/2;
+    padding: vars.$smallPadding calc(vars.$smallPadding / 2);
     flex-wrap: wrap;
     gap: 8px;
   }
@@ -30,7 +30,7 @@
   .mainInfo {
     @include mixins.flex;
     flex: 1;
-    min-width: 0; // Для корректного переноса длинного текста
+    min-width: 0;
 
     .title {
       margin-left: 8px;
