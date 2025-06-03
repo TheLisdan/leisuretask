@@ -79,7 +79,7 @@ pnpm dev
 To run the entire application in Docker:
 
 ```bash
-docker-compose up -d
+pnpm dcu
 ```
 
 ## Environment Variables
@@ -115,8 +115,7 @@ LeisureTask/
 ├── webapp/           # Client-side code
 │   ├── src/
 │   └── tests/
-├── shared/          # Shared code
-└── prisma/          # Database schema
+└── shared/          # Shared code
 ```
 
 ## Features
@@ -151,7 +150,7 @@ MIT
 
 ## Author
 
-[Your Name]
+Lisdan
 
 ---
 
