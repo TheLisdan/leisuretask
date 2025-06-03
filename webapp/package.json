@@ -57,6 +57,7 @@
     "@types/react-modal": "^3.16.3",
     "@vitejs/plugin-legacy": "^6.1.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
     "dotenv-cli": "^8.0.0",
     "prettier": "^3.4.2",
     "rollup-plugin-visualizer": "^6.0.1",
