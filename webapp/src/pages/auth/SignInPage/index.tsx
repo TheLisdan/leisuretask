@@ -1,6 +1,5 @@
 import { zSignInTrpcInput } from '@leisuretask/backend/src/router/auth/signIn/input';
 import Cookies from 'js-cookie';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from '../../../components/Form';
@@ -13,7 +12,6 @@ import css from './index.module.scss';
 
 export const SignInPage = () => {
   const { t } = useTranslation();
-  const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
   const signInMutation = trpc.signIn.useMutation();
@@ -31,18 +29,12 @@ export const SignInPage = () => {
           }}
           validationSchema={zSignInTrpcInput}
           onSubmit={async (values) => {
-            try {
-              setSubmittingError(null);
-              const { token, userId } =
-                await signInMutation.mutateAsync(values);
-              mixpanelIdentify(userId);
-              mixpanelTrackSignIn();
-              Cookies.set('token', token, { expires: 99999 });
-              void trpcUtils.invalidate();
-              navigate(getHomeRoute());
-            } catch (error: any) {
-              setSubmittingError(error.message);
-            }
+            const { token, userId } = await signInMutation.mutateAsync(values);
+            mixpanelIdentify(userId);
+            mixpanelTrackSignIn();
+            Cookies.set('token', token, { expires: 99999 });
+            void trpcUtils.invalidate();
+            navigate(getHomeRoute());
           }}
           submitButtonText={t('signIn')}
         >
@@ -63,9 +55,6 @@ export const SignInPage = () => {
             stretch
             marginBottom
           />
-          {submittingError && (
-            <div className={css.error}>{submittingError}</div>
-          )}
         </Form>
         <div className={css.switchAuth}>
           {t('dontHaveAccount')}

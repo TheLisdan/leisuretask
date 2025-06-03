@@ -1,5 +1,6 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv } from 'vite';
 import { parsePublicEnv } from './src/lib/parsePublicEnv';
 
@@ -20,6 +21,13 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
+      env.HOST_ENV !== 'local'
+        ? undefined
+        : visualizer({
+            filename: './dist/bundle-stats.html',
+            gzipSize: true,
+            brotliSize: true,
+          }),
       !env.SENTRY_AUTH_TOKEN
         ? undefined
         : sentryVitePlugin({
@@ -45,7 +53,7 @@ export default defineConfig(({ mode }) => {
         },
       },
       sourcemap: true,
-      chunkSizeWarningLimit: 650,
+      chunkSizeWarningLimit: 900,
     },
     server: {
       port: +env.PORT,

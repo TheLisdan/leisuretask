@@ -12,7 +12,14 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --config eslint.config.js",
     "typecheck": "concurrently -n backend,webapp,shared -c red,blue,green \"pnpm -r --filter @leisuretask/backend typecheck\" \"pnpm -r --filter @leisuretask/webapp typecheck\" \"pnpm -r --filter @leisuretask/shared typecheck\"",
     "prettify": "pnpm -r --parallel prettify",
+    "dcc": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose config'",
+    "dcb": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose build'",
+    "dcu": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose up'",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "dotenv-cli": "^8.0.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
@@ -21,7 +28,6 @@
     "@typescript-eslint/parser": "^8.19.0",
     "concurrently": "^9.1.2",
     "copyfiles": "^2.4.1",
-    "cross-env": "^7.0.3",
     "eslint": "^9.17.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",

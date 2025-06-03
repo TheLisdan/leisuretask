@@ -1,6 +1,5 @@
 import { zSignUpTrpcInput } from '@leisuretask/backend/src/router/auth/signUp/input';
 import Cookies from 'js-cookie';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -17,7 +16,6 @@ import css from './index.module.scss';
 
 export const SignUpPage = () => {
   const { t } = useTranslation();
-  const [submittingError, setSubmittingError] = useState<string | null>(null);
   const trpcUtils = trpc.useUtils();
   const navigate = useNavigate();
   const signUpMutation = trpc.signUp.useMutation();
@@ -39,18 +37,12 @@ export const SignUpPage = () => {
             .extend({ passwordAgain: zStringMin(8) })
             .superRefine(zPasswordsMustBeTheSame('password', 'passwordAgain'))}
           onSubmit={async (values) => {
-            try {
-              setSubmittingError(null);
-              const { token, userId } =
-                await signUpMutation.mutateAsync(values);
-              mixpanelAlias(userId);
-              mixpanelTrackSignUp();
-              Cookies.set('token', token, { expires: 99999 });
-              void trpcUtils.invalidate();
-              navigate(getHomeRoute());
-            } catch (error: any) {
-              setSubmittingError(error.message);
-            }
+            const { token, userId } = await signUpMutation.mutateAsync(values);
+            mixpanelAlias(userId);
+            mixpanelTrackSignUp();
+            Cookies.set('token', token, { expires: 99999 });
+            void trpcUtils.invalidate();
+            navigate(getHomeRoute());
           }}
           submitButtonText={t('signUp')}
         >
@@ -88,9 +80,6 @@ export const SignUpPage = () => {
             stretch
             marginBottom
           />
-          {submittingError && (
-            <div className={css.error}>{submittingError}</div>
-          )}
         </Form>
         <div className={css.switchAuth}>
           {t('alreadyHaveAccount')}
