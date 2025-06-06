@@ -1,0 +1,27 @@
+name: Deploy to heroku
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to heroku registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.heroku.com
+          username: ${{secrets.HEROKU_EMAIL}}
+          password: ${{secrets.HEROKU_API_KEY}}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+          build-args: |
+            SENTRY_AUTH_TOKEN=${{secrets.SENTRY_AUTH_TOKEN}}
+            SOURCE_VERSION=${{github.sha}}
+      - name: Release image to heroku
+        env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+        run: heroku container:release -a ${{secrets.HEROKU_APP_NAME}} web
