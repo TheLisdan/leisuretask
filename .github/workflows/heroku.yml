@@ -13,6 +13,7 @@ jobs:
           registry: registry.heroku.com
           username: ${{secrets.HEROKU_EMAIL}}
           password: ${{secrets.HEROKU_API_KEY}}
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -21,6 +22,11 @@ jobs:
           build-args: |
             SENTRY_AUTH_TOKEN=${{secrets.SENTRY_AUTH_TOKEN}}
             SOURCE_VERSION=${{github.sha}}
+
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
       - name: Release image to heroku
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
