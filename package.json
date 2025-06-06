@@ -15,6 +15,10 @@
     "dcc": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose config'",
     "dcb": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose build'",
     "dcu": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose up'",
+    "dth": "docker tag leisuretask-image registry.heroku.com/leisuretaskonline/web",
+    "hl": "heroku login && heroku container:login",
+    "dph": "docker push registry.heroku.com/leisuretaskonline/web",
+    "hr": "heroku container:release web -a leisuretaskonline",
     "prepare": "husky install"
   },
   "dependencies": {
