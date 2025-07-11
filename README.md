@@ -6,6 +6,13 @@ A web application for tracking and managing tasks and leisure time.
 
 LeisureTask is a fullstack application developed using a modern technology stack. It helps users effectively manage their tasks and maintain a balance between work and leisure time.
 
+## Demo
+
+<img width="1885" height="870" alt="Screenshot_5" src="https://github.com/user-attachments/assets/7fc8bdd8-3aa0-4940-94e5-f094ba576c06" />
+<img width="651" height="745" alt="Screenshot_3" src="https://github.com/user-attachments/assets/81e88534-f8b7-4046-a7e0-f1d4ba725886" />
+<img width="1899" height="873" alt="Screenshot_1" src="https://github.com/user-attachments/assets/c76c7eef-8e02-40f6-a2f9-eb1cc04ac2c1" />
+<img width="1893" height="871" alt="Screenshot_2" src="https://github.com/user-attachments/assets/6aa84d97-27ed-4ab4-b5bd-c03e60a72ce4" />
+
 ## Technologies
 
 ### Frontend
