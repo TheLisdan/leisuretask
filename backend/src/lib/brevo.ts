@@ -23,6 +23,17 @@ const makeRequestToBrevo = async ({
       },
     };
   }
+  if (!env.FROM_EMAIL_ADDRESS || !env.FROM_EMAIL_NAME) {
+    return {
+      loggableResponse: {
+        status: 200,
+        statusText: 'OK',
+        data: {
+          message: 'Email sender is not configured, skipping request',
+        },
+      },
+    };
+  }
   const response = await axios({
     method: 'POST',
     url: `https://api.brevo.com/v3/${path}`,

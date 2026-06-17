@@ -20,7 +20,7 @@ LeisureTask is a fullstack application developed using a modern technology stack
 - React
 - TypeScript
 - Vite
-- Chakra UI
+- SCSS Modules
 - tRPC (for type-safe API)
 - React Query
 
@@ -101,7 +101,6 @@ NODE_ENV=development
 DATABASE_URL=postgresql://user:password@localhost:5432/leisuretask
 JWT_SECRET=your-jwt-secret
 PASSWORD_SALT=your-password-salt
-BREVO_API_KEY=your-brevo-api-key
 ```
 
 ## Testing
@@ -162,3 +161,8 @@ Lisdan
 ---
 
 For any questions or issues, please use the Issues section.
+
+## Additional docs
+
+- [Project resume brief](./PROJECT_RESUME_BRIEF.md)
+- [Run and deploy guide](./RUN_AND_DEPLOY_GUIDE.md)

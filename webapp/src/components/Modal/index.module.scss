@@ -46,7 +46,8 @@
   @include mixins.flex(column);
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(vars.$mainText, 0.28);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   padding: 0 vars.$mediumPadding;
 
@@ -60,8 +61,10 @@
   position: relative;
   min-width: 660px;
   background: vars.$mainWhite;
-  border-radius: 5px;
+  border: 1px solid rgba(vars.$mainWhite, 0.7);
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: vars.$shadowSoft;
 
   @include include-media.media('<=tablet') {
     min-width: auto;
@@ -78,15 +81,15 @@
     @include mixins.flex(column, flex-start);
     padding: 16px 12px;
     background: vars.$uiBackground;
-    border-right: 1px solid vars.$mainGrayLight;
-    border-radius: 5px 0 0 5px;
+    border-right: 1px solid vars.$borderColor;
+    border-radius: 8px 0 0 8px;
 
     @include include-media.media('<=phone') {
       flex-direction: row;
       padding: 12px;
       border-right: none;
-      border-bottom: 1px solid vars.$mainGrayLight;
-      border-radius: 5px 5px 0 0;
+      border-bottom: 1px solid vars.$borderColor;
+      border-radius: 8px 8px 0 0;
       overflow-x: auto;
       gap: 16px;
     }
@@ -96,6 +99,8 @@
       cursor: pointer;
       color: vars.$mainGray;
       white-space: nowrap;
+      padding: 8px;
+      border-radius: 8px;
 
       @include include-media.media('<=phone') {
         font-size: 14px;
@@ -110,7 +115,8 @@
       }
 
       &:hover {
-        color: vars.$mainGreenLight;
+        color: vars.$mainGreen;
+        background: vars.$surfaceStrong;
       }
     }
 

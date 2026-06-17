@@ -14,16 +14,17 @@
 
 .avatar {
   @include mixins.flex(row, center, center);
-  background-color: vars.$mainGray;
+  background: linear-gradient(135deg, vars.$mainGreen, vars.$mainBlue);
   border-radius: 50%;
   font-weight: 600;
   user-select: none;
-  color: vars.$mainGrayLight;
+  color: vars.$mainWhite;
   overflow: hidden;
   transition: box-shadow 0.2s ease;
+  border: 2px solid vars.$mainWhite;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: vars.$shadowSmall;
   }
 
   &.small {

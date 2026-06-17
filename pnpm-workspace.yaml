@@ -3,6 +3,18 @@ packages:
   - shared
   - webapp
 onlyBuiltDependencies:
+  - '@parcel/watcher'
   - '@prisma/client'
   - '@prisma/engines'
+  - '@sentry/cli'
+  - core-js
+  - esbuild
   - prisma
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@sentry/cli': true
+  core-js: true
+  esbuild: true
+  prisma: true

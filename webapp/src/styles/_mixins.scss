@@ -15,7 +15,7 @@
 }
 
 @mixin border() {
-  border: 1px solid vars.$mainGrayLight;
+  border: 1px solid vars.$borderColor;
 }
 
 @mixin error() {

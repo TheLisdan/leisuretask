@@ -6,8 +6,8 @@
   @include mixins.flex(row, center);
   gap: 12px;
   font-size: 24px;
-  font-weight: 600;
-  color: vars.$mainGreen;
+  font-weight: 800;
+  color: vars.$mainText;
   transition: transform 0.2s ease;
 
   @include include-media.media('<=tablet') {
@@ -33,6 +33,7 @@
   }
 
   &:hover {
-    transform: scale(1.05);
+    color: vars.$mainGreenDark;
+    transform: translateY(-1px);
   }
 }

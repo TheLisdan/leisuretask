@@ -4,7 +4,7 @@ import path from 'path';
 import {
   zEnvEnum,
   zEnvNonemptyTrimmed,
-  zEnvNonemptyTrimmedRequiredOnNotLocal,
+  zEnvOptionalTrimmed,
 } from '@leisuretask/shared/src/zod';
 import * as dotenv from 'dotenv';
 import { z } from 'zod';
@@ -52,9 +52,9 @@ const zEnv = z.object({
   JWT_SECRET: zEnvNonemptyTrimmed,
   PASSWORD_SALT: zEnvNonemptyTrimmed,
   WEBAPP_URL: zEnvNonemptyTrimmed,
-  BREVO_API_KEY: zEnvNonemptyTrimmedRequiredOnNotLocal,
-  FROM_EMAIL_NAME: zEnvNonemptyTrimmed,
-  FROM_EMAIL_ADDRESS: zEnvNonemptyTrimmed,
+  BREVO_API_KEY: zEnvOptionalTrimmed,
+  FROM_EMAIL_NAME: zEnvOptionalTrimmed,
+  FROM_EMAIL_ADDRESS: zEnvOptionalTrimmed,
   DEBUG: z
     .string()
     .optional()
@@ -65,11 +65,11 @@ const zEnv = z.object({
         (!!val && val.length > 0),
       'Required on not local host or production'
     ),
-  BACKEND_SENTRY_DSN: zEnvNonemptyTrimmedRequiredOnNotLocal,
-  SOURCE_VERSION: zEnvNonemptyTrimmedRequiredOnNotLocal,
-  CLOUDINARY_CLOUD_NAME: zEnvNonemptyTrimmed,
-  CLOUDINARY_API_KEY: zEnvNonemptyTrimmedRequiredOnNotLocal,
-  CLOUDINARY_API_SECRET: zEnvNonemptyTrimmedRequiredOnNotLocal,
+  BACKEND_SENTRY_DSN: zEnvOptionalTrimmed,
+  SOURCE_VERSION: zEnvOptionalTrimmed,
+  CLOUDINARY_CLOUD_NAME: zEnvOptionalTrimmed,
+  CLOUDINARY_API_KEY: zEnvOptionalTrimmed,
+  CLOUDINARY_API_SECRET: zEnvOptionalTrimmed,
 });
 
 export const env = zEnv.parse(process.env);

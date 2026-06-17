@@ -5,11 +5,13 @@
 .authContainer {
   @include mixins.flex(column, center, center);
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    vars.$mainWhite 0%,
-    vars.$uiBackground 100%
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(vars.$surfaceStrong, 0.88),
+      rgba(vars.$uiBackground, 0.96)
+    ),
+    url('../../../components/Layout/app-background-image.png') repeat;
   padding: vars.$bigPadding;
 
   @include include-media.media('<=tablet') {
@@ -21,12 +23,14 @@
   }
 
   .authCard {
-    background: vars.$mainWhite;
+    background: rgba(vars.$mainWhite, 0.94);
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(vars.$mainWhite, 0.72);
+    border-radius: 8px;
+    box-shadow: vars.$shadowSoft;
     width: 100%;
     max-width: 400px;
+    backdrop-filter: blur(18px);
 
     @include include-media.media('<=tablet') {
       padding: 30px;
@@ -76,8 +80,8 @@
         input {
           width: 100%;
           padding: 12px;
-          border: 1px solid vars.$mainGrayLight;
-          border-radius: 5px;
+          border: 1px solid vars.$borderColor;
+          border-radius: 8px;
           font-size: 16px;
           transition: border-color 0.2s ease;
 
@@ -114,7 +118,7 @@
         background-color: vars.$mainGreen;
         color: vars.$mainWhite;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 500;
         cursor: pointer;
@@ -128,7 +132,7 @@
         }
 
         &:hover {
-          background-color: vars.$mainGreenLight;
+          background-color: vars.$mainGreenDark;
           transform: translateY(-1px);
         }
 

@@ -8,11 +8,11 @@
 
   .submitButton {
     @include mixins.flex;
-    padding: 8px 16px;
+    padding: 10px 18px;
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
@@ -32,7 +32,7 @@
     }
 
     &:hover {
-      background-color: vars.$mainGreenLight;
+      background-color: vars.$mainGreenDark;
       transform: translateY(-1px);
     }
 

@@ -9,6 +9,7 @@
   label {
     margin-bottom: 8px;
     font-weight: bold;
+    color: vars.$mainGray;
 
     @include include-media.media('<=phone') {
       font-size: 12px;
@@ -18,8 +19,9 @@
 
   .controls {
     @include mixins.flex(row, center);
-    background-color: vars.$uiBackground;
-    border-radius: 5px;
+    background-color: vars.$surface;
+    border: 1px solid vars.$borderColor;
+    border-radius: 8px;
     padding: 8px;
     width: 100%;
     justify-content: space-between;
@@ -47,7 +49,9 @@
       }
 
       &:hover:not(:disabled) {
-        color: vars.$mainGreenLight;
+        color: vars.$mainGreenDark;
+        background: vars.$surfaceStrong;
+        border-radius: 8px;
       }
 
       &:disabled {
@@ -60,6 +64,8 @@
       min-width: 60px;
       text-align: center;
       font-size: vars.$defaultFontSize;
+      font-weight: 600;
+      color: vars.$mainText;
 
       @include include-media.media('<=phone') {
         min-width: 50px;

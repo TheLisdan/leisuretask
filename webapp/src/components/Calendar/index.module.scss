@@ -4,28 +4,32 @@
 
 .calendar {
   @include mixins.flex(column, center);
-  margin-top: 16px;
+  margin-top: 18px;
   width: 100%;
 
   .header {
     @include mixins.flex(row, center, space-between);
     font-weight: 600;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    color: vars.$mainText;
 
     .navigation {
       @include mixins.flex(row, center);
 
       .switchMonth {
         color: vars.$mainGray;
-        padding: 4px;
+        padding: 6px;
+        border-radius: 8px;
 
         &:first-child {
           margin-right: 12px;
         }
 
+        &:hover,
         &:active {
-          color: vars.$mainGreenLight;
+          color: vars.$mainGreen;
+          background: vars.$surfaceStrong;
         }
       }
     }
@@ -36,6 +40,7 @@
     margin-bottom: 6px;
     width: 100%;
     font-weight: 600;
+    color: vars.$mainGray;
 
     .weekDay {
       @include mixins.flex(row, center, center);
@@ -63,7 +68,8 @@
       @include mixins.flex(row, center, center);
       width: 25px;
       height: 25px;
-      border-radius: 50%;
+      border-radius: 8px;
+      color: vars.$mainText;
     }
 
     .otherMonth {
@@ -73,6 +79,7 @@
     .today {
       background-color: vars.$mainGreen;
       color: vars.$mainWhite;
+      box-shadow: 0 6px 16px rgba(vars.$mainGreen, 0.2);
     }
   }
 }

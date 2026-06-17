@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
 
 $breakpoints: (
   'phone': 480px,
@@ -7,17 +7,33 @@ $breakpoints: (
   'large': 1200px,
 );
 
-$mainGreen: #4caf50;
-$mainGreenLight: #81c784;
-$mainGreenDark: #388e3c;
+$mainGreen: #1f9d72;
+$mainGreenLight: #7bdcb5;
+$mainGreenDark: #137253;
 $mainWhite: #ffffff;
-$uiBackground: #f5f5f5;
-$mainText: #212121;
-$mainGray: #b0b0b0;
-$mainGrayLight: #ededed;
-$mainRed: #ff5252;
+$uiBackground: #f6f8f7;
+$mainText: #17211d;
+$mainGray: #758179;
+$mainGrayLight: #e2e8e4;
+$mainRed: #e65a5a;
+$mainAmber: #c88424;
+$mainBlue: #4777d7;
+$surface: #ffffff;
+$surfaceMuted: #f0f4f2;
+$surfaceStrong: #e9f6ef;
+$borderColor: #dce4df;
+$shadowSoft: 0 18px 45px rgba(23, 33, 29, 0.08);
+$shadowSmall: 0 8px 22px rgba(23, 33, 29, 0.08);
+$focusRing: 0 0 0 3px rgba($mainGreen, 0.18);
 
-$defaultFontFamily: 'montserrat', sans-serif;
+$defaultFontFamily:
+  'Inter',
+  ui-sans-serif,
+  system-ui,
+  -apple-system,
+  blinkmacsystemfont,
+  'Segoe UI',
+  sans-serif;
 $defaultTextColor: $mainText;
 $defaultFontSize: 14px;
 $mediumFontSize: 16px;

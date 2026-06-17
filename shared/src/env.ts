@@ -1,6 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { z } from 'zod';
-import { zEnvNonemptyTrimmed } from './zod';
+import { zEnvOptionalTrimmed } from './zod';
 
 const getSharedEnvVariable = (key: string) => {
   if (typeof window !== 'undefined') {
@@ -20,7 +20,7 @@ const sharedEnvRaw = {
 };
 
 const zEnv = z.object({
-  CLOUDINARY_CLOUD_NAME: zEnvNonemptyTrimmed,
+  CLOUDINARY_CLOUD_NAME: zEnvOptionalTrimmed,
 });
 
 export const sharedEnv = zEnv.parse(sharedEnvRaw);

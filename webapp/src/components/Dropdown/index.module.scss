@@ -4,10 +4,12 @@
 
 .dropdownMenu {
   @include mixins.flex(column, flex-start);
-  background-color: vars.$uiBackground;
-  padding: 16px 8px;
-  border-radius: 5px;
+  background-color: vars.$surface;
+  padding: 8px;
+  border: 1px solid vars.$borderColor;
+  border-radius: 8px;
   min-width: 180px;
+  box-shadow: vars.$shadowSmall;
 
   @include include-media.media('<=phone') {
     padding: 12px 6px;
@@ -18,10 +20,10 @@
 .dropdownMenuItem {
   @include mixins.flex(row, center);
   color: vars.$mainGray;
-  padding: 8px;
+  padding: 9px 10px;
   cursor: pointer;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   transition: all 0.2s ease;
 
   @include include-media.media('<=phone') {
@@ -37,8 +39,8 @@
     }
 
     &:hover {
-      color: vars.$mainGreenLight;
-      background-color: rgba(vars.$mainGreenLight, 0.1);
+      color: vars.$mainGreenDark;
+      background-color: vars.$surfaceStrong;
     }
 
     &:active {
@@ -62,9 +64,9 @@
 
 .dropdownMenuSeparator {
   height: 1px;
-  background-color: vars.$mainGray;
+  background-color: vars.$borderColor;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   opacity: 0.3;
 
   @include include-media.media('<=phone') {

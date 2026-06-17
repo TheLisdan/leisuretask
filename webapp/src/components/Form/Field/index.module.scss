@@ -42,13 +42,13 @@
       }
 
       &:hover:not(.editing) {
-        background-color: vars.$uiBackground;
+        background-color: vars.$surfaceStrong;
       }
 
       &.editing {
         cursor: text;
-        background-color: vars.$uiBackground;
-        border-radius: 5px;
+        background-color: vars.$surface;
+        border-radius: 8px;
       }
     }
   }
@@ -56,6 +56,8 @@
   .label {
     margin-bottom: 8px;
     font-size: vars.$defaultFontSize;
+    color: vars.$mainGray;
+    font-weight: 600;
 
     @include include-media.media('<=phone') {
       font-size: 12px;
@@ -65,11 +67,22 @@
 
   .textInput {
     padding: vars.$smallPadding;
-    border: 0;
-    background-color: vars.$uiBackground;
-    border-radius: 5px;
+    border: 1px solid vars.$borderColor;
+    background-color: vars.$surface;
+    border-radius: 8px;
     font-family: vars.$defaultFontFamily;
     font-size: vars.$defaultFontSize;
+    color: vars.$mainText;
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      background 0.18s ease;
+
+    &:focus {
+      border-color: rgba(vars.$mainGreen, 0.55);
+      box-shadow: vars.$focusRing;
+      background: vars.$mainWhite;
+    }
 
     @include include-media.media('<=phone') {
       padding: 10px;

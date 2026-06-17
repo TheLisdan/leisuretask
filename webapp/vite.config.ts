@@ -11,13 +11,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const publicEnv = parsePublicEnv(env);
 
-  if (env.HOST_ENV !== 'local') {
-    if (!env.SENTRY_AUTH_TOKEN) {
-      throw new Error('SENTRY_AUTH_TOKEN is required');
-    }
-    if (!env.SOURCE_VERSION) {
-      throw new Error('SOURCE_VERSION is required');
-    }
+  if (env.SENTRY_AUTH_TOKEN && !env.SOURCE_VERSION) {
+    throw new Error('SOURCE_VERSION is required when SENTRY_AUTH_TOKEN is set');
   }
 
   return {

@@ -1,6 +1,8 @@
 import { sharedEnv } from './env';
 
-const cloudinaryUrl = `https://res.cloudinary.com/${sharedEnv.CLOUDINARY_CLOUD_NAME}/image/upload`;
+const cloudinaryUrl = sharedEnv.CLOUDINARY_CLOUD_NAME
+  ? `https://res.cloudinary.com/${sharedEnv.CLOUDINARY_CLOUD_NAME}/image/upload`
+  : null;
 
 type CloudinaryUploadType = {
   folder: string;
@@ -34,6 +36,9 @@ export const getCloudinaryUploadUrl = <
   typeName: TTypeName,
   presetName: CloudinaryUploadPresetName<TTypeName>
 ) => {
+  if (!cloudinaryUrl) {
+    throw new Error('CLOUDINARY_CLOUD_NAME is not configured');
+  }
   const type = cloudinaryUploadTypes[typeName] as CloudinaryUploadType;
   const preset = type.presets[presetName as string];
   return `${cloudinaryUrl}/${preset}/${publicId}`;

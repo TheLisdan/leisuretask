@@ -36,6 +36,11 @@ export const zNumberMax = (max: number, message?: string) =>
 
 // Environment validators
 export const zEnvNonemptyTrimmed = z.string().trim().min(1);
+export const zEnvOptionalTrimmed = z
+  .string()
+  .trim()
+  .optional()
+  .transform((val) => val || undefined);
 
 export const zEnvNonemptyTrimmedRequiredOnNotLocal = zEnvNonemptyTrimmed
   .optional()

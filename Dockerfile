@@ -16,7 +16,7 @@ ARG SOURCE_VERSION
 
 RUN pnpm b prepare
 RUN pnpm b build
-RUN pnpm b sentry
+RUN if [ -n "$SENTRY_AUTH_TOKEN" ]; then pnpm b sentry; else echo "Skipping backend Sentry sourcemaps"; fi
 RUN pnpm w build
 
 

@@ -6,7 +6,7 @@
   @include mixins.flex(column, normal);
   flex: 1;
   position: relative;
-  padding: vars.$bigPadding;
+  padding: 28px clamp(18px, 4vw, 52px);
   height: 100vh;
   overflow-y: auto;
 
@@ -21,6 +21,7 @@
 
   .bigText {
     font-size: vars.$bigFontSize;
+    margin-bottom: 18px;
 
     @include include-media.media('<=phone') {
       font-size: vars.$mediumFontSize;
@@ -29,10 +30,16 @@
 
   .taskWrapper {
     position: relative;
+    width: min(100%, 860px);
 
     .sectionTitle {
-      color: vars.$mainGray;
-      margin: vars.$bigMargin 0;
+      color: vars.$mainText;
+      margin: 26px 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      opacity: 0.68;
 
       @include include-media.media('<=phone') {
         margin: vars.$mediumMargin 0;
@@ -46,8 +53,10 @@
       margin: 16px auto;
       cursor: pointer;
       user-select: none;
-      padding: 8px;
-      border-radius: 4px;
+      padding: 10px 14px;
+      border: 1px solid vars.$borderColor;
+      border-radius: 8px;
+      background: rgba(vars.$surface, 0.78);
       transition: all 0.2s ease;
 
       @include include-media.media('<=phone') {
@@ -56,8 +65,9 @@
       }
 
       &:hover {
-        color: vars.$mainGreenLight;
-        background-color: rgba(vars.$mainGreenLight, 0.1);
+        color: vars.$mainGreenDark;
+        background-color: vars.$surfaceStrong;
+        border-color: rgba(vars.$mainGreen, 0.32);
       }
 
       &:active {
@@ -74,14 +84,14 @@
     bottom: vars.$mediumPadding;
     width: fit-content;
     padding: 15px;
-    background-color: vars.$uiBackground;
-    color: vars.$mainGray;
+    background-color: vars.$mainGreen;
+    color: vars.$mainWhite;
     border: 0;
     border-radius: 50%;
     cursor: pointer;
     z-index: 1000;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: vars.$shadowSmall;
 
     @include include-media.media('<=tablet') {
       bottom: vars.$smallPadding;
@@ -95,13 +105,13 @@
     }
 
     &:hover {
-      background-color: vars.$mainGrayLight;
+      background-color: vars.$mainGreenDark;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: vars.$shadowSoft;
     }
 
     &:active {
-      background-color: vars.$mainGreenLight;
+      background-color: vars.$mainGreenDark;
       color: vars.$mainWhite;
       transform: translateY(0);
     }
@@ -133,9 +143,9 @@
     width: 100%;
     max-width: 600px;
     padding: vars.$smallPadding;
-    border: 0;
-    background-color: vars.$uiBackground;
-    border-radius: 5px;
+    border: 1px solid vars.$borderColor;
+    background-color: vars.$surface;
+    border-radius: 8px;
     font-size: vars.$defaultFontSize;
 
     @include include-media.media('<=tablet') {
@@ -163,7 +173,7 @@
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
@@ -181,7 +191,7 @@
     }
 
     &:hover {
-      background-color: vars.$mainGreenLight;
+      background-color: vars.$mainGreenDark;
       transform: translateY(-1px);
     }
 

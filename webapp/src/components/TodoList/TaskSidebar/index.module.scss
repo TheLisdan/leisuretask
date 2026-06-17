@@ -6,15 +6,16 @@
   position: relative;
   @include mixins.flex(column, center);
   height: 100%;
-  padding: 18px 12px;
+  padding: 22px 14px;
   width: 100%;
-  background-color: vars.$mainWhite;
-  border-left: solid 1px vars.$mainGrayLight;
+  background-color: rgba(vars.$surface, 0.95);
+  border-left: solid 1px vars.$borderColor;
+  box-shadow: -12px 0 34px rgba(vars.$mainText, 0.04);
 
   @include include-media.media('<=tablet') {
     height: 25%;
     border-left: none;
-    border-top: solid 1px vars.$mainGrayLight;
+    border-top: solid 1px vars.$borderColor;
     padding: 12px;
   }
 
@@ -36,7 +37,7 @@
     width: 100%;
     position: relative;
     padding: 0 12px 18px;
-    border-bottom: solid 1px vars.$mainGrayLight;
+    border-bottom: solid 1px vars.$borderColor;
     @include mixins.flex(row, center, space-between);
 
     @include include-media.media('<=phone') {
@@ -54,6 +55,7 @@
         width: 1px;
         margin: 0 12px;
         background-color: vars.$mainGray;
+        opacity: 0.55;
 
         @include include-media.media('<=phone') {
           margin: 0 8px;
@@ -64,6 +66,10 @@
         @include mixins.flex(row, center);
         color: vars.$mainGreen;
         font-size: vars.$defaultFontSize;
+        font-weight: 600;
+        padding: 5px 8px;
+        border-radius: 8px;
+        background: rgba(vars.$mainGreen, 0.1);
 
         @include include-media.media('<=phone') {
           font-size: 12px;
@@ -75,6 +81,7 @@
 
         &.taskFailed {
           color: vars.$mainRed;
+          background: rgba(vars.$mainRed, 0.1);
         }
       }
     }
@@ -85,11 +92,13 @@
       border: none;
       cursor: pointer;
       margin: 0;
-      padding: 0;
       color: vars.$mainGray;
+      border-radius: 8px;
+      padding: 6px;
 
       &:hover {
         color: vars.$mainRed;
+        background: rgba(vars.$mainRed, 0.1);
       }
     }
   }
@@ -100,6 +109,8 @@
     margin-top: 18px;
     padding: 0 12px;
     word-break: break-word;
+    color: vars.$mainText;
+    line-height: 1.45;
 
     @include include-media.media('<=phone') {
       font-size: 14px;
@@ -124,11 +135,13 @@
       height: 20px;
       cursor: pointer;
       margin: 0;
-      padding: 0;
       color: vars.$mainGray;
+      padding: 6px;
+      border-radius: 8px;
 
       &:hover {
         color: vars.$mainGreen;
+        background: vars.$surfaceStrong;
       }
     }
   }
@@ -156,8 +169,8 @@
     max-width: 600px;
     padding: vars.$smallPadding;
     border: 0;
-    background-color: vars.$uiBackground;
-    border-radius: 5px;
+    background-color: vars.$surface;
+    border-radius: 8px;
 
     @include include-media.media('<=tablet') {
       max-width: none;
@@ -179,7 +192,7 @@
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
@@ -190,7 +203,7 @@
     }
 
     &:hover {
-      background-color: vars.$mainGreenLight;
+      background-color: vars.$mainGreenDark;
     }
 
     &:active {
@@ -215,6 +228,7 @@
 
     span {
       color: vars.$mainGray;
+      font-weight: 500;
       user-select: none;
     }
   }

@@ -3,8 +3,13 @@
 @use '../../../node_modules/include-media/dist/include-media';
 
 .timerContainer {
-  @include mixins.flex;
-  width: 100%;
+  @include mixins.flex(row, center, space-between);
+  width: min(100%, 860px);
+  padding: 18px 20px;
+  background: rgba(vars.$surface, 0.9);
+  border: 1px solid vars.$borderColor;
+  border-radius: 8px;
+  box-shadow: vars.$shadowSmall;
 
   @include include-media.media('<=tablet') {
     flex-direction: column;
@@ -12,8 +17,9 @@
   }
 
   .time {
-    width: 300px;
+    width: auto;
     margin-right: 28px;
+    color: vars.$mainText;
     font-size: vars.$mediumFontSize;
 
     @include include-media.media('<=tablet') {
@@ -29,11 +35,11 @@
 
   .toggleButton {
     @include mixins.flex;
-    padding: 8px 16px;
+    padding: 10px 18px;
     background-color: vars.$mainGreen;
     color: vars.$mainWhite;
     border: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     user-select: none;
     align-self: flex-end;
@@ -53,11 +59,17 @@
     }
 
     &:hover {
-      background-color: vars.$mainGreenLight;
+      background-color: vars.$mainGreenDark;
     }
 
     &:active {
+      background-color: vars.$mainGreenDark;
+    }
+
+    &:disabled {
       background-color: vars.$mainGrayLight;
+      color: vars.$mainGray;
+      cursor: not-allowed;
     }
   }
 }

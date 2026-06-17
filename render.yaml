@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: leisuretask
+    runtime: node
+    plan: free
+    buildCommand: corepack enable && corepack prepare pnpm@11.5.1 --activate && pnpm install --frozen-lockfile && pnpm b pgc && pnpm b build && pnpm w build
+    startCommand: pnpm b pmp && pnpm b start
+    healthCheckPath: /ping
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST_ENV
+        value: production
+      - key: WEBAPP_URL
+        value: https://leisuretask.onrender.com
+      - key: VITE_WEBAPP_URL
+        value: https://leisuretask.onrender.com
+      - key: VITE_BACKEND_TRPC_URL
+        value: https://leisuretask.onrender.com/trpc
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PASSWORD_SALT
+        sync: false

@@ -7,10 +7,11 @@
   @include mixins.border;
   height: 100%;
   position: relative;
-  padding: vars.$mediumPadding 36px;
-  background-color: vars.$mainWhite;
+  padding: 22px 28px;
+  background-color: rgba(vars.$surface, 0.92);
   min-width: 270px;
   max-width: 600px;
+  box-shadow: 12px 0 34px rgba(vars.$mainText, 0.04);
 
   @include include-media.media('<=tablet') {
     display: none;
@@ -32,6 +33,8 @@
 
   h2 {
     @include mixins.h2;
+    color: vars.$mainText;
+    line-height: 1.35;
 
     @include include-media.media('<=phone') {
       font-size: 14px;

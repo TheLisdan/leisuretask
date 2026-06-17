@@ -20,7 +20,7 @@
     width: 100%;
     margin-bottom: 16px;
     padding: 8px;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: background-color 0.2s ease;
 
     @include include-media.media('<=tablet') {
@@ -31,7 +31,7 @@
     }
 
     &:hover {
-      background-color: vars.$uiBackground;
+      background-color: vars.$surfaceStrong;
     }
 
     &:last-child {
@@ -60,8 +60,8 @@
 
       .changeSettingButton {
         color: vars.$mainGreen;
-        padding: 4px 8px;
-        border-radius: 4px;
+        padding: 6px 10px;
+        border-radius: 8px;
         transition: all 0.2s ease;
         font-size: vars.$defaultFontSize;
 
@@ -70,8 +70,8 @@
         }
 
         &:hover {
-          color: vars.$mainGreenLight;
-          background-color: rgba(vars.$mainGreenLight, 0.1);
+          color: vars.$mainGreenDark;
+          background-color: vars.$surfaceStrong;
         }
 
         &:active {
