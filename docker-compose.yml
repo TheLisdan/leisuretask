@@ -1,6 +1,5 @@
 services:
   app:
-    # platform: linux/amd64 # uncomment to build for amd64 which used in heroku
     build:
       context: .
       # args used in image build as env variables

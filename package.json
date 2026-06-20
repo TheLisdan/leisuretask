@@ -9,6 +9,9 @@
     "w": "pnpm --filter @leisuretask/webapp",
     "sh": "pnpm --filter @leisuretask/shared",
     "dev": "pnpm -r --parallel dev",
+    "demo": "cross-env VITE_APP_MODE=demo HOST_ENV=local PORT=8000 VITE_WEBAPP_URL=http://localhost:8000 pnpm --dir webapp dev --host 127.0.0.1",
+    "demo:build": "cross-env VITE_APP_MODE=demo HOST_ENV=production VITE_WEBAPP_URL=/ pnpm --filter @leisuretask/webapp build",
+    "demo:preview": "cross-env VITE_APP_MODE=demo HOST_ENV=production VITE_WEBAPP_URL=/ pnpm --dir webapp preview --host 127.0.0.1",
     "test": "pnpm -r test",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --config eslint.config.js",
     "typecheck": "concurrently -n backend,webapp,shared -c red,blue,green \"pnpm -r --filter @leisuretask/backend typecheck\" \"pnpm -r --filter @leisuretask/webapp typecheck\" \"pnpm -r --filter @leisuretask/shared typecheck\"",
@@ -16,10 +19,6 @@
     "dcc": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose config'",
     "dcb": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose build'",
     "dcu": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose up'",
-    "dth": "docker tag leisuretask-image registry.heroku.com/leisuretaskonline/web",
-    "hl": "heroku login && heroku container:login",
-    "dph": "docker push registry.heroku.com/leisuretaskonline/web",
-    "hr": "heroku container:release web -a leisuretaskonline",
     "prepare": "husky install"
   },
   "dependencies": {

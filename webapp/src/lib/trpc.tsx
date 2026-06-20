@@ -52,7 +52,7 @@ const trpcClient = trpc.createClient({
       enabled: () => env.NODE_ENV === 'development',
     }),
     httpBatchLink({
-      url: env.VITE_BACKEND_TRPC_URL,
+      url: env.VITE_BACKEND_TRPC_URL ?? '',
       headers: () => {
         const token = Cookies.get('token');
         return {

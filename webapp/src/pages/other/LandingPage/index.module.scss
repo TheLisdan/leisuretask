@@ -4,362 +4,430 @@
 
 .landing {
   min-height: 100vh;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(vars.$surfaceStrong, 0.82),
-      rgba(vars.$uiBackground, 0.96) 58%
+  background: radial-gradient(
+      circle at 68% 14%,
+      rgba(vars.$mainGreenLight, 0.22),
+      transparent 30%
     ),
-    url('../../../components/Layout/app-background-image.png') repeat;
+    linear-gradient(
+      135deg,
+      #111916 0%,
+      #1d2a24 42%,
+      #f3f6f3 42.2%,
+      #f7faf8 100%
+    );
   display: flex;
   flex-direction: column;
 
-  .header {
-    @include mixins.flex(row, center, space-between);
-    padding: vars.$bigPadding;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+  @include include-media.media('<=tablet') {
+    background: linear-gradient(
+      180deg,
+      #111916 0%,
+      #1d2a24 48%,
+      #f7faf8 48.2%,
+      #f7faf8 100%
+    );
+  }
+}
 
-    @include include-media.media('<=tablet') {
-      padding: vars.$mediumPadding;
-    }
+.header {
+  @include mixins.flex(row, center, space-between);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 24px 28px;
+  color: vars.$mainWhite;
 
-    .nav {
-      @include mixins.flex(row, center);
-      gap: 20px;
-
-      @include include-media.media('<=phone') {
-        gap: 10px;
-      }
-
-      .signInButton {
-        color: vars.$mainText;
-        font-weight: 500;
-        padding: 10px 12px;
-        border-radius: 8px;
-
-        & {
-          &:hover {
-            color: vars.$mainGreenDark;
-            background: vars.$surfaceStrong;
-          }
-        }
-      }
-
-      .signUpButton {
-        padding: 10px 20px;
-        background-color: vars.$mainGreen;
-        color: vars.$mainWhite;
-        border-radius: 8px;
-        font-weight: 500;
-        box-shadow: vars.$shadowSmall;
-
-        & {
-          transition: all 0.2s ease;
-        }
-
-        @include include-media.media('<=phone') {
-          padding: 8px 16px;
-        }
-
-        & {
-          &:hover {
-            background-color: vars.$mainGreenDark;
-          }
-        }
-      }
-    }
+  a:first-child {
+    color: vars.$mainWhite;
   }
 
-  .main {
-    flex: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px vars.$bigPadding 52px;
-    width: 100%;
-
-    @include include-media.media('<=tablet') {
-      padding: 40px vars.$mediumPadding;
-    }
-
-    .hero {
-      position: relative;
-      min-height: min(520px, calc(100vh - 210px));
-      overflow: hidden;
-      border: 1px solid rgba(vars.$mainWhite, 0.7);
-      border-radius: 8px;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(vars.$mainWhite, 0.96) 0%,
-          rgba(vars.$mainWhite, 0.82) 48%,
-          rgba(vars.$surfaceStrong, 0.5) 100%
-        ),
-        url('../../../components/Layout/app-background-image.png') repeat;
-      box-shadow: vars.$shadowSoft;
-      margin-bottom: 28px;
-      padding: clamp(28px, 6vw, 72px);
-
-      @include include-media.media('<=tablet') {
-        min-height: auto;
-        padding: 32px 24px 220px;
-      }
-
-      @include include-media.media('<=phone') {
-        padding: 24px 18px 190px;
-      }
-
-      .heroContent {
-        position: relative;
-        z-index: 1;
-        max-width: 520px;
-
-        .eyebrow {
-          color: vars.$mainGreenDark;
-          font-size: 13px;
-          font-weight: 800;
-          margin-bottom: 14px;
-          text-transform: uppercase;
-        }
-
-        h1 {
-          font-size: clamp(42px, 8vw, 84px);
-          font-weight: 800;
-          color: vars.$mainText;
-          margin-bottom: 18px;
-          line-height: 0.95;
-        }
-
-        p {
-          font-size: 19px;
-          color: vars.$mainGray;
-          margin-bottom: 24px;
-          max-width: 560px;
-          line-height: 1.55;
-
-          @include include-media.media('<=phone') {
-            font-size: 16px;
-          }
-        }
-
-        .ctaButton {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 13px 28px;
-          background-color: vars.$mainGreen;
-          color: vars.$mainWhite;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 700;
-          box-shadow: vars.$shadowSmall;
-
-          & {
-            transition: all 0.2s ease;
-          }
-
-          @include include-media.media('<=phone') {
-            width: 100%;
-            padding: 12px 20px;
-          }
-
-          &:hover {
-            background-color: vars.$mainGreenDark;
-            transform: translateY(-2px);
-          }
-        }
-      }
-
-      .productPreview {
-        position: absolute;
-        right: clamp(24px, 5vw, 72px);
-        bottom: clamp(24px, 5vw, 62px);
-        z-index: 0;
-        width: min(380px, 42vw);
-        padding: 16px;
-        border: 1px solid vars.$borderColor;
-        border-radius: 8px;
-        background: rgba(vars.$surface, 0.92);
-        box-shadow: vars.$shadowSoft;
-
-        @include include-media.media('<=tablet') {
-          right: 24px;
-          bottom: 24px;
-          width: calc(100% - 48px);
-        }
-
-        @include include-media.media('<=phone') {
-          right: 18px;
-          bottom: 18px;
-          width: calc(100% - 36px);
-        }
-
-        .previewTop,
-        .previewFooter {
-          @include mixins.flex(row, center, space-between);
-          color: vars.$mainGray;
-          font-size: 13px;
-          font-weight: 600;
-
-          b {
-            color: vars.$mainText;
-          }
-        }
-
-        .previewTop {
-          padding-bottom: 14px;
-          border-bottom: 1px solid vars.$borderColor;
-          margin-bottom: 10px;
-        }
-
-        .previewTask {
-          @include mixins.flex(row, center);
-          gap: 10px;
-          padding: 12px 0;
-          color: vars.$mainText;
-          font-weight: 600;
-
-          .previewCheck {
-            width: 18px;
-            height: 18px;
-            border-radius: 6px;
-            background: vars.$mainGreen;
-          }
-
-          span:nth-child(2) {
-            flex: 1;
-            min-width: 0;
-          }
-
-          b {
-            color: vars.$mainGreenDark;
-            font-size: 12px;
-          }
-        }
-
-        .previewFooter {
-          margin-top: 10px;
-          padding: 10px;
-          border-radius: 8px;
-          background: rgba(vars.$mainAmber, 0.1);
-
-          b {
-            color: vars.$mainAmber;
-          }
-        }
-      }
-    }
-
-    .features {
-      @include mixins.flex(row, stretch, center);
-      gap: 14px;
-
-      @include include-media.media('<=tablet') {
-        flex-direction: column;
-      }
-
-      .feature {
-        @include mixins.flex(column, flex-start);
-        flex: 1;
-        padding: 22px;
-        background: rgba(vars.$mainWhite, 0.86);
-        border: 1px solid vars.$borderColor;
-        border-radius: 8px;
-
-        & {
-          transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-        }
-
-        @include include-media.media('<=tablet') {
-          padding: 20px;
-        }
-
-        .featureIcon {
-          @include mixins.flex(row, center, center);
-          width: 34px;
-          height: 34px;
-          color: vars.$mainGreenDark;
-          font-size: 12px;
-          font-weight: 800;
-          margin-bottom: 18px;
-          border-radius: 8px;
-          background: vars.$surfaceStrong;
-
-          @include include-media.media('<=tablet') {
-            font-size: 12px;
-            margin-bottom: 15px;
-          }
-        }
-
-        h3 {
-          font-size: 20px;
-          font-weight: 600;
-          color: vars.$mainText;
-          margin-bottom: 15px;
-
-          @include include-media.media('<=tablet') {
-            font-size: 18px;
-            margin-bottom: 10px;
-          }
-        }
-
-        p {
-          color: vars.$mainGray;
-          line-height: 1.6;
-
-          @include include-media.media('<=tablet') {
-            font-size: 14px;
-          }
-        }
-
-        &:hover {
-          transform: translateY(-5px);
-          box-shadow: vars.$shadowSmall;
-        }
-      }
-    }
+  @include include-media.media('<=tablet') {
+    padding: 18px;
   }
 
-  .footer {
-    @include mixins.flex(column, center, center);
-    width: 100%;
+  @include include-media.media('<=phone') {
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+.nav {
+  @include mixins.flex(row, center);
+  gap: 10px;
+
+  @include include-media.media('<=phone') {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+.textLink,
+.demoButton,
+.primaryCta,
+.secondaryCta {
+  @include mixins.flex(row, center, center);
+  min-height: 42px;
+  border-radius: 8px;
+  font-weight: 800;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.textLink {
+  padding: 0 12px;
+  color: rgba(vars.$mainWhite, 0.78);
+
+  &:hover {
+    color: vars.$mainWhite;
+    background: rgba(vars.$mainWhite, 0.08);
+  }
+}
+
+.demoButton,
+.primaryCta {
+  padding: 0 18px;
+  color: vars.$mainText;
+  background: vars.$mainWhite;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+
+  &:hover {
+    background: vars.$mainGreenLight;
+  }
+}
+
+.main {
+  flex: 1;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 24px 28px 48px;
+
+  @include include-media.media('<=tablet') {
+    padding: 12px 18px 32px;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  min-height: min(690px, calc(100vh - 96px));
+  padding-bottom: 28px;
+
+  @include include-media.media('<=tablet') {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 24px;
+  }
+}
+
+.heroContent {
+  color: vars.$mainWhite;
+
+  h1 {
+    max-width: 660px;
+    color: vars.$mainWhite;
+    font-size: clamp(54px, 9vw, 112px);
+    font-weight: 900;
+    line-height: 0.9;
+  }
+
+  p {
+    max-width: 560px;
+    margin-top: 24px;
+    color: rgba(vars.$mainWhite, 0.74);
+    font-size: 19px;
+    line-height: 1.6;
+  }
+
+  @include include-media.media('<=phone') {
+    h1 {
+      font-size: 48px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.primaryCta,
+.secondaryCta {
+  padding: 0 22px;
+}
+
+.secondaryCta {
+  border: 1px solid rgba(vars.$mainWhite, 0.2);
+  color: vars.$mainWhite;
+  background: rgba(vars.$mainWhite, 0.07);
+
+  &:hover {
+    border-color: rgba(vars.$mainWhite, 0.4);
+    background: rgba(vars.$mainWhite, 0.12);
+  }
+}
+
+.productPreview {
+  padding: 16px;
+  border: 1px solid rgba(vars.$mainText, 0.08);
+  border-radius: 8px;
+  background: rgba(vars.$surface, 0.86);
+  box-shadow: 0 30px 90px rgba(17, 25, 22, 0.22);
+  backdrop-filter: blur(22px);
+}
+
+.previewHeader {
+  @include mixins.flex(row, center, space-between);
+  gap: 12px;
+  padding: 18px;
+  border-radius: 8px;
+  color: vars.$mainWhite;
+  background: vars.$mainText;
+
+  span {
+    display: block;
+    color: rgba(vars.$mainWhite, 0.65);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  b {
+    display: block;
+    margin-top: 8px;
+    font-size: clamp(34px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1;
+  }
+}
+
+.livePill {
+  min-height: 30px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: vars.$mainGreenLight !important;
+  background: rgba(vars.$mainGreenLight, 0.12);
+}
+
+.previewFlow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+
+  @include include-media.media('<=phone') {
+    grid-template-columns: 1fr;
+  }
+
+  div {
+    min-height: 128px;
+    padding: 14px;
+    border: 1px solid rgba(vars.$mainText, 0.08);
+    border-radius: 8px;
+    background: vars.$mainWhite;
+  }
+
+  span {
+    color: vars.$mainGreenDark;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  b {
+    display: block;
+    margin-top: 18px;
+    color: vars.$mainText;
+    font-size: 16px;
+    font-weight: 850;
+  }
+
+  p {
+    margin-top: 8px;
+    color: vars.$mainGray;
+    line-height: 1.45;
+  }
+}
+
+.previewTasks {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+
+  div {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 12px;
+    border: 1px solid rgba(vars.$mainText, 0.08);
+    border-radius: 8px;
+    background: rgba(vars.$mainWhite, 0.78);
+  }
+
+  b {
+    overflow: hidden;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  em {
+    color: vars.$mainGreenDark;
+    font-style: normal;
+    font-weight: 900;
+  }
+}
+
+.previewCheck {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: vars.$mainGreen;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 9px;
+    border: solid vars.$mainWhite;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
+
+.mechanics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 22px;
+
+  @include include-media.media('<=tablet') {
+    grid-template-columns: 1fr;
+  }
+
+  div {
+    min-height: 210px;
+    padding: 22px;
+    border: 1px solid rgba(vars.$mainText, 0.08);
+    border-radius: 8px;
+    background: rgba(vars.$surface, 0.82);
+  }
+
+  span {
+    color: vars.$mainGreenDark;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin-top: 24px;
+    color: vars.$mainText;
+    font-size: 24px;
+    font-weight: 850;
+  }
+
+  p {
+    margin-top: 12px;
+    color: vars.$mainGray;
+    line-height: 1.65;
+  }
+}
+
+.architecture {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 28px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 34px;
+  border-radius: 8px;
+  color: vars.$mainWhite;
+  background: vars.$mainText;
+
+  @include include-media.media('<=tablet') {
+    grid-template-columns: 1fr;
     padding: 24px;
-    background-color: transparent;
+  }
+}
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      @include mixins.flex(column, center, space-between);
+.architectureCopy {
+  h2 {
+    max-width: 720px;
+    color: vars.$mainWhite;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1;
+  }
 
-      @include include-media.media('<=tablet') {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
+  p {
+    max-width: 680px;
+    margin-top: 18px;
+    color: rgba(vars.$mainWhite, 0.68);
+    line-height: 1.7;
+  }
+}
 
-      .footerNav {
-        @include mixins.flex(row, center, center);
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 12px;
-      }
+.stackList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 
-      .copyright {
-        color: vars.$mainGray;
-      }
+  @include include-media.media('<=phone') {
+    grid-template-columns: 1fr;
+  }
 
-      .footerLink {
-        color: vars.$mainGreen;
-        text-decoration: none;
-        transition: color 0.2s ease;
+  span {
+    min-height: 46px;
+    border: 1px solid rgba(vars.$mainWhite, 0.12);
+    border-radius: 8px;
+    padding: 14px;
+    color: rgba(vars.$mainWhite, 0.78);
+    background: rgba(vars.$mainWhite, 0.06);
+    font-weight: 800;
+  }
+}
 
-        &:hover {
-          color: vars.$mainGreenLight;
-        }
-      }
-    }
+.footer {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 20px 28px 30px;
+  color: vars.$mainGray;
+}
+
+.container {
+  @include mixins.flex(row, center, space-between);
+  gap: 18px;
+
+  @include include-media.media('<=phone') {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.footerLink {
+  color: vars.$mainGreenDark;
+  font-weight: 800;
+
+  &:hover {
+    color: vars.$mainText;
   }
 }
